@@ -2,7 +2,6 @@ package com.professionalowo.util
 
 import net.minecraft.inventory.Inventory
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.GameRules
 import net.minecraft.world.World
 
 /**
