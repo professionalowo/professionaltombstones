@@ -5,7 +5,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 /**
- * Get the inventory from the BlockEnitity at pos
+ * Get the inventory from the BlockEntity at pos
  * @param pos the BlockPos of the BlockEntity
  * @return the Inventory of the BlockEntity, if available
  */
