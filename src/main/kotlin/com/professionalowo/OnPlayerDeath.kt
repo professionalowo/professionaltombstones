@@ -35,7 +35,7 @@ fun afterDeath(player: ServerPlayerEntity) = player.run {
 
     inventory.transferTo(blockInventory)
 
-    logger.info("Saved inventory of ${player.name.literalString} at $blockPos")
+    logger.info("Saved inventory of ${name.literalString} at $blockPos")
 }
 
 private fun getBlock() = Blocks.BARREL
