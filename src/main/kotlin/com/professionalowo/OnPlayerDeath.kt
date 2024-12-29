@@ -2,7 +2,7 @@ package com.professionalowo
 
 import com.professionalowo.gamerules.ModGameRules
 import com.professionalowo.Professionaltombstones.MOD_ID
-import com.professionalowo.util.allGamerules
+import com.professionalowo.gamerules.allGamerules
 import com.professionalowo.util.getBlockInventory
 import com.professionalowo.util.transferTo
 import net.minecraft.block.Blocks
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory
 fun afterDeath(player: ServerPlayerEntity) = player.run {
     val logger = LoggerFactory.getLogger(MOD_ID)
 
-    val shouldSpawnGravestone = world.allGamerules(
+    val shouldSpawnGravestone = world.gameRules.allGamerules(
         ModGameRules.SPAWN_GRAVESTONE to true,
         GameRules.KEEP_INVENTORY to false
     )

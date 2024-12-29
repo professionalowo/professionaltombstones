@@ -16,3 +16,15 @@ object ModGameRules {
      */
     fun initialize(){}
 }
+
+private typealias KeyToBooleanPair
+        = Pair<GameRules.Key<GameRules.BooleanRule>, Boolean>
+
+/**
+ * Checks if all gamerule pairs are set to the right value
+ *
+ * @param pairs the gamerules and their values
+ * @return true if all keys are set to the right value
+ */
+fun GameRules.allGamerules(vararg pairs: KeyToBooleanPair) =
+    pairs.all { getBoolean(it.first) == it.second }
