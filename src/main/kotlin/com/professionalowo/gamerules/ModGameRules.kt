@@ -14,11 +14,8 @@ object ModGameRules {
     /**
      * Does nothing only static initialisation
      */
-    fun initialize(){}
+    fun initialize() {}
 }
-
-private typealias KeyToBooleanPair
-        = Pair<GameRules.Key<GameRules.BooleanRule>, Boolean>
 
 /**
  * Checks if all gamerule pairs are set to the right value
@@ -26,5 +23,5 @@ private typealias KeyToBooleanPair
  * @param pairs the gamerules and their values
  * @return true if all keys are set to the right value
  */
-fun GameRules.allGamerules(vararg pairs: KeyToBooleanPair) =
+fun GameRules.allGamerules(vararg pairs: Pair<GameRules.Key<GameRules.BooleanRule>, Boolean>) =
     pairs.all { getBoolean(it.first) == it.second }
