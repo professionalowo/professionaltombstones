@@ -5,7 +5,7 @@ import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
 
 object Professionaltombstones : ModInitializer {
-    const val MOD_ID = "professionaltombstones";
+    const val MOD_ID = "professionaltombstones"
     private val logger = LoggerFactory.getLogger(MOD_ID)
 
 
