@@ -63,6 +63,7 @@ class TombstoneBlockEntity(pos: BlockPos, state: BlockState?) :
         if (nbt.contains("PlayerUuid", NbtElement.STRING_TYPE.toInt())) {
             this.playerUuid = nbt.getString("PlayerUuid")
         }
+        Inventories.readNbt(nbt, inventory, registryLookup)
     }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
@@ -73,6 +74,7 @@ class TombstoneBlockEntity(pos: BlockPos, state: BlockState?) :
         if (playerUuid != null) {
             nbt.putString("PlayerUuid", playerUuid)
         }
+        Inventories.writeNbt(nbt, inventory, registryLookup)
     }
 
     fun setPlayer(player: PlayerEntity) {
