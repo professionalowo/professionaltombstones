@@ -4,13 +4,23 @@ import com.professionalowo.blocks.tombstone.TombstoneBlock
 import com.professionalowo.util.modIdentifier
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
+import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object ModBlocks {
-    val TOMBSTONE_BLOCK = register(TombstoneBlock(AbstractBlock.Settings.create()), "tombstone_block", true)
+    val TOMBSTONE_BLOCK =
+        register(
+            TombstoneBlock(
+                AbstractBlock.Settings.create()
+                    .dropsNothing()
+                    .hardness(7f)
+                    .luminance { 2 }
+                    .pistonBehavior(PistonBehavior.BLOCK)
+            ), "tombstone_block", true
+        )
 
     fun initialize() {}
 
