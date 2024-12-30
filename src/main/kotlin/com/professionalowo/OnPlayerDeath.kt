@@ -25,6 +25,8 @@ fun afterDeath(player: ServerPlayerEntity) = player.run {
         return
     }
 
+    if (inventory.isEmpty) return
+
     world.setBlockState(
         blockPos,
         getBlock().defaultState
