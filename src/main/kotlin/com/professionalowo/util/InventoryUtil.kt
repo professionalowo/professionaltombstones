@@ -9,21 +9,27 @@ import net.minecraft.item.ItemStack
  * @see Inventory
  */
 fun Inventory.transferTo(other: Inventory) {
-    val itemCopies = mutableListOf<ItemStack>()
+    //fill other inventory with copy
+    for ((index, stack) in itemsCopy().withIndex()) {
+        if (index < other.size()) {
+            other.setStack(index, stack)
+        } else {
+            break
+        }
+    }
+    //clear this
+    clear()
+}
 
+fun Inventory.itemsCopy(): Iterable<ItemStack> {
+    val itemCopies = mutableListOf<ItemStack>()
     //clear this list and make copy
-    for (i in 0 until this.size()) {
-        val itemStack = this.getStack(i)
+    for (i in 0 until size()) {
+        val itemStack = getStack(i)
         if (itemStack.isEmpty) {
             continue
         }
         itemCopies.add(itemStack.copy())
     }
-    this.clear()
-    //fill other inventory with copy
-    for ((index, stack) in itemCopies.withIndex()) {
-        if (index < other.size()) {
-            other.setStack(index, stack)
-        }
-    }
+    return itemCopies.toList()
 }
