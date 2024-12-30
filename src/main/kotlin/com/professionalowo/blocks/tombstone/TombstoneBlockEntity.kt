@@ -53,7 +53,7 @@ class TombstoneBlockEntity(pos: BlockPos, state: BlockState?) :
 
     override fun canPlayerUse(player: PlayerEntity?): Boolean = Inventory.canPlayerUse(this, player)
 
-    override fun getName(): Text = customName ?: Text.translatable("block.professionaltombstone.tombstone");
+    override fun getName(): Text = customName ?: Text.translatable("block.professionaltombstone.tombstone")
 
     override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, registryLookup)

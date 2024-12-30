@@ -5,9 +5,7 @@ import com.professionalowo.Professionaltombstones.MOD_ID
 import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.blocks.tombstone.TombstoneBlockEntity
 import com.professionalowo.gamerules.allGamerules
-import com.professionalowo.util.getBlockInventory
 import com.professionalowo.util.transferTo
-import net.minecraft.block.Blocks
 import net.minecraft.inventory.Inventory
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.state.property.Properties

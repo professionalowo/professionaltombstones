@@ -15,7 +15,7 @@ object ModBlocks {
     fun initialize() {}
 
     private fun register(block: Block, name: String, shouldRegisterItem: Boolean): Block {
-        val id = modIdentifier(name);
+        val id = modIdentifier(name)
 
         if (shouldRegisterItem) {
             val blockItem = BlockItem(block, Item.Settings())
