@@ -21,15 +21,10 @@ fun Inventory.transferTo(other: Inventory) {
     clear()
 }
 
-fun Inventory.itemsCopy(): Iterable<ItemStack> {
-    val itemCopies = mutableListOf<ItemStack>()
-    //clear this list and make copy
-    for (i in 0 until size()) {
-        val itemStack = getStack(i)
-        if (itemStack.isEmpty) {
-            continue
-        }
-        itemCopies.add(itemStack.copy())
-    }
-    return itemCopies.toList()
-}
+/**
+ * @return a copy of each ItemStack in the Inventory
+ */
+fun Inventory.itemsCopy() = (0..<size())
+    .map { getStack(it) ?: ItemStack.EMPTY!! }
+    .filter { !it.isEmpty }
+    .map { it.copy() }
