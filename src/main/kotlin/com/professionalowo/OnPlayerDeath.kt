@@ -5,6 +5,7 @@ import com.professionalowo.Professionaltombstones.MOD_ID
 import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.blocks.tombstone.TombstoneBlockEntity
 import com.professionalowo.gamerules.allGamerules
+import com.professionalowo.util.nextSolidBlockDown
 import com.professionalowo.util.transferTo
 import net.minecraft.inventory.Inventory
 import net.minecraft.server.network.ServerPlayerEntity
@@ -27,14 +28,15 @@ fun afterDeath(player: ServerPlayerEntity) = player.run {
 
     if (inventory.isEmpty) return
 
+    val gravestonePos = blockPos.nextSolidBlockDown(world)
+
     world.setBlockState(
-        blockPos,
+        gravestonePos,
         getBlock().defaultState
             .withIfExists(Properties.FACING, facing)
-            .withIfExists(Properties.HORIZONTAL_FACING, facing)
     )
 
-    val blockEntity = world.getBlockEntity(blockPos)
+    val blockEntity = world.getBlockEntity(gravestonePos)
 
     val blockInventory = blockEntity as? Inventory ?: return
 
