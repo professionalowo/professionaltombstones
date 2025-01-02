@@ -34,9 +34,7 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
         matrices.translate(facing.translateX(), 0.65f, facing.translateZ())
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(facing.getRotationAngleY()))
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180f))
-
-        val scalar = (1f / width) * 0.8f
-        matrices.scale(scalar, scalar, scalar)
+        matrices.fit(width, 0.8f)
 
         renderer.draw(
             text,
@@ -73,5 +71,10 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
         Direction.NORTH -> 0.9f
         Direction.SOUTH -> 0.1f
         else -> 0f
+    }
+
+    private fun MatrixStack.fit(width: Int, padding: Float = 1f) {
+        val scalar = (1f / width) * padding
+        scale(scalar, scalar, scalar)
     }
 }
