@@ -9,6 +9,9 @@ import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
+import net.minecraft.network.listener.ClientPlayPacketListener
+import net.minecraft.network.packet.Packet
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.text.Text
 import net.minecraft.util.Nameable
@@ -53,7 +56,7 @@ class TombstoneBlockEntity(pos: BlockPos, state: BlockState?) :
 
     override fun canPlayerUse(player: PlayerEntity?): Boolean = Inventory.canPlayerUse(this, player)
 
-    override fun getName(): Text = customName ?: Text.translatable("block.professionaltombstone.tombstone")
+    override fun getName(): Text = customName ?: Text.literal("Anonymous")
 
     override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, registryLookup)
@@ -75,6 +78,14 @@ class TombstoneBlockEntity(pos: BlockPos, state: BlockState?) :
             nbt.putString("PlayerUuid", playerUuid)
         }
         Inventories.writeNbt(nbt, inventory, registryLookup)
+    }
+
+    override fun toUpdatePacket(): Packet<ClientPlayPacketListener>? {
+        return BlockEntityUpdateS2CPacket.create(this)
+    }
+
+    override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup?): NbtCompound {
+        return createNbt(registryLookup)
     }
 
     fun setPlayer(player: PlayerEntity) {

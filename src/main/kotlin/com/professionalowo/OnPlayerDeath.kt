@@ -26,7 +26,7 @@ fun afterDeath(player: ServerPlayerEntity) = player.run {
         return
     }
 
-    if (inventory.isEmpty) return
+    if (inventory.isEmpty) return@run
 
     val gravestonePos = blockPos.nextSolidBlockDown(world)
 
