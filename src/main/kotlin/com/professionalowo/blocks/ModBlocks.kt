@@ -20,7 +20,7 @@ object ModBlocks {
                     .dropsNothing()
                     .hardness(7f)
                     .luminance { 2 }
-                    .pistonBehavior(PistonBehavior.BLOCK)
+                    .pistonBehavior(PistonBehavior.DESTROY)
             ), "tombstone_block", true
         )
 
