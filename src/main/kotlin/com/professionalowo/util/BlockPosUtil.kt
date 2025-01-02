@@ -10,7 +10,7 @@ import net.minecraft.world.World
  * @param world the World
  * @return the BlockPos of the next solid block under this
  */
-fun BlockPos.nextSolidBlockDown(world: World): BlockPos {
+tailrec fun BlockPos.nextSolidBlockDown(world: World): BlockPos {
     val newPos = withY(y - 1)
     if (world.bottomY >= newPos.y) {
         val newY = world.bottomY + 1
