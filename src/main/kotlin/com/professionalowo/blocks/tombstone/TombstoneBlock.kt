@@ -57,6 +57,12 @@ class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterlogga
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
     }
 
+    init {
+        defaultState = stateManager.defaultState
+            .with(WATERLOGGED, false)
+            .with(FACING, Direction.NORTH)
+    }
+
     override fun getCodec(): MapCodec<out TombstoneBlock> = createCodec { TombstoneBlock(it) }
 
     override fun getRenderType(state: BlockState): BlockRenderType = BlockRenderType.MODEL
@@ -78,9 +84,9 @@ class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterlogga
     override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
         state.rotate(mirror.getRotation(state.get(FACING)))
 
-    override fun getFluidState(state: BlockState): FluidState {
-        return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
-    }
+    override fun getFluidState(state: BlockState): FluidState =
+        if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
+
 
     override fun getStateForNeighborUpdate(
         state: BlockState,
