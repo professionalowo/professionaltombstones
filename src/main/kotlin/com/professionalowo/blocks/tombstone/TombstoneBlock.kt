@@ -1,8 +1,8 @@
 package com.professionalowo.blocks.tombstone
 
 import com.mojang.serialization.MapCodec
-import com.professionalowo.blocks.tombstone.TombstoneBlock.Companion
 import com.professionalowo.blocks.voxels.HorizontalVoxelShape
+import com.professionalowo.sound.ModSoundEvents
 import com.professionalowo.util.or
 import net.minecraft.block.*
 import net.minecraft.block.BlockWithEntity.createCuboidShape
@@ -11,6 +11,8 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.particle.ParticleTypes
+import net.minecraft.sound.SoundCategory
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.DirectionProperty
@@ -22,6 +24,7 @@ import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.random.Random
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
@@ -141,5 +144,39 @@ class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterlogga
     ) {
         ItemScatterer.onStateReplaced(state, newState, world, pos)
         super.onStateReplaced(state, world, pos, newState, moved)
+    }
+
+    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
+        val blockEntity = world.getBlockEntity(pos) as? TombstoneBlockEntity ?: return
+        //only summon particles if there are items
+        if (blockEntity.isEmpty) return
+
+        //summon particles not so often
+        if (random.nextInt(4) == 0) {
+            for (i in 0 until random.nextInt(2)) {
+                world.addParticle(
+                    ParticleTypes.SOUL,
+                    pos.x.toDouble() + random.nextFloat(),
+                    pos.y.toDouble() + 0.5,
+                    pos.z.toDouble() + random.nextFloat(),
+                    0.0,
+                    (random.nextFloat() / 20.0f).toDouble(),
+                    0.0
+                )
+            }
+        }
+
+        if (random.nextInt(15) == 0) {
+            world.playSound(
+                pos.x.toDouble() + 0.5,
+                pos.y.toDouble() + 0.5,
+                pos.z.toDouble() + 0.5,
+                ModSoundEvents.TOMBSTONE_CREAKING,
+                SoundCategory.BLOCKS,
+                0.2f + random.nextFloat(),
+                random.nextFloat() * 0.7f + 0.6f,
+                true
+            )
+        }
     }
 }

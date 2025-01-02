@@ -5,6 +5,7 @@ import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.creative_tabs.ModTabs
 import com.professionalowo.gamerules.ModGameRules
 import com.professionalowo.items.ModItems
+import com.professionalowo.sound.ModSoundEvents
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
 
@@ -14,6 +15,7 @@ object Professionaltombstones : ModInitializer {
 
 
     override fun onInitialize() {
+        ModSoundEvents.initialize()
         ModGameRules.initialize()
         ModTabs.initialize()
         ModBlockEntities.initialize()
