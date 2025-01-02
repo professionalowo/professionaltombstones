@@ -13,9 +13,9 @@ import net.minecraft.world.World
 fun BlockPos.nextSolidBlockDown(world: World): BlockPos {
     val newPos = withY(y - 1)
     if (world.bottomY >= newPos.y) {
-        val newY = world.bottomY + 1;
-        world.setBlockState(newPos.withY(world.bottomY), Blocks.DIRT.defaultState);
-        return newPos.withY(newY);
+        val newY = world.bottomY + 1
+        world.setBlockState(newPos.withY(world.bottomY), Blocks.DIRT.defaultState)
+        return newPos.withY(newY)
     }
 
     val blockState = world.getBlockState(newPos)
