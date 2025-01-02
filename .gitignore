@@ -38,3 +38,6 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+/src/main/resources/blockbench/andesite.png
+/src/main/resources/blockbench/diorite.png
+/src/main/resources/blockbench/dirt.png
