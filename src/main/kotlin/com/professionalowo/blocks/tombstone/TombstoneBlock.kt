@@ -1,8 +1,11 @@
 package com.professionalowo.blocks.tombstone
 
 import com.mojang.serialization.MapCodec
+import com.professionalowo.blocks.tombstone.TombstoneBlock.Companion
+import com.professionalowo.blocks.voxels.HorizontalVoxelShape
 import com.professionalowo.util.or
 import net.minecraft.block.*
+import net.minecraft.block.BlockWithEntity.createCuboidShape
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.FluidState
@@ -26,35 +29,41 @@ import net.minecraft.world.WorldAccess
 import java.util.stream.Stream
 
 
+private fun createVoxelShape(): HorizontalVoxelShape {
+    val north: VoxelShape = Stream.of(
+        createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+        createCuboidShape(0.0, 2.0, 14.0, 16.0, 14.0, 16.0),
+        createCuboidShape(2.0, 14.0, 14.0, 14.0, 16.0, 16.0),
+        createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
+    ).reduce { v1, v2 -> v1.or(v2) }.get()
+
+    val west: VoxelShape = Stream.of(
+        createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+        createCuboidShape(14.0, 2.0, 0.0, 16.0, 14.0, 16.0),
+        createCuboidShape(14.0, 14.0, 2.0, 16.0, 16.0, 14.0),
+        createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
+    ).reduce { v1, v2 -> v1.or(v2) }.get()
+    val south: VoxelShape = Stream.of(
+        createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+        createCuboidShape(0.0, 2.0, 0.0, 16.0, 14.0, 2.0),
+        createCuboidShape(2.0, 14.0, 0.0, 14.0, 16.0, 2.0),
+        createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
+    ).reduce { v1, v2 -> v1.or(v2) }.get()
+    val east: VoxelShape = Stream.of(
+        createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+        createCuboidShape(0.0, 2.0, 0.0, 2.0, 14.0, 16.0),
+        createCuboidShape(0.0, 14.0, 2.0, 2.0, 16.0, 14.0),
+        createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
+    ).reduce { v1, v2 -> v1.or(v2) }.get()
+    return HorizontalVoxelShape(north, east, south, west)
+}
+
 class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterloggable {
     companion object {
-        val SHAPE_N: VoxelShape = Stream.of(
-            createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-            createCuboidShape(0.0, 2.0, 14.0, 16.0, 14.0, 16.0),
-            createCuboidShape(2.0, 14.0, 14.0, 14.0, 16.0, 16.0),
-            createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-        ).reduce { v1, v2 -> v1.or(v2) }.get()
-
-        val SHAPE_W: VoxelShape = Stream.of(
-            createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-            createCuboidShape(14.0, 2.0, 0.0, 16.0, 14.0, 16.0),
-            createCuboidShape(14.0, 14.0, 2.0, 16.0, 16.0, 14.0),
-            createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-        ).reduce { v1, v2 -> v1.or(v2) }.get()
-        val SHAPE_S: VoxelShape = Stream.of(
-            createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-            createCuboidShape(0.0, 2.0, 0.0, 16.0, 14.0, 2.0),
-            createCuboidShape(2.0, 14.0, 0.0, 14.0, 16.0, 2.0),
-            createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-        ).reduce { v1, v2 -> v1.or(v2) }.get()
-        val SHAPE_E: VoxelShape = Stream.of(
-            createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-            createCuboidShape(0.0, 2.0, 0.0, 2.0, 14.0, 16.0),
-            createCuboidShape(0.0, 14.0, 2.0, 2.0, 16.0, 14.0),
-            createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-        ).reduce { v1, v2 -> v1.or(v2) }.get()
         val FACING: DirectionProperty = Properties.HORIZONTAL_FACING
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
+
+        val voxelShape: HorizontalVoxelShape = createVoxelShape()
     }
 
     init {
@@ -109,13 +118,8 @@ class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterlogga
         world: BlockView?,
         pos: BlockPos?,
         context: ShapeContext?
-    ): VoxelShape = when (state?.get(FACING)) {
-        Direction.NORTH -> SHAPE_N
-        Direction.SOUTH -> SHAPE_S
-        Direction.WEST -> SHAPE_W
-        Direction.EAST -> SHAPE_E
-        else -> SHAPE_N
-    }
+    ): VoxelShape = voxelShape[state?.get(FACING)]
+
 
     override fun onUse(
         state: BlockState,
