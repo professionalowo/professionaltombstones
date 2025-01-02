@@ -35,7 +35,7 @@ class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterlogga
         player: PlayerEntity,
         hit: BlockHitResult
     ): ActionResult {
-        world.breakBlock(pos, false)
+        world.breakBlock(pos, false, player)
         return ActionResult.SUCCESS
     }
 
