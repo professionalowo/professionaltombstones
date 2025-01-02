@@ -1,6 +1,7 @@
 package com.professionalowo.creative_tabs
 
 import com.professionalowo.blocks.ModBlocks
+import com.professionalowo.util.createLogger
 import com.professionalowo.util.modIdentifier
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
@@ -12,6 +13,7 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 
 object ModTabs {
+    private val logger = createLogger()
     val TOMBSTONE_GROUP_KEY: RegistryKey<ItemGroup> =
         RegistryKey.of(Registries.ITEM_GROUP.key, modIdentifier("tombstone_group"))
 
@@ -26,5 +28,7 @@ object ModTabs {
         ItemGroupEvents.modifyEntriesEvent(TOMBSTONE_GROUP_KEY).register {
             it.add(ModBlocks.TOMBSTONE_BLOCK.asItem())
         }
+
+        logger.info("Initialized ItemGroups")
     }
 }

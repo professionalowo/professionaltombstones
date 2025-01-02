@@ -2,6 +2,7 @@ package com.professionalowo.blocks
 
 import com.professionalowo.Professionaltombstones.MOD_ID
 import com.professionalowo.blocks.tombstone.TombstoneBlockEntity
+import com.professionalowo.util.createLogger
 import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
@@ -11,10 +12,14 @@ import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
 
 object ModBlockEntities {
+    private val logger = createLogger()
+
     val TOMBSTONE_BLOCK_ENTITY: BlockEntityType<TombstoneBlockEntity> =
         register("tombstone", ModBlocks.TOMBSTONE_BLOCK) { pos, state -> TombstoneBlockEntity(pos, state) }
 
-    fun initialize() {}
+    fun initialize() {
+        logger.info("Initialized BlockEntities")
+    }
 
     private fun <T : BlockEntity> register(
         name: String,
