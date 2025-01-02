@@ -3,8 +3,8 @@
   "parent": "block/cube_all",
   "textures": {
     "0": "minecraft:block/andesite",
-    "1": "minecraft:block/diorite",
-    "2": "minecraft:block/dirt",
+    "1": "minecraft:block/mossy_cobblestone",
+    "2": "minecraft:block/coarse_dirt",
     "particle": "minecraft:block/andesite"
   },
   "elements": [
