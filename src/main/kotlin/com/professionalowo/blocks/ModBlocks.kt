@@ -28,11 +28,16 @@ object ModBlocks {
         logger.info("Initialized Blocks")
     }
 
-    private fun register(block: Block, name: String, shouldRegisterItem: Boolean): Block {
+    private fun register(
+        block: Block,
+        name: String,
+        shouldRegisterItem: Boolean,
+        settingSupplier: ((Block) -> Item.Settings) = { Item.Settings() }
+    ): Block {
         val id = modIdentifier(name)
 
         if (shouldRegisterItem) {
-            val blockItem = BlockItem(block, Item.Settings())
+            val blockItem = BlockItem(block, settingSupplier(block))
             Registry.register(Registries.ITEM, id, blockItem)
         }
 
