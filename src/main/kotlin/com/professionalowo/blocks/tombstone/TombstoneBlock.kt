@@ -1,7 +1,7 @@
 package com.professionalowo.blocks.tombstone
 
 import com.mojang.serialization.MapCodec
-import com.professionalowo.util.reduceOr
+import com.professionalowo.util.or
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
@@ -33,26 +33,26 @@ class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterlogga
             createCuboidShape(0.0, 2.0, 14.0, 16.0, 14.0, 16.0),
             createCuboidShape(2.0, 14.0, 14.0, 14.0, 16.0, 16.0),
             createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-        ).toList().reduceOr()
+        ).reduce { v1, v2 -> v1.or(v2) }.get()
 
         val SHAPE_W: VoxelShape = Stream.of(
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
             createCuboidShape(14.0, 2.0, 0.0, 16.0, 14.0, 16.0),
             createCuboidShape(14.0, 14.0, 2.0, 16.0, 16.0, 14.0),
             createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-        ).toList().reduceOr()
+        ).reduce { v1, v2 -> v1.or(v2) }.get()
         val SHAPE_S: VoxelShape = Stream.of(
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
             createCuboidShape(0.0, 2.0, 0.0, 16.0, 14.0, 2.0),
             createCuboidShape(2.0, 14.0, 0.0, 14.0, 16.0, 2.0),
             createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-        ).toList().reduceOr()
+        ).reduce { v1, v2 -> v1.or(v2) }.get()
         val SHAPE_E: VoxelShape = Stream.of(
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
             createCuboidShape(0.0, 2.0, 0.0, 2.0, 14.0, 16.0),
             createCuboidShape(0.0, 14.0, 2.0, 2.0, 16.0, 14.0),
             createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-        ).toList().reduceOr()
+        ).reduce { v1, v2 -> v1.or(v2) }.get()
         val FACING: DirectionProperty = Properties.HORIZONTAL_FACING
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
     }
