@@ -3,6 +3,7 @@ package com.professionalowo
 import com.professionalowo.Professionaltombstones.MOD_ID
 import com.professionalowo.blocks.ModBlockEntities
 import com.professionalowo.blocks.ModBlocks
+import com.professionalowo.renderer.TombstoneEntityRenderer
 import com.professionalowo.util.createLogger
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap

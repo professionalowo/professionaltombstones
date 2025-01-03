@@ -80,11 +80,11 @@ class TombstoneBlockEntity(pos: BlockPos, state: BlockState?) :
         Inventories.writeNbt(nbt, inventory, registryLookup)
     }
 
-    override fun toUpdatePacket(): Packet<ClientPlayPacketListener>? {
+    override fun toUpdatePacket(): Packet<ClientPlayPacketListener> {
         return BlockEntityUpdateS2CPacket.create(this)
     }
 
-    override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup?): NbtCompound {
+    override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound {
         return createNbt(registryLookup)
     }
 

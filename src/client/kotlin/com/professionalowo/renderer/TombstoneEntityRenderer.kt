@@ -1,4 +1,4 @@
-package com.professionalowo
+package com.professionalowo.renderer
 
 import com.professionalowo.blocks.tombstone.TombstoneBlock
 import com.professionalowo.blocks.tombstone.TombstoneBlockEntity
@@ -9,9 +9,12 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.RotationAxis
 import net.minecraft.util.math.Direction
+import kotlin.jvm.optionals.getOrElse
+import kotlin.jvm.optionals.getOrNull
 
 class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Context) :
     BlockEntityRenderer<TombstoneBlockEntity> {
+
     override fun render(
         entity: TombstoneBlockEntity?,
         tickDelta: Float,
@@ -27,14 +30,16 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
         val pos = entity.pos
 
         val blockState = entity.world?.getBlockState(pos) ?: return
-        val facingOption = blockState.getOrEmpty(TombstoneBlock.FACING)
-        if (facingOption.isEmpty) return
-        val facing = facingOption.get()
+        val facing = blockState.getOrEmpty(TombstoneBlock.FACING).getOrNull() ?: return
 
         matrices.translate(facing.translateX(), 0.65f, facing.translateZ())
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(facing.getRotationAngleY()))
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180f))
+
+        //make the text fit on the block
         matrices.fit(width)
+
+        //add some padding
         matrices.pad(0.8f)
 
         renderer.draw(
