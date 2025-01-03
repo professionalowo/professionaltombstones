@@ -5,6 +5,7 @@ import com.professionalowo.util.createLogger
 import com.professionalowo.util.modIdentifier
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
+import net.minecraft.block.MapColor
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -20,6 +21,7 @@ object ModBlocks {
                     .dropsNothing()
                     .hardness(7f)
                     .luminance { 2 }
+                    .mapColor(MapColor.BROWN)
                     .pistonBehavior(PistonBehavior.DESTROY)
             ), "tombstone_block", true
         )
