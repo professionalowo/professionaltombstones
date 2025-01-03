@@ -14,29 +14,37 @@ import net.minecraft.registry.Registry
 
 object ModBlocks {
     private val logger = createLogger()
-    val TOMBSTONE_BLOCK =
-        register(
-            TombstoneBlock(
-                AbstractBlock.Settings.create()
-                    .dropsNothing()
-                    .hardness(7f)
-                    .luminance { 2 }
-                    .mapColor(MapColor.BROWN)
-                    .pistonBehavior(PistonBehavior.DESTROY)
-            ), "tombstone_block", true
-        )
+    val TOMBSTONE_BLOCK = TombstoneBlock(
+        AbstractBlock.Settings.create()
+            .dropsNothing()
+            .hardness(7f)
+            .luminance { 2 }
+            .mapColor(MapColor.BROWN)
+            .pistonBehavior(PistonBehavior.DESTROY)
+    ).register("tombstone_block", true)
+
 
     fun initialize() {
         logger.info("Initialized Blocks")
     }
 
-    private fun register(block: Block, name: String, shouldRegisterItem: Boolean): Block {
+    private fun Block.register(
+        name: String,
+        shouldRegisterItem: Boolean,
+        blockItemFactory: ((Block) -> Item) = { block -> BlockItem(block, Item.Settings()) }
+    ) = register(this, name, shouldRegisterItem, blockItemFactory)
+
+    private fun register(
+        block: Block,
+        name: String,
+        shouldRegisterItem: Boolean,
+        blockItemFactory: (Block) -> Item
+    ): Block {
         val id = modIdentifier(name)
 
-        if (shouldRegisterItem) {
-            val blockItem = BlockItem(block, Item.Settings())
-            Registry.register(Registries.ITEM, id, blockItem)
-        }
+        if (shouldRegisterItem)
+            Registry.register(Registries.ITEM, id, blockItemFactory(block))
+
 
         return Registry.register(Registries.BLOCK, id, block)
     }
