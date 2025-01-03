@@ -39,6 +39,7 @@ private fun createVoxelShape(): HorizontalVoxelShape {
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
     ).reduce { v1, v2 -> v1.or(v2) }
 
+
     val west: VoxelShape = arrayOf(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(14.0, 2.0, 0.0, 16.0, 14.0, 16.0),
