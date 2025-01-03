@@ -29,35 +29,34 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
-import java.util.stream.Stream
 
 
 private fun createVoxelShape(): HorizontalVoxelShape {
-    val north: VoxelShape = Stream.of(
+    val north: VoxelShape = arrayOf(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(0.0, 2.0, 14.0, 16.0, 14.0, 16.0),
         createCuboidShape(2.0, 14.0, 14.0, 14.0, 16.0, 16.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    ).reduce { v1, v2 -> v1.or(v2) }.get()
+    ).reduce { v1, v2 -> v1.or(v2) }
 
-    val west: VoxelShape = Stream.of(
+    val west: VoxelShape = arrayOf(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(14.0, 2.0, 0.0, 16.0, 14.0, 16.0),
         createCuboidShape(14.0, 14.0, 2.0, 16.0, 16.0, 14.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    ).reduce { v1, v2 -> v1.or(v2) }.get()
-    val south: VoxelShape = Stream.of(
+    ).reduce { v1, v2 -> v1.or(v2) }
+    val south: VoxelShape = arrayOf(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(0.0, 2.0, 0.0, 16.0, 14.0, 2.0),
         createCuboidShape(2.0, 14.0, 0.0, 14.0, 16.0, 2.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    ).reduce { v1, v2 -> v1.or(v2) }.get()
-    val east: VoxelShape = Stream.of(
+    ).reduce { v1, v2 -> v1.or(v2) }
+    val east: VoxelShape = arrayOf(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(0.0, 2.0, 0.0, 2.0, 14.0, 16.0),
         createCuboidShape(0.0, 14.0, 2.0, 2.0, 16.0, 14.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    ).reduce { v1, v2 -> v1.or(v2) }.get()
+    ).reduce { v1, v2 -> v1.or(v2) }
     return HorizontalVoxelShape(north, east, south, west)
 }
 
