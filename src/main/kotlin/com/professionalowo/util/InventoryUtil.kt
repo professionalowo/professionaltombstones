@@ -7,13 +7,13 @@ import net.minecraft.inventory.Inventory
  * @param other the Inventory that recieves the items
  * @see Inventory
  */
-fun Inventory.transferTo(other: Inventory) {
+fun Inventory.transferTo(other: Inventory) =
     //fill other inventory with copy
-    for ((index, stack) in itemsCopy().withIndex().take(other.size()))
-        other.setStack(index, stack)
-    //clear this
-    clear()
-}
+    itemsCopy().withIndex()
+        .take(other.size())
+        .forEach { (index, stack) -> other.setStack(index, stack) }
+        .also { clear() }
+
 
 /**
  * @return a copy of each ItemStack in the Inventory
