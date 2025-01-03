@@ -32,11 +32,11 @@ object ModBlocks {
         name: String,
         shouldRegisterItem: Boolean,
         blockItemFactory: ((Block) -> Item) = { block -> BlockItem(block, Item.Settings()) }
-    ) = register(this, name, shouldRegisterItem, blockItemFactory)
+    ) = register(name, this, shouldRegisterItem, blockItemFactory)
 
     private fun register(
-        block: Block,
         name: String,
+        block: Block,
         shouldRegisterItem: Boolean,
         blockItemFactory: (Block) -> Item
     ): Block {
