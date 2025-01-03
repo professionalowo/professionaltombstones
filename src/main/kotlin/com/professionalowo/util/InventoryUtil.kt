@@ -3,7 +3,7 @@ package com.professionalowo.util
 import net.minecraft.inventory.Inventory
 
 /**
- * Transfers the contents of this inventory to other, while clearing this
+ * Transfers the contents of this inventory to other, while clearing this, other is overwritten
  * @param other the Inventory that recieves the items
  * @see Inventory
  */
