@@ -46,10 +46,8 @@ class TombstoneBlockEntity(pos: BlockPos, state: BlockState?) :
 
     override fun removeStack(slot: Int): ItemStack = Inventories.removeStack(inventory, slot).also { markDirty() }
 
-    override fun setStack(slot: Int, stack: ItemStack?) {
-        inventory[slot] = stack
-        stack?.capCount(getMaxCount(stack))
-        markDirty()
+    override fun setStack(slot: Int, stack: ItemStack) {
+        inventory[slot] = stack.apply { capCount(getMaxCount(this)) }.also { markDirty() }
     }
 
     override fun canPlayerUse(player: PlayerEntity?): Boolean = Inventory.canPlayerUse(this, player)
