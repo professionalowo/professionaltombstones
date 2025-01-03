@@ -37,16 +37,14 @@ class TombstoneBlockEntity(pos: BlockPos, state: BlockState?) :
 
     override fun getStack(slot: Int): ItemStack = if (slot > INVENTORY_SIZE) ItemStack.EMPTY else inventory[slot]
 
-    override fun removeStack(slot: Int, amount: Int): ItemStack {
-        val itemStack = Inventories.splitStack(inventory, slot, amount)
-        if (!itemStack.isEmpty) {
+    override fun removeStack(slot: Int, amount: Int): ItemStack = Inventories.splitStack(inventory, slot, amount).also {
+        if (!it.isEmpty) {
             markDirty()
         }
-
-        return itemStack
     }
 
-    override fun removeStack(slot: Int): ItemStack = Inventories.removeStack(inventory, slot)
+
+    override fun removeStack(slot: Int): ItemStack = Inventories.removeStack(inventory, slot).also { markDirty() }
 
     override fun setStack(slot: Int, stack: ItemStack?) {
         inventory[slot] = stack
@@ -80,13 +78,15 @@ class TombstoneBlockEntity(pos: BlockPos, state: BlockState?) :
         Inventories.writeNbt(nbt, inventory, registryLookup)
     }
 
-    override fun toUpdatePacket(): Packet<ClientPlayPacketListener> {
-        return BlockEntityUpdateS2CPacket.create(this)
-    }
+    override fun toUpdatePacket(): Packet<ClientPlayPacketListener> = BlockEntityUpdateS2CPacket.create(this)
 
-    override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound {
-        return createNbt(registryLookup)
-    }
+
+    override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound =
+        createNbt(registryLookup)
+
+
+    //Should not be drained by hoppers
+    override fun canTransferTo(hopperInventory: Inventory?, slot: Int, stack: ItemStack?): Boolean = false
 
     fun setPlayer(player: PlayerEntity) {
         this.playerUuid = player.uuidAsString

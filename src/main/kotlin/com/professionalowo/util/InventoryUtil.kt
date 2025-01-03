@@ -25,6 +25,6 @@ fun Inventory.transferTo(other: Inventory) {
  * @return a copy of each ItemStack in the Inventory
  */
 fun Inventory.itemsCopy() = (0 until size())
-    .map { getStack(it) ?: ItemStack.EMPTY!! }
+    .mapNotNull { getStack(it) }
     .filter { !it.isEmpty }
     .map { it.copy() }
