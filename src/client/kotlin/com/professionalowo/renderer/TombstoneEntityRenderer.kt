@@ -9,7 +9,6 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.RotationAxis
 import net.minecraft.util.math.Direction
-import kotlin.jvm.optionals.getOrElse
 import kotlin.jvm.optionals.getOrNull
 
 class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Context) :
@@ -23,6 +22,14 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
         light: Int,
         overlay: Int
     ) {
+        matrices.drawPlayerText(entity, vertexConsumers, light)
+    }
+
+    private fun MatrixStack.drawPlayerText(
+        entity: TombstoneBlockEntity?,
+        vertexConsumers: VertexConsumerProvider?,
+        light: Int,
+    ) {
         val text = entity?.name ?: return
         val renderer = ctx.textRenderer
         val width = renderer.getWidth(text)
@@ -32,15 +39,15 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
         val blockState = entity.world?.getBlockState(pos) ?: return
         val facing = blockState.getOrEmpty(TombstoneBlock.FACING).getOrNull() ?: return
 
-        matrices.translate(facing.translateX(), 0.65f, facing.translateZ())
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(facing.getRotationAngleY()))
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180f))
+        translate(facing.translateX(), 0.65f, facing.translateZ())
+        multiply(RotationAxis.POSITIVE_Y.rotationDegrees(facing.getRotationAngleY()))
+        multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180f))
 
         //make the text fit on the block
-        matrices.fit(width)
+        fit(width)
 
         //add some padding
-        matrices.pad(0.8f)
+        pad(0.8f)
 
         renderer.draw(
             text,
@@ -48,7 +55,7 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
             -4f,
             0xffffff,
             false,
-            matrices.peek().positionMatrix,
+            peek().positionMatrix,
             vertexConsumers,
             TextRenderer.TextLayerType.SEE_THROUGH,
             0,
