@@ -21,4 +21,4 @@ fun Inventory.transferTo(other: Inventory) {
 fun Inventory.itemsCopy() = (0 until size())
     .mapNotNull { getStack(it) }
     .filter { !it.isEmpty }
-    .map { it.copy() }
+    .map { it.copy()!! }
