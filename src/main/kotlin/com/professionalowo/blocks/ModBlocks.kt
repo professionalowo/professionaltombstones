@@ -28,13 +28,13 @@ object ModBlocks {
         logger.info("Initialized Blocks")
     }
 
-    private fun Block.register(
+    private inline fun Block.register(
         name: String,
         shouldRegisterItem: Boolean,
         blockItemFactory: ((Block) -> Item) = { block -> BlockItem(block, Item.Settings()) }
     ) = register(name, this, shouldRegisterItem, blockItemFactory)
 
-    private fun register(
+    private inline fun register(
         name: String,
         block: Block,
         shouldRegisterItem: Boolean,
