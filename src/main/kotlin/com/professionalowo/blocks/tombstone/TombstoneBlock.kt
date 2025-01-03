@@ -45,18 +45,21 @@ private fun createVoxelShape(): HorizontalVoxelShape {
         createCuboidShape(14.0, 14.0, 2.0, 16.0, 16.0, 14.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
     ).reduce { v1, v2 -> v1.or(v2) }
+
     val south: VoxelShape = arrayOf(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(0.0, 2.0, 0.0, 16.0, 14.0, 2.0),
         createCuboidShape(2.0, 14.0, 0.0, 14.0, 16.0, 2.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
     ).reduce { v1, v2 -> v1.or(v2) }
+
     val east: VoxelShape = arrayOf(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(0.0, 2.0, 0.0, 2.0, 14.0, 16.0),
         createCuboidShape(0.0, 14.0, 2.0, 2.0, 16.0, 14.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
     ).reduce { v1, v2 -> v1.or(v2) }
+
     return HorizontalVoxelShape(north, east, south, west)
 }
 
