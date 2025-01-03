@@ -4,6 +4,7 @@ import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.util.createLogger
 import com.professionalowo.util.modIdentifier
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
@@ -18,17 +19,20 @@ object ModTabs {
         RegistryKey.of(Registries.ITEM_GROUP.key, modIdentifier("tombstone_group"))
 
     val TOMBSTOME_ITEM_GROUP: ItemGroup = FabricItemGroup.builder()
-        .icon { ItemStack(ModBlocks.TOMBSTONE_BLOCK.asItem()) }
+        .icon { ItemStack(ModBlocks.TOMBSTONE_BLOCK) }
         .displayName(Text.translatable("itemGroup.tombstones"))
         .build()
 
     fun initialize() {
-        Registry.register(Registries.ITEM_GROUP, TOMBSTONE_GROUP_KEY, TOMBSTOME_ITEM_GROUP)
-
-        ItemGroupEvents.modifyEntriesEvent(TOMBSTONE_GROUP_KEY).register {
-            it.add(ModBlocks.TOMBSTONE_BLOCK.asItem())
+        TOMBSTOME_ITEM_GROUP.registerGroup(TOMBSTONE_GROUP_KEY) {
+            it.add(ModBlocks.TOMBSTONE_BLOCK)
         }
 
         logger.info("Initialized ItemGroups")
+    }
+
+    private fun ItemGroup.registerGroup(key: RegistryKey<ItemGroup>, registerFunc: (FabricItemGroupEntries) -> Unit) {
+        Registry.register(Registries.ITEM_GROUP, key, this)
+        ItemGroupEvents.modifyEntriesEvent(key).register(registerFunc)
     }
 }
