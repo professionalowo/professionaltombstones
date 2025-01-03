@@ -1,6 +1,5 @@
 package com.professionalowo.blocks.voxels
 
-import net.minecraft.state.property.DirectionProperty
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 
