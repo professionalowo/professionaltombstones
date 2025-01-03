@@ -1,7 +1,6 @@
 package com.professionalowo.util
 
 import net.minecraft.inventory.Inventory
-import net.minecraft.item.ItemStack
 
 /**
  * Transfers the contents of this inventory to other, while clearing this
@@ -10,13 +9,8 @@ import net.minecraft.item.ItemStack
  */
 fun Inventory.transferTo(other: Inventory) {
     //fill other inventory with copy
-    for ((index, stack) in itemsCopy().withIndex()) {
-        if (index < other.size()) {
-            other.setStack(index, stack)
-        } else {
-            break
-        }
-    }
+    for ((index, stack) in itemsCopy().withIndex().take(other.size()))
+        other.setStack(index, stack)
     //clear this
     clear()
 }
