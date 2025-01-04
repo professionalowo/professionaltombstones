@@ -28,9 +28,9 @@ object ModTabs {
 }
 
 data class Group(val key: RegistryKey<ItemGroup>, val itemGroup: ItemGroup) {
-    fun register(registerFunc: (FabricItemGroupEntries) -> Unit) {
+    fun register(registerFunc: (FabricItemGroupEntries) -> Unit) =
         ItemGroupEvents.modifyEntriesEvent(key).register(registerFunc)
-    }
+
 
     fun register(vararg itemConvertibles: ItemConvertible) =
         register { group -> itemConvertibles.forEach { group.add(it) } }
