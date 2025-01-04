@@ -1,6 +1,6 @@
 {
   "gamerule.spawnGravestone": "Spawn a gravestone on Player death",
-  "itemGroup.tombstones": "Tombstones",
+  "itemGroup.tombstone_group": "Tombstones",
   "block.professionaltombstones.tombstone_block": "Tombstone",
   "item.professionaltombstones.tombstone_block": "Tombstone",
   "sound.professionaltombstones.tombstone_creaking": "Tombstone creaking"

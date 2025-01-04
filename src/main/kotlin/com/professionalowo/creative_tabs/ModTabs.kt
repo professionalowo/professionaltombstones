@@ -15,24 +15,35 @@ import net.minecraft.text.Text
 
 object ModTabs {
     private val logger = createLogger()
-    val TOMBSTONE_GROUP_KEY: RegistryKey<ItemGroup> =
-        RegistryKey.of(Registries.ITEM_GROUP.key, modIdentifier("tombstone_group"))
 
-    val TOMBSTOME_ITEM_GROUP: ItemGroup = FabricItemGroup.builder()
-        .icon { ItemStack(ModBlocks.TOMBSTONE_BLOCK) }
-        .displayName(Text.translatable("itemGroup.tombstones"))
-        .build()
+    val TOMBSTONE_GROUP = createGroup("tombstone_group") { ItemStack(ModBlocks.TOMBSTONE_BLOCK) }
 
     fun initialize() {
-        TOMBSTOME_ITEM_GROUP.registerGroup(TOMBSTONE_GROUP_KEY) {
+        TOMBSTONE_GROUP.register {
             it.add(ModBlocks.TOMBSTONE_BLOCK)
         }
 
         logger.info("Initialized ItemGroups")
     }
+}
 
-    private fun ItemGroup.registerGroup(key: RegistryKey<ItemGroup>, registerFunc: (FabricItemGroupEntries) -> Unit) {
-        Registry.register(Registries.ITEM_GROUP, key, this)
-        ItemGroupEvents.modifyEntriesEvent(key).register(registerFunc)
+data class Group(val key: RegistryKey<ItemGroup>, val itemGroup: ItemGroup) {
+    fun register(registerFunc: (FabricItemGroupEntries) -> Unit) {
+        itemGroup.registerGroup(key, registerFunc)
     }
+}
+
+private fun ItemGroup.registerGroup(key: RegistryKey<ItemGroup>, registerFunc: (FabricItemGroupEntries) -> Unit) {
+    Registry.register(Registries.ITEM_GROUP, key, this)
+    ItemGroupEvents.modifyEntriesEvent(key).register(registerFunc)
+}
+
+fun createGroup(id: String, iconSupplier: () -> ItemStack): Group {
+    val key = RegistryKey.of(Registries.ITEM_GROUP.key, modIdentifier(id))
+    val group = FabricItemGroup.builder()
+        .icon(iconSupplier)
+        .displayName(Text.translatable("itemGroup.$id"))
+        .build()
+
+    return Group(key, group)
 }
