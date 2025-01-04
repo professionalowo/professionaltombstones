@@ -15,7 +15,7 @@ fun VoxelShape.rotateShape(from: Direction, to: Direction): VoxelShape {
     val times = (to.horizontal - from.horizontal + 4) % 4
     for (i in 0 until times) {
         buffer[0].forEachBox { minX, minY, minZ, maxX, maxY, maxZ ->
-            buffer[1] = VoxelShapes.union(buffer[1], VoxelShapes.cuboid(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX))
+            buffer[1] = buffer[1].or(VoxelShapes.cuboid(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX))
         }
         buffer[0] = buffer[1]
         buffer[1] = VoxelShapes.empty()
