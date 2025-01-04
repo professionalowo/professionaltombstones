@@ -26,40 +26,40 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 import net.minecraft.util.shape.VoxelShape
+import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
 
 private fun createVoxelShape(): HorizontalVoxelShape {
-    val north: VoxelShape = arrayOf(
+    val north: VoxelShape = VoxelShapes.union(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(0.0, 2.0, 14.0, 16.0, 14.0, 16.0),
         createCuboidShape(2.0, 14.0, 14.0, 14.0, 16.0, 16.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    ).reduce { v1, v2 -> v1.or(v2) }
+    )
 
-
-    val west: VoxelShape = arrayOf(
+    val west: VoxelShape = VoxelShapes.union(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(14.0, 2.0, 0.0, 16.0, 14.0, 16.0),
         createCuboidShape(14.0, 14.0, 2.0, 16.0, 16.0, 14.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    ).reduce { v1, v2 -> v1.or(v2) }
+    )
 
-    val south: VoxelShape = arrayOf(
+    val south: VoxelShape = VoxelShapes.union(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(0.0, 2.0, 0.0, 16.0, 14.0, 2.0),
         createCuboidShape(2.0, 14.0, 0.0, 14.0, 16.0, 2.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    ).reduce { v1, v2 -> v1.or(v2) }
+    )
 
-    val east: VoxelShape = arrayOf(
+    val east: VoxelShape = VoxelShapes.union(
         createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
         createCuboidShape(0.0, 2.0, 0.0, 2.0, 14.0, 16.0),
         createCuboidShape(0.0, 14.0, 2.0, 2.0, 16.0, 14.0),
         createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    ).reduce { v1, v2 -> v1.or(v2) }
+    )
 
     return HorizontalVoxelShape(north, east, south, west)
 }
