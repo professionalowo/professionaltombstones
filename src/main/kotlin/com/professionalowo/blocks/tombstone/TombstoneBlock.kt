@@ -2,8 +2,9 @@ package com.professionalowo.blocks.tombstone
 
 import com.mojang.serialization.MapCodec
 import com.professionalowo.blocks.voxels.HorizontalVoxelShape
+import com.professionalowo.blocks.voxels.createHorizontalVoxelShape
 import com.professionalowo.sound.ModSoundEvents
-import com.professionalowo.util.or
+import com.professionalowo.util.rotateShape
 import net.minecraft.block.*
 import net.minecraft.block.BlockWithEntity.createCuboidShape
 import net.minecraft.block.entity.BlockEntity
@@ -31,45 +32,17 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
-
-private fun createVoxelShape(): HorizontalVoxelShape {
-    val north: VoxelShape = VoxelShapes.union(
-        createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-        createCuboidShape(0.0, 2.0, 14.0, 16.0, 14.0, 16.0),
-        createCuboidShape(2.0, 14.0, 14.0, 14.0, 16.0, 16.0),
-        createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    )
-
-    val west: VoxelShape = VoxelShapes.union(
-        createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-        createCuboidShape(14.0, 2.0, 0.0, 16.0, 14.0, 16.0),
-        createCuboidShape(14.0, 14.0, 2.0, 16.0, 16.0, 14.0),
-        createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    )
-
-    val south: VoxelShape = VoxelShapes.union(
-        createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-        createCuboidShape(0.0, 2.0, 0.0, 16.0, 14.0, 2.0),
-        createCuboidShape(2.0, 14.0, 0.0, 14.0, 16.0, 2.0),
-        createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    )
-
-    val east: VoxelShape = VoxelShapes.union(
-        createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-        createCuboidShape(0.0, 2.0, 0.0, 2.0, 14.0, 16.0),
-        createCuboidShape(0.0, 14.0, 2.0, 2.0, 16.0, 14.0),
-        createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
-    )
-
-    return HorizontalVoxelShape(north, east, south, west)
-}
-
 class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterloggable {
     companion object {
         val FACING: DirectionProperty = Properties.HORIZONTAL_FACING
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
 
-        val voxelShape: HorizontalVoxelShape = createVoxelShape()
+        val voxelShape: HorizontalVoxelShape = createHorizontalVoxelShape(
+            createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+            createCuboidShape(0.0, 2.0, 14.0, 16.0, 14.0, 16.0),
+            createCuboidShape(2.0, 14.0, 14.0, 14.0, 16.0, 16.0),
+            createCuboidShape(2.0, 2.0, 2.0, 14.0, 4.0, 14.0)
+        )
     }
 
     init {
