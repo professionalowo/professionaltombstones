@@ -18,7 +18,7 @@ import net.minecraft.text.Text
 object ModTabs {
     private val logger = createLogger()
 
-    val TOMBSTONE_GROUP = createGroup("tombstone_group") { ItemStack(ModBlocks.TOMBSTONE_BLOCK) }
+    val TOMBSTONE_GROUP = createGroup("tombstone_group", ModBlocks.TOMBSTONE_BLOCK)
 
     fun initialize() {
         TOMBSTONE_GROUP.register(ModBlocks.TOMBSTONE_BLOCK)
@@ -44,6 +44,14 @@ fun createGroup(id: String, iconSupplier: () -> ItemStack): Group {
     return Group(key, Registry.register(Registries.ITEM_GROUP, key, group))
 }
 
+/**
+ * @see createGroup
+ */
+fun createGroup(id: String, iconItem: ItemConvertible) = createGroup(id) { ItemStack(iconItem) }
+
+/**
+ * Simple function to create an ItemGroup with a name and icon
+ */
 private fun createItemGroup(text: Text, iconSupplier: () -> ItemStack): ItemGroup =
     FabricItemGroup.builder()
         .icon(iconSupplier)
