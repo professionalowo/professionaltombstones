@@ -40,9 +40,12 @@ data class Group(val key: RegistryKey<ItemGroup>, val itemGroup: ItemGroup) {
  */
 fun createGroup(id: String, iconSupplier: () -> ItemStack): Group {
     val key = RegistryKey.of(Registries.ITEM_GROUP.key, modIdentifier(id))
-    val group = FabricItemGroup.builder()
-        .icon(iconSupplier)
-        .displayName(Text.translatable("itemGroup.${Professionaltombstones.MOD_ID}.$id"))
-        .build()
+    val group = createItemGroup(Text.translatable("itemGroup.${Professionaltombstones.MOD_ID}.$id"), iconSupplier)
     return Group(key, Registry.register(Registries.ITEM_GROUP, key, group))
 }
+
+private fun createItemGroup(text: Text, iconSupplier: () -> ItemStack): ItemGroup =
+    FabricItemGroup.builder()
+        .icon(iconSupplier)
+        .displayName(text)
+        .build()
