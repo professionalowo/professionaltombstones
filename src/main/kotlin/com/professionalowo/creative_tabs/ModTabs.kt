@@ -1,5 +1,6 @@
 package com.professionalowo.creative_tabs
 
+import com.professionalowo.Professionaltombstones
 import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.util.createLogger
 import com.professionalowo.util.modIdentifier
@@ -31,18 +32,18 @@ data class Group(val key: RegistryKey<ItemGroup>, val itemGroup: ItemGroup) {
     fun register(registerFunc: (FabricItemGroupEntries) -> Unit) {
         itemGroup.registerGroup(key, registerFunc)
     }
-}
 
-private fun ItemGroup.registerGroup(key: RegistryKey<ItemGroup>, registerFunc: (FabricItemGroupEntries) -> Unit) {
-    Registry.register(Registries.ITEM_GROUP, key, this)
-    ItemGroupEvents.modifyEntriesEvent(key).register(registerFunc)
+    private fun ItemGroup.registerGroup(key: RegistryKey<ItemGroup>, registerFunc: (FabricItemGroupEntries) -> Unit) {
+        Registry.register(Registries.ITEM_GROUP, key, this)
+        ItemGroupEvents.modifyEntriesEvent(key).register(registerFunc)
+    }
 }
 
 fun createGroup(id: String, iconSupplier: () -> ItemStack): Group {
     val key = RegistryKey.of(Registries.ITEM_GROUP.key, modIdentifier(id))
     val group = FabricItemGroup.builder()
         .icon(iconSupplier)
-        .displayName(Text.translatable("itemGroup.$id"))
+        .displayName(Text.translatable("itemGroup.${Professionaltombstones.MOD_ID}.$id"))
         .build()
 
     return Group(key, group)
