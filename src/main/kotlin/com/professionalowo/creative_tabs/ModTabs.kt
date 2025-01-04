@@ -29,7 +29,6 @@ object ModTabs {
 
 data class Group(val key: RegistryKey<ItemGroup>, val itemGroup: ItemGroup) {
     fun register(registerFunc: (FabricItemGroupEntries) -> Unit) {
-        Registry.register(Registries.ITEM_GROUP, key, itemGroup)
         ItemGroupEvents.modifyEntriesEvent(key).register(registerFunc)
     }
 
@@ -43,6 +42,5 @@ fun createGroup(id: String, iconSupplier: () -> ItemStack): Group {
         .icon(iconSupplier)
         .displayName(Text.translatable("itemGroup.${Professionaltombstones.MOD_ID}.$id"))
         .build()
-
-    return Group(key, group)
+    return Group(key, Registry.register(Registries.ITEM_GROUP, key, group))
 }
