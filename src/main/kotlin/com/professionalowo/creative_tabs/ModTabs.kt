@@ -35,6 +35,9 @@ data class Group(val key: RegistryKey<ItemGroup>, val itemGroup: ItemGroup) {
         register { group -> itemConvertibles.forEach { group.add(it) } }
 }
 
+/**
+ * Creates an ItemGroup and RegistryKey<ItemGroup> from the supplied id
+ */
 fun createGroup(id: String, iconSupplier: () -> ItemStack): Group {
     val key = RegistryKey.of(Registries.ITEM_GROUP.key, modIdentifier(id))
     val group = FabricItemGroup.builder()
