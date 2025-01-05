@@ -11,16 +11,17 @@ import net.fabricmc.api.ModInitializer
 object Professionaltombstones : Initializer(), ModInitializer {
     const val MOD_ID = "professionaltombstones"
 
-    override fun initialize() {
-        ModSoundEvents.initialize()
-        ModGameRules.initialize()
-        ModTabs.initialize()
-        ModBlockEntities.initialize()
-        ModBlocks.initialize()
-        ModItems.initialize()
+    override fun initialize() =
+        arrayOf(
+            ModSoundEvents,
+            ModGameRules,
+            ModTabs,
+            ModBlockEntities,
+            ModBlocks,
+            ModItems,
+        ).forEach { it.initialize() }
+            .also { logger.info("Initialized $MOD_ID") }
 
-        logger.info("Initialized $MOD_ID")
-    }
 
     // This code runs as soon as Minecraft is in a mod-load-ready state.
     // However, some things (like resources) may still be uninitialized.
