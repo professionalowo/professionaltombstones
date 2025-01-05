@@ -87,8 +87,6 @@ class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterlogga
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
 
-    override fun hasSidedTransparency(state: BlockState?): Boolean = true
-
     override fun getOutlineShape(
         state: BlockState?,
         world: BlockView?,
@@ -103,10 +101,9 @@ class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterlogga
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult
-    ): ActionResult {
-        world.breakBlock(pos, false, player)
-        return ActionResult.SUCCESS
-    }
+    ): ActionResult =
+        if (world.breakBlock(pos, false, player)) ActionResult.SUCCESS else ActionResult.FAIL
+
 
     override fun onStateReplaced(
         state: BlockState,
