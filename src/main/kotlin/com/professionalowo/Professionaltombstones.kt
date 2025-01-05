@@ -7,7 +7,6 @@ import com.professionalowo.gamerules.ModGameRules
 import com.professionalowo.items.ModItems
 import com.professionalowo.sound.ModSoundEvents
 import net.fabricmc.api.ModInitializer
-import org.slf4j.LoggerFactory
 
 object Professionaltombstones : Initializer(), ModInitializer {
     const val MOD_ID = "professionaltombstones"
