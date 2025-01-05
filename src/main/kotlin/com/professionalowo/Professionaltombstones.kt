@@ -9,12 +9,10 @@ import com.professionalowo.sound.ModSoundEvents
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
 
-object Professionaltombstones : ModInitializer {
+object Professionaltombstones : Initializer(), ModInitializer {
     const val MOD_ID = "professionaltombstones"
-    private val logger = LoggerFactory.getLogger(MOD_ID)
 
-
-    override fun onInitialize() {
+    override fun initialize() {
         ModSoundEvents.initialize()
         ModGameRules.initialize()
         ModTabs.initialize()
@@ -22,10 +20,12 @@ object Professionaltombstones : ModInitializer {
         ModBlocks.initialize()
         ModItems.initialize()
 
-        // This code runs as soon as Minecraft is in a mod-load-ready state.
-        // However, some things (like resources) may still be uninitialized.
-        // Proceed with mild caution
         logger.info("Initialized $MOD_ID")
     }
+
+    // This code runs as soon as Minecraft is in a mod-load-ready state.
+    // However, some things (like resources) may still be uninitialized.
+    // Proceed with mild caution
+    override fun onInitialize() = initialize()
 }
 

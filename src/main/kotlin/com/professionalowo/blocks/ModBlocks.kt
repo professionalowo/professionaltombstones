@@ -1,7 +1,7 @@
 package com.professionalowo.blocks
 
+import com.professionalowo.Initializer
 import com.professionalowo.blocks.tombstone.TombstoneBlock
-import com.professionalowo.util.createLogger
 import com.professionalowo.util.modIdentifier
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
@@ -12,8 +12,7 @@ import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
-object ModBlocks {
-    private val logger = createLogger()
+object ModBlocks : Initializer() {
     val TOMBSTONE_BLOCK = TombstoneBlock(
         AbstractBlock.Settings.create()
             .dropsNothing()
@@ -24,7 +23,7 @@ object ModBlocks {
     ).register("tombstone_block", true)
 
 
-    fun initialize() {
+    override fun initialize() {
         logger.info("Initialized Blocks")
     }
 

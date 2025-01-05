@@ -1,11 +1,9 @@
 package com.professionalowo.items
 
-import com.professionalowo.util.createLogger
+import com.professionalowo.Initializer
 
-object ModItems {
-    private val logger = createLogger()
-
-    fun initialize(){
+object ModItems : Initializer() {
+    override fun initialize() {
         logger.info("Initialized Items")
     }
 }

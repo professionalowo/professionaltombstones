@@ -1,8 +1,8 @@
 package com.professionalowo.creative_tabs
 
+import com.professionalowo.Initializer
 import com.professionalowo.Professionaltombstones
 import com.professionalowo.blocks.ModBlocks
-import com.professionalowo.util.createLogger
 import com.professionalowo.util.modIdentifier
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
@@ -15,12 +15,10 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 
-object ModTabs {
-    private val logger = createLogger()
-
+object ModTabs : Initializer() {
     val TOMBSTONE_GROUP = createGroup("tombstone_group", ModBlocks.TOMBSTONE_BLOCK)
 
-    fun initialize() {
+    override fun initialize() {
         TOMBSTONE_GROUP.register(ModBlocks.TOMBSTONE_BLOCK)
 
         logger.info("Initialized ItemGroups")

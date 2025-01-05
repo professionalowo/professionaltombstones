@@ -1,13 +1,11 @@
 package com.professionalowo.gamerules
 
-import com.professionalowo.util.createLogger
+import com.professionalowo.Initializer
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry
 import net.minecraft.world.GameRules
 
-object ModGameRules {
-    private val logger = createLogger()
-
+object ModGameRules : Initializer() {
     val SPAWN_GRAVESTONE: GameRules.Key<GameRules.BooleanRule> = GameRuleRegistry.register(
         "spawnGravestone",
         GameRules.Category.PLAYER,
@@ -17,7 +15,7 @@ object ModGameRules {
     /**
      * Does nothing only static initialisation
      */
-    fun initialize() {
+    override fun initialize() {
         logger.info("Initialized GameRules")
     }
 }
