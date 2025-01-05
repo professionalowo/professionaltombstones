@@ -11,15 +11,15 @@ import net.minecraft.block.Block
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 
-object ProfessionaltombstonesClient : ClientModInitializer {
-    private val logger = createLogger()
-    override fun onInitializeClient() {
+object ProfessionaltombstonesClient : Initializer(), ClientModInitializer {
+    override fun initialize() {
         RenderLayer.getCutout().putBlocks(ModBlocks.TOMBSTONE_BLOCK)
 
         BlockEntityRendererFactories.register(ModBlockEntities.TOMBSTONE_BLOCK_ENTITY) { TombstoneEntityRenderer(it) }
         logger.info("Initialized Client for $MOD_ID")
     }
 
+    override fun onInitializeClient() = initialize()
 
     private fun RenderLayer.putBlocks(vararg blocks: Block) = BlockRenderLayerMap.INSTANCE.putBlocks(this, *blocks)
 }
