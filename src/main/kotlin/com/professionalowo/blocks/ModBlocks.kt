@@ -18,7 +18,7 @@ object ModBlocks : Initializer() {
             .dropsNothing()
             .hardness(7f)
             .luminance { 2 }
-            .mapColor(MapColor.BROWN)
+            .mapColor { if (it.get(TombstoneBlock.WATERLOGGED)) MapColor.BLUE else MapColor.BROWN }
             .pistonBehavior(PistonBehavior.DESTROY)
     ).register("tombstone_block", true)
 
