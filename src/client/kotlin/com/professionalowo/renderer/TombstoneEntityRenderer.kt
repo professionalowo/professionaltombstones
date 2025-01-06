@@ -30,6 +30,7 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
         vertexConsumers: VertexConsumerProvider?,
         light: Int,
     ) {
+        push()
         val text = entity?.name ?: return
         val renderer = ctx.textRenderer
         val width = renderer.getWidth(text)
@@ -57,10 +58,11 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
             false,
             peek().positionMatrix,
             vertexConsumers,
-            TextRenderer.TextLayerType.SEE_THROUGH,
+            TextRenderer.TextLayerType.POLYGON_OFFSET,
             0,
             light
         )
+        pop()
     }
 
     private fun Direction.getRotationAngleY() = when (this) {
@@ -73,16 +75,16 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
 
     private fun Direction.translateX() = when (this) {
         Direction.NORTH, Direction.SOUTH -> 0.5f
-        Direction.WEST -> 0.9f
-        Direction.EAST -> 0.1f
+        Direction.WEST -> 0.87f
+        Direction.EAST -> 0.13f
         else -> 0f
     }
 
 
     private fun Direction.translateZ() = when (this) {
         Direction.EAST, Direction.WEST -> 0.5f
-        Direction.NORTH -> 0.9f
-        Direction.SOUTH -> 0.1f
+        Direction.NORTH -> 0.87f
+        Direction.SOUTH -> 0.13f
         else -> 0f
     }
 
