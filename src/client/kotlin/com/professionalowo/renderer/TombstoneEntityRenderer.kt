@@ -2,15 +2,18 @@ package com.professionalowo.renderer
 
 import com.professionalowo.blocks.tombstone.TombstoneBlock
 import com.professionalowo.blocks.tombstone.TombstoneBlockEntity
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.util.math.RotationAxis
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.RotationAxis
 import kotlin.jvm.optionals.getOrNull
 
+@Environment(EnvType.CLIENT)
 class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Context) :
     BlockEntityRenderer<TombstoneBlockEntity> {
 
@@ -30,7 +33,6 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
         vertexConsumers: VertexConsumerProvider?,
         light: Int,
     ) {
-        push()
         val text = entity?.name ?: return
         val renderer = ctx.textRenderer
         val width = renderer.getWidth(text)
@@ -62,7 +64,6 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
             0,
             light
         )
-        pop()
     }
 
     private fun Direction.getRotationAngleY() = when (this) {
