@@ -1,11 +1,13 @@
 {
-	"required": true,
-	"package": "com.professionalowo.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ServerPlayerEntityMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "package": "com.professionalowo.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MobEntityMixin",
+    "ServerPlayerEntityMixin",
+    "VillagerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }
