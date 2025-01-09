@@ -9,11 +9,13 @@ import com.professionalowo.util.nextSolidBlockDown
 import com.professionalowo.util.transferTo
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.state.property.Properties
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.GameRules
 
 
 fun afterDeath(player: ServerPlayerEntity) = player.run {
-    val logger = createLogger()
+
+    if (inventory.isEmpty) return
 
     val shouldSpawnGravestone = world.gameRules.allGamerules(
         ModGameRules.SPAWN_GRAVESTONE to true,
@@ -24,28 +26,23 @@ fun afterDeath(player: ServerPlayerEntity) = player.run {
         return
     }
 
-    if (inventory.isEmpty) return
-
-    val gravestonePos = blockPos.nextSolidBlockDown(world)
-
-    world.setBlockState(
-        gravestonePos,
-        getBlock().defaultState
-            .withIfExists(Properties.FACING, facing)
-    )
-
-    val blockEntity = world.getBlockEntity(gravestonePos)
-
-    val tombstoneBlockEntity = blockEntity as? TombstoneBlockEntity ?: return
+    val tombstoneBlockEntity = createTombstone() ?: return
 
     inventory.transferTo(tombstoneBlockEntity)
 
     tombstoneBlockEntity.setPlayer(this)
 
-    logger.info("Saved inventory of ${name.literalString} at $blockPos")
+    createLogger().info("Saved inventory of ${name.literalString} at $blockPos")
 }
 
-private fun getBlock() = ModBlocks.TOMBSTONE_BLOCK
+private fun ServerPlayerEntity.createTombstone() =
+    world.getBlockEntity(placeTombstone()) as? TombstoneBlockEntity
 
+
+private fun ServerPlayerEntity.placeTombstone(): BlockPos =
+    blockPos.nextSolidBlockDown(world).also { world.setBlockState(it, getTombstoneBlockState()) }
+
+private fun ServerPlayerEntity.getTombstoneBlockState() =
+    ModBlocks.TOMBSTONE_BLOCK.defaultState.withIfExists(Properties.FACING, facing)
 
 
