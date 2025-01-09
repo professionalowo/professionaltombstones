@@ -17,6 +17,10 @@ tailrec fun BlockPos.nextSolidBlockDown(world: World): BlockPos {
         return newPos.withY(world.bottomY + 1)
     }
 
-    return if (world.isSolidBlock(newPos)) this else newPos.nextSolidBlockDown(world)
+    return if (world.isSolidBlock(newPos)) {
+        this
+    } else {
+        newPos.nextSolidBlockDown(world)
+    }
 }
 
