@@ -26,7 +26,7 @@ loom {
     splitEnvironmentSourceSets()
 
     mods {
-        create("professionaltombstones") {
+        create(project.property("mod_id") as String) {
             sourceSet(sourceSets.main.get())
             sourceSet(sourceSets["client"])
         }
