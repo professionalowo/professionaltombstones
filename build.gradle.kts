@@ -34,9 +34,7 @@ loom {
 }
 
 fabricApi {
-    configureDataGeneration {
-        client = true
-    }
+
 }
 
 dependencies {
@@ -54,12 +52,12 @@ tasks.processResources {
     inputs.property("version", project.version)
 
     filesMatching("fabric.mod.json") {
-        expand(Pair("version", project.version))
+        expand("version" to project.version)
     }
 }
 
 tasks.withType<JavaCompile>().configureEach {
-    options.release.set(21)
+    options.release = 21
 }
 
 tasks.withType<KotlinCompile>().configureEach {

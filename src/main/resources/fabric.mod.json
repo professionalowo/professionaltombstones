@@ -1,54 +1,48 @@
 {
-	"schemaVersion": 1,
-	"id": "professionaltombstones",
-	"version": "${version}",
-	"name": "professionaltombstones",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"Me!"
-	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/professionaltombstones/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			{
-				"value": "com.professionalowo.Professionaltombstones",
-				"adapter": "kotlin"
-			}
-		],
-		"client": [
-			{
-				"value": "com.professionalowo.ProfessionaltombstonesClient",
-				"adapter": "kotlin"
-			}
-		],
-		"fabric-datagen": [
-			{
-				"value": "com.professionalowo.ProfessionaltombstonesDataGenerator",
-				"adapter": "kotlin"
-			}
-		]
-	},
-	"mixins": [
-		"professionaltombstones.mixins.json",
-		{
-			"config": "professionaltombstones.client.mixins.json",
-			"environment": "client"
-		}
-	],
-	"depends": {
-		"fabricloader": ">=0.16.9",
-		"minecraft": "~1.21",
-		"java": ">=21",
-		"fabric-api": "*",
-		"fabric-language-kotlin": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
-	}
+  "schemaVersion": 1,
+  "id": "professionaltombstones",
+  "version": "${version}",
+  "name": "professionaltombstones",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/professionaltombstones/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "value": "com.professionalowo.Professionaltombstones",
+        "adapter": "kotlin"
+      }
+    ],
+    "client": [
+      {
+        "value": "com.professionalowo.ProfessionaltombstonesClient",
+        "adapter": "kotlin"
+      }
+    ]
+  },
+  "mixins": [
+    "professionaltombstones.mixins.json",
+    {
+      "config": "professionaltombstones.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.9",
+    "minecraft": "~1.21",
+    "java": ">=21",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
 }
