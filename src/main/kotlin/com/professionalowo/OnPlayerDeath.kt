@@ -40,7 +40,9 @@ private fun ServerPlayerEntity.createTombstone() =
 
 
 private fun ServerPlayerEntity.placeTombstone(): BlockPos =
-    blockPos.nextSolidBlockDown(world).also { world.setBlockState(it, getTombstoneBlockState()) }
+    getNextSolidBlockDown().also { world.setBlockState(it, getTombstoneBlockState()) }
+
+private fun ServerPlayerEntity.getNextSolidBlockDown() = blockPos.nextSolidBlockDown(world)
 
 private fun ServerPlayerEntity.getTombstoneBlockState() =
     ModBlocks.TOMBSTONE_BLOCK.defaultState.withIfExists(Properties.FACING, facing)
