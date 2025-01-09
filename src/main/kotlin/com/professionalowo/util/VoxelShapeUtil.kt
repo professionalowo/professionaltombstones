@@ -43,7 +43,7 @@ private tailrec fun VoxelShape.rotateNTimes(n: Int): VoxelShape =
 private fun transformSingleShape(shape: VoxelShape): VoxelShape =
     buildList {
         shape.forEachBox { minX, minY, minZ, maxX, maxY, maxZ ->
-            val rotatedCuboid = VoxelShapes.cuboid(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX)
-            add(rotatedCuboid)
+            add(VoxelShapes.cuboid(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX))
+
         }
     }.fold(VoxelShapes.empty()) { acc, cuboid -> acc.or(cuboid) }
