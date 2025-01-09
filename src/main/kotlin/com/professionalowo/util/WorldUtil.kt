@@ -12,4 +12,10 @@ import net.minecraft.world.World
 fun World.getBlockInventory(pos: BlockPos) =
     getBlockEntity(pos) as? Inventory
 
+/**
+ * Checks if the block specified by pos is a solid block
+ *
+ * @param pos the BlockPos to check
+ * @return if the Block at pos in this is solid
+ */
 fun World.isSolidBlock(pos: BlockPos) = getBlockState(pos).isSolidBlock(getChunkAsView(pos.x, pos.z), pos)
