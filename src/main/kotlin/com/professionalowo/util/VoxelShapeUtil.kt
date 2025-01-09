@@ -31,7 +31,6 @@ private fun rotationTimes(from: Direction, to: Direction): Int = (to.horizontal 
 private tailrec fun VoxelShape.rotateNTimes(n: Int): VoxelShape =
     when (n) {
         0 -> this
-        //transform the pair again, swap the pair
         else -> transformSingleShape(this).rotateNTimes(n.dec())
     }
 
