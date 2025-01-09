@@ -11,3 +11,5 @@ import net.minecraft.world.World
  */
 fun World.getBlockInventory(pos: BlockPos) =
     getBlockEntity(pos) as? Inventory
+
+fun World.isSolidBlock(pos: BlockPos) = getBlockState(pos).isSolidBlock(getChunkAsView(pos.x, pos.z), pos)

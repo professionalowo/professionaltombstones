@@ -13,16 +13,10 @@ import net.minecraft.world.World
 tailrec fun BlockPos.nextSolidBlockDown(world: World): BlockPos {
     val newPos = withY(y - 1)
     if (world.bottomY >= newPos.y) {
-        val newY = world.bottomY + 1
         world.setBlockState(newPos.withY(world.bottomY), Blocks.DIRT.defaultState)
-        return newPos.withY(newY)
+        return newPos.withY(world.bottomY + 1)
     }
 
-    val blockState = world.getBlockState(newPos)
-
-    if (blockState.isSolidBlock(world.getChunkAsView(x, z), newPos)) {
-        return this
-    }
-
-    return newPos.nextSolidBlockDown(world)
+    return if (world.isSolidBlock(newPos)) this else newPos.nextSolidBlockDown(world)
 }
+
