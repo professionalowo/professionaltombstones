@@ -29,17 +29,16 @@ private fun rotationTimes(from: Direction, to: Direction): Int = (to.horizontal 
  * @return the result of rotating this n times
  */
 private tailrec fun VoxelShape.rotateNTimes(n: Int): VoxelShape =
-    if (n == 0) this else transformSingleShape(this).rotateNTimes(n.dec())
+    if (n == 0) this else rotateY90Deg().rotateNTimes(n.dec())
 
 
 /**
  * Rotate shape by 90% on the Y-Axis
- * @param shape the shape to rotate
  * @return the shape after being rotated
  */
-private fun transformSingleShape(shape: VoxelShape): VoxelShape =
+private fun VoxelShape.rotateY90Deg(): VoxelShape =
     buildList {
-        shape.forEachBox { minX, minY, minZ, maxX, maxY, maxZ ->
+        forEachBox { minX, minY, minZ, maxX, maxY, maxZ ->
             add(VoxelShapes.cuboid(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX))
         }
     }.fold(VoxelShapes.empty()) { acc, cuboid -> acc.or(cuboid) }
