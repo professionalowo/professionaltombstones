@@ -43,6 +43,5 @@ private fun transformSingleShape(shape: VoxelShape): VoxelShape =
     buildList {
         shape.forEachBox { minX, minY, minZ, maxX, maxY, maxZ ->
             add(VoxelShapes.cuboid(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX))
-
         }
     }.fold(VoxelShapes.empty()) { acc, cuboid -> acc.or(cuboid) }
