@@ -29,10 +29,8 @@ private fun rotationTimes(from: Direction, to: Direction): Int = (to.horizontal 
  * @return the result of rotating this n times
  */
 private tailrec fun VoxelShape.rotateNTimes(n: Int): VoxelShape =
-    when (n) {
-        0 -> this
-        else -> transformSingleShape(this).rotateNTimes(n.dec())
-    }
+    if (n == 0) this else transformSingleShape(this).rotateNTimes(n.dec())
+
 
 /**
  * Rotate shape by 90% on the Y-Axis
