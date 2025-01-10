@@ -33,7 +33,7 @@ private tailrec fun VoxelShape.rotateNTimes(n: Int): VoxelShape =
 
 
 /**
- * Rotate shape by 90% on the Y-Axis
+ * Rotate shape by 90 deg on the Y-Axis
  * @return the shape after being rotated
  */
 private fun VoxelShape.rotateY90Deg(): VoxelShape =
