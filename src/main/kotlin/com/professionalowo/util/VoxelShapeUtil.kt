@@ -8,7 +8,7 @@ fun VoxelShape.or(other: VoxelShape): VoxelShape =
     VoxelShapes.union(this, other)
 
 /**
- * Rotates a Shape
+ * Rotates a VoxelShape
  * @param from the original direction this is facing
  * @param to the direction this should be rotated to
  * @return the rotated VoxelShape
