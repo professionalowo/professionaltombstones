@@ -14,7 +14,7 @@ fun VoxelShape.or(other: VoxelShape): VoxelShape =
  * @return the rotated VoxelShape
  */
 fun VoxelShape.rotateShape(from: Direction, to: Direction): VoxelShape =
-    this.rotateNTimes(rotationTimes(from, to))
+    rotateNTimes(rotationTimes(from, to))
 
 /**
  * @param from the start direction
