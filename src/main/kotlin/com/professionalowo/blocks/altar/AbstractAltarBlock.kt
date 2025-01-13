@@ -38,7 +38,7 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
 
     private fun swapItems(entity: AltarBlockEntity, player: PlayerEntity, hand: Hand): ItemActionResult =
         entity.runCatching {
-            val existing = item.copy()
+            val existing = itemSlot.first()
             clear()
             val playerItemStack = player.getStackInHand(hand)
 
@@ -55,7 +55,7 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
             }
 
 
-            item = playerItemStack.copyWithCount(1)
+            setStack(0, playerItemStack.copyWithCount(1))
 
             if (!player.isCreative)
                 playerItemStack.decrement(1)

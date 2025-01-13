@@ -20,34 +20,29 @@ import kotlin.random.Random
 class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
     BlockEntity(ModBlockEntities.ALTAR_BLOCK_ENTITY, pos, state),
     Inventory {
-    private val itemSlot = DefaultedList.ofSize(1, ItemStack.EMPTY)
+    val itemSlot: DefaultedList<ItemStack> = DefaultedList.ofSize(1, ItemStack.EMPTY)
 
     var ticks: Int = Random.nextInt(360)
         set(value) {
             field = value % 360
         }
 
-    var item: ItemStack
-        get() = getStack(0)
-        set(value) = setStack(0, value)
-
     override fun size(): Int = itemSlot.size
     override fun isEmpty(): Boolean = itemSlot.isEmpty()
 
     override fun clear() = itemSlot.clear()
 
-    override fun getStack(slot: Int): ItemStack = if (slot > size()) ItemStack.EMPTY else itemSlot[slot]
-    override fun removeStack(slot: Int): ItemStack = Inventories.removeStack(itemSlot, slot)
+    override fun getStack(slot: Int): ItemStack = if (slot == 0) itemSlot[slot] else ItemStack.EMPTY
+    override fun removeStack(slot: Int): ItemStack = Inventories.removeStack(itemSlot, slot).also { markDirty() }
 
-    override fun removeStack(slot: Int, amount: Int): ItemStack = Inventories.splitStack(itemSlot, slot, amount).also {
-        if (!it.isEmpty) {
-            markDirty()
-        }
-    }
+    override fun removeStack(slot: Int, amount: Int): ItemStack =
+        Inventories.splitStack(itemSlot, slot, amount).also { markDirty() }
 
     override fun setStack(slot: Int, stack: ItemStack) {
         itemSlot[slot] = stack.apply { capCount(getMaxCount(this)) }.also { markDirty() }
     }
+
+    override fun getMaxCountPerStack(): Int = 1
 
     override fun canPlayerUse(player: PlayerEntity?): Boolean = Inventory.canPlayerUse(this, player)
 
@@ -69,6 +64,4 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
 
     override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound =
         createNbt(registryLookup)
-
-    override fun getMaxCountPerStack(): Int = 1
 }

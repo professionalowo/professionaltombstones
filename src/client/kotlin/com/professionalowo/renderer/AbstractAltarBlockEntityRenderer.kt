@@ -10,7 +10,6 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.RotationAxis
-import org.joml.Quaternionf
 import kotlin.math.sin
 
 @Environment(EnvType.CLIENT)
@@ -25,7 +24,8 @@ class AbstractAltarBlockEntityRenderer(private val ctx: BlockEntityRendererFacto
         light: Int,
         overlay: Int
     ) {
-        val stack = entity.item
+        val stack = entity.getStack(0)
+        if (stack.isEmpty) return
         val itemRenderer = ctx.itemRenderer
 
         matrices.push()
