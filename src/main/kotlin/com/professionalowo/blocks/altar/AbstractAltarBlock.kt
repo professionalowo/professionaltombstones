@@ -21,22 +21,27 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
-        hand: Hand?,
-        hit: BlockHitResult?
-    ): ItemActionResult {
-        val entity = world.getBlockEntity(pos) as? AbstractAltarBlockEntity ?: return ItemActionResult.FAIL
-        val existing = entity.item.copy()
-        entity.clear()
-        val playerItemStack = player.getStackInHand(hand)
-        entity.item = playerItemStack.copyWithCount(1)
+        hand: Hand,
+        hit: BlockHitResult
+    ): ItemActionResult =
+        ((world.getBlockEntity(pos) as? AbstractAltarBlockEntity)?.let { swapItems(it, player, hand) })
+            ?: ItemActionResult.FAIL
 
-        if (!player.isCreative)
-            playerItemStack.decrement(1)
 
-        player.inventory.insertStack(existing)
+    protected fun swapItems(entity: AbstractAltarBlockEntity, player: PlayerEntity, hand: Hand): ItemActionResult =
+        entity.runCatching {
+            val existing = item.copy()
+            clear()
+            val playerItemStack = player.getStackInHand(hand)
+            item = playerItemStack.copyWithCount(1)
 
-        return ItemActionResult.SUCCESS
-    }
+            if (!player.isCreative)
+                playerItemStack.decrement(1)
+
+            player.inventory.insertStack(existing)
+
+            return ItemActionResult.SUCCESS
+        }.getOrElse { ItemActionResult.FAIL }
 
     override fun onStateReplaced(
         state: BlockState?,
