@@ -50,7 +50,7 @@ class AbstractAltarBlockEntityRenderer(private val ctx: BlockEntityRendererFacto
 
         val deltaDeg = entity.ticks % 360 * 1.5
 
-        stack.translate(0.5, 1.0 + deltaY, 0.5)
+        stack.translate(0.5, 1.2 + deltaY, 0.5)
 
         stack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(deltaDeg.toFloat()))
         stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(deltaDeg.toFloat()))

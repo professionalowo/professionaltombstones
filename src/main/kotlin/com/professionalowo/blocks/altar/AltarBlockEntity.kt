@@ -8,19 +8,25 @@ import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.nbt.NbtElement
 import net.minecraft.network.listener.ClientPlayPacketListener
 import net.minecraft.network.packet.Packet
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
+import kotlin.math.min
+import kotlin.random.Random
 
 class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
     BlockEntity(ModBlockEntities.ALTAR_BLOCK_ENTITY, pos, state),
     Inventory {
     private val itemSlot = DefaultedList.ofSize(1, ItemStack.EMPTY)
 
-    var ticks: Int = 0
+    var ticks: Int = Random.nextInt(360)
+        set(value) {
+            field = min(value, 360)
+        }
 
     var item: ItemStack
         get() = getStack(0)
@@ -46,13 +52,17 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
 
     override fun canPlayerUse(player: PlayerEntity?): Boolean = Inventory.canPlayerUse(this, player)
 
-    override fun readNbt(nbt: NbtCompound?, registryLookup: RegistryWrapper.WrapperLookup?) {
+    override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup?) {
         super.readNbt(nbt, registryLookup)
+        if (nbt.contains("Ticks", NbtElement.INT_TYPE.toInt())) {
+            ticks = nbt.getInt("Ticks")
+        }
         Inventories.readNbt(nbt, itemSlot, registryLookup)
     }
 
-    override fun writeNbt(nbt: NbtCompound?, registryLookup: RegistryWrapper.WrapperLookup?) {
+    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup?) {
         Inventories.writeNbt(nbt, itemSlot, registryLookup)
+        nbt.putInt("Ticks", ticks)
         super.writeNbt(nbt, registryLookup)
     }
 
