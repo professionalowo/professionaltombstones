@@ -15,7 +15,6 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
-import kotlin.math.min
 import kotlin.random.Random
 
 class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
@@ -25,7 +24,7 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
 
     var ticks: Int = Random.nextInt(360)
         set(value) {
-            field = min(value, 360)
+            field = value % 360
         }
 
     var item: ItemStack
