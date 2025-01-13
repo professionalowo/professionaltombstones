@@ -33,14 +33,16 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
     override fun clear() = itemSlot.clear()
 
     override fun getStack(slot: Int): ItemStack = if (slot == 0) itemSlot[slot] else ItemStack.EMPTY
-    override fun removeStack(slot: Int): ItemStack = Inventories.removeStack(itemSlot, slot).also { markDirty() }
+    override fun removeStack(slot: Int): ItemStack = Inventories.removeStack(itemSlot, slot).also { super.markDirty() }
 
     override fun removeStack(slot: Int, amount: Int): ItemStack =
-        Inventories.splitStack(itemSlot, slot, amount).also { markDirty() }
+        Inventories.splitStack(itemSlot, slot, amount).also { super.markDirty() }
 
     override fun setStack(slot: Int, stack: ItemStack) {
-        itemSlot[slot] = stack.apply { capCount(getMaxCount(this)) }.also { markDirty() }
+        itemSlot[slot] = stack.apply { capCount(getMaxCount(this)) }.also { super.markDirty() }
     }
+
+    override fun isValid(slot: Int, stack: ItemStack?): Boolean = slot in itemSlot.indices && itemSlot[slot].isEmpty
 
     override fun getMaxCountPerStack(): Int = 1
 
