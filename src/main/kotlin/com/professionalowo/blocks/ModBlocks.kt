@@ -1,6 +1,8 @@
 package com.professionalowo.blocks
 
 import com.professionalowo.Initializer
+import com.professionalowo.blocks.altar.AltarCoreBlock
+import com.professionalowo.blocks.altar.AltarPedestalBlock
 import com.professionalowo.blocks.tombstone.TombstoneBlock
 import com.professionalowo.util.modIdentifier
 import net.minecraft.block.AbstractBlock
@@ -22,6 +24,9 @@ object ModBlocks : Initializer() {
             .pistonBehavior(PistonBehavior.DESTROY)
     ).register("tombstone_block", true)
 
+    val ALTAR_CORE_BLOCK = AltarCoreBlock(AbstractBlock.Settings.create()).register("altar_core", true)
+
+    val ALTAR_PEDESTAL_BLOCK = AltarPedestalBlock(AbstractBlock.Settings.create()).register("altar_pedestal", true)
 
     override fun initialize() {
         logger.info("Initialized Blocks")
