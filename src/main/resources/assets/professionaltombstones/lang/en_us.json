@@ -2,6 +2,10 @@
   "gamerule.spawnGravestone": "Spawn a gravestone on Player death",
   "itemGroup.professionaltombstones.tombstone_group": "Professional Tombstones",
   "block.professionaltombstones.tombstone_block": "Tombstone",
+  "block.professionaltombstones.altar_core_block": "Altar Core",
+  "block.professionaltombstones.altar_pedestal_block": "Altar Pedestal",
   "item.professionaltombstones.tombstone_block": "Tombstone",
+  "item.professionaltombstones.altar_core_block": "Altar Core",
+  "item.professionaltombstones.altar_pedestal_block": "Altar Pedestal",
   "sound.professionaltombstones.tombstone_creaking": "Tombstone creaking"
 }
