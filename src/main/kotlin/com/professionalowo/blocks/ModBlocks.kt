@@ -30,7 +30,7 @@ object ModBlocks : Initializer() {
     private inline fun Block.register(
         name: String,
         shouldRegisterItem: Boolean,
-        blockItemFactory: ((Block) -> Item) = { block -> BlockItem(block, Item.Settings()) }
+        blockItemFactory: ((Block) -> Item) = { BlockItem(it, Item.Settings()) }
     ) = register(name, this, shouldRegisterItem, blockItemFactory)
 
     private inline fun register(
