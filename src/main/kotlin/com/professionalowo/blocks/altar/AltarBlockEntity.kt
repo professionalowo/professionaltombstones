@@ -1,8 +1,8 @@
 package com.professionalowo.blocks.altar
 
+import com.professionalowo.blocks.ModBlockEntities
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
@@ -15,10 +15,12 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
 
-abstract class AbstractAltarBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState?) :
-    BlockEntity(type, pos, state),
+class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
+    BlockEntity(ModBlockEntities.ALTAR_BLOCK_ENTITY, pos, state),
     Inventory {
     private val itemSlot = DefaultedList.ofSize(1, ItemStack.EMPTY)
+
+    var ticks: Int = 0
 
     var item: ItemStack
         get() = getStack(0)
