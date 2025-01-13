@@ -20,13 +20,18 @@ abstract class AbstractAltarBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
     Inventory {
     private val itemSlot = DefaultedList.ofSize(1, ItemStack.EMPTY)
 
+    var item: ItemStack
+        get() = getStack(0)
+        set(value) = setStack(0, value)
+
     override fun size(): Int = itemSlot.size
     override fun isEmpty(): Boolean = itemSlot.isEmpty()
+
     override fun clear() = itemSlot.clear()
 
     override fun getStack(slot: Int): ItemStack = if (slot > size()) ItemStack.EMPTY else itemSlot[slot]
-
     override fun removeStack(slot: Int): ItemStack = Inventories.removeStack(itemSlot, slot)
+
     override fun removeStack(slot: Int, amount: Int): ItemStack = Inventories.splitStack(itemSlot, slot, amount).also {
         if (!it.isEmpty) {
             markDirty()

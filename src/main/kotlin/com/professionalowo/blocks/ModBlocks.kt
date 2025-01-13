@@ -24,10 +24,14 @@ object ModBlocks : Initializer() {
             .pistonBehavior(PistonBehavior.DESTROY)
     ).register("tombstone_block", true)
 
-    val ALTAR_CORE_BLOCK = AltarCoreBlock(AbstractBlock.Settings.create()).register("altar_core_block", true)
+    val ALTAR_CORE_BLOCK =
+        AltarCoreBlock(AbstractBlock.Settings.create().hardness(3f).requiresTool()).register("altar_core_block", true)
 
     val ALTAR_PEDESTAL_BLOCK =
-        AltarPedestalBlock(AbstractBlock.Settings.create()).register("altar_pedestal_block", true)
+        AltarPedestalBlock(AbstractBlock.Settings.create().hardness(3f).requiresTool()).register(
+            "altar_pedestal_block",
+            true
+        )
 
     override fun initialize() {
         logger.info("Initialized Blocks")
