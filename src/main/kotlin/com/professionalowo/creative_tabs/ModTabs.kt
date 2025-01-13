@@ -3,7 +3,6 @@ package com.professionalowo.creative_tabs
 import com.professionalowo.Initializer
 import com.professionalowo.Professionaltombstones
 import com.professionalowo.blocks.ModBlocks
-import com.professionalowo.items.ModItems
 import com.professionalowo.util.modIdentifier
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries

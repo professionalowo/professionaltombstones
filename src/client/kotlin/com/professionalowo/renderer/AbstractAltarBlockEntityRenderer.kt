@@ -9,6 +9,9 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.util.math.RotationAxis
+import org.joml.Quaternionf
+import kotlin.math.sin
 
 @Environment(EnvType.CLIENT)
 class AbstractAltarBlockEntityRenderer(private val ctx: BlockEntityRendererFactory.Context) :
@@ -26,7 +29,7 @@ class AbstractAltarBlockEntityRenderer(private val ctx: BlockEntityRendererFacto
         val itemRenderer = ctx.itemRenderer
 
         matrices.push()
-        moveModel(matrices)
+        moveModel(entity, matrices)
         itemRenderer.renderItem(
             stack,
             ModelTransformationMode.FIXED,
@@ -40,8 +43,19 @@ class AbstractAltarBlockEntityRenderer(private val ctx: BlockEntityRendererFacto
         matrices.pop()
     }
 
-    private fun moveModel(stack: MatrixStack) {
-        stack.translate(0.5, 1.0, 0.5)
+    private fun moveModel(entity: AltarBlockEntity, stack: MatrixStack) {
+
+
+        val deltaY = sin(entity.ticks.toDouble() * 0.07) * 0.2
+
+        val deltaDeg = entity.ticks % 360 * 1.5
+
+        stack.translate(0.5, 1.0 + deltaY, 0.5)
+
+        stack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(deltaDeg.toFloat()))
+        stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(deltaDeg.toFloat()))
+        stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(deltaDeg.toFloat()))
+
         stack.scale(0.5f, 0.5f, 0.5f)
     }
 }
