@@ -38,13 +38,12 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
     ): ItemActionResult {
         val entity = world.getBlockEntity(pos) as? AltarBlockEntity ?: return ItemActionResult.FAIL
 
-        return swapItems(entity, state, player, hand)
+        return swapItems(entity, player, hand)
     }
 
 
     private fun swapItems(
         entity: AltarBlockEntity,
-        state: BlockState,
         player: PlayerEntity,
         hand: Hand
     ): ItemActionResult =
@@ -65,7 +64,6 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
                     true
                 )
             }
-
             if (!world.isClient)
                 setStack(0, playerItemStack.copyWithCount(1))
 
