@@ -8,7 +8,7 @@ import net.minecraft.world.World
  * Returns the next solid block under this block, if there is no block, there will be a Block of dirt
  *
  * @param world the World
- * @return the BlockPos of the next solid block under this
+ * @return the [BlockPos] of the next solid block under [this]
  */
 tailrec fun BlockPos.nextSolidBlockDown(world: World): BlockPos {
     val newPos = withY(y - 1)

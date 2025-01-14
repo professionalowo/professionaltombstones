@@ -1,6 +1,7 @@
 package com.professionalowo.renderer
 
 import com.professionalowo.blocks.altar.AltarBlockEntity
+import com.professionalowo.util.rotateAllAxes
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.render.OverlayTexture
@@ -44,18 +45,15 @@ class AbstractAltarBlockEntityRenderer(private val ctx: BlockEntityRendererFacto
     }
 
     private fun moveModel(entity: AltarBlockEntity, stack: MatrixStack) {
-
-
         val deltaY = sin(entity.ticks.toDouble() * 0.07) * 0.2
 
-        val deltaDeg = entity.ticks % 360 * 1.5
-
-        stack.translate(0.5, 1.2 + deltaY, 0.5)
-
-        stack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(deltaDeg.toFloat()))
-        stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(deltaDeg.toFloat()))
-        stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(deltaDeg.toFloat()))
-
-        stack.scale(0.5f, 0.5f, 0.5f)
+        val deltaDeg = (entity.ticks % 360 * 1.5).toFloat()
+        stack.run {
+            translate(0.5, 1.2 + deltaY, 0.5)
+            rotateAllAxes(deltaDeg)
+            scale(0.5f, 0.5f, 0.5f)
+        }
     }
+
+
 }

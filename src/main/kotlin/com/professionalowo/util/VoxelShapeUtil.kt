@@ -8,10 +8,10 @@ fun VoxelShape.or(other: VoxelShape): VoxelShape =
     VoxelShapes.union(this, other)
 
 /**
- * Rotates a VoxelShape
- * @param from the original direction this is facing
- * @param to the direction this should be rotated to
- * @return the rotated VoxelShape
+ * Rotates [this]
+ * @param from the original direction [this] is facing
+ * @param to the direction [this] should be rotated to
+ * @return the rotated [VoxelShape]
  */
 fun VoxelShape.rotateShape(from: Direction, to: Direction): VoxelShape =
     rotateNTimes(rotationTimes(from, to))
@@ -25,8 +25,8 @@ private fun rotationTimes(from: Direction, to: Direction): Int = (to.horizontal 
 
 /**
  * Rotate this on the Y-Axis by n * 90%
- * @param n the number of times to rotate this
- * @return the result of rotating this n times
+ * @param n the number of times to rotate [this]
+ * @return the result of rotating this [n] times
  */
 private tailrec fun VoxelShape.rotateNTimes(n: Int): VoxelShape =
     if (n == 0) this else rotateY90Deg().rotateNTimes(n.dec())
