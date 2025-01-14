@@ -19,7 +19,7 @@ object ModTabs : Initializer() {
     val TOMBSTONE_GROUP = createGroup("tombstone_group", ModBlocks.TOMBSTONE_BLOCK)
 
     override fun initialize() {
-        TOMBSTONE_GROUP.register(ModBlocks.TOMBSTONE_BLOCK)
+        TOMBSTONE_GROUP.register(ModBlocks.TOMBSTONE_BLOCK, ModBlocks.ALTAR_PEDESTAL_BLOCK, ModBlocks.ALTAR_CORE_BLOCK)
 
         logger.info("Initialized ItemGroups")
     }

@@ -7,19 +7,38 @@ import net.minecraft.util.shape.VoxelShapes
 fun VoxelShape.or(other: VoxelShape): VoxelShape =
     VoxelShapes.union(this, other)
 
+/**
+ * Rotates [this]
+ * @param from the original direction [this] is facing
+ * @param to the direction [this] should be rotated to
+ * @return the rotated [VoxelShape]
+ */
+fun VoxelShape.rotateShape(from: Direction, to: Direction): VoxelShape =
+    rotateNTimes(rotationTimes(from, to))
 
-fun VoxelShape.rotateShape(from: Direction, to: Direction): VoxelShape {
-    if (from == to) return this
+/**
+ * @param from the start direction
+ * @param to the target direction
+ * @return how often to rotate on the Y-Axis to reach to
+ */
+private fun rotationTimes(from: Direction, to: Direction): Int = (to.horizontal - from.horizontal + 4) % 4
 
-    val buffer = arrayOf(this, VoxelShapes.empty())
-    val times = (to.horizontal - from.horizontal + 4) % 4
-    for (i in 0 until times) {
-        buffer[0].forEachBox { minX, minY, minZ, maxX, maxY, maxZ ->
-            buffer[1] = buffer[1].or(VoxelShapes.cuboid(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX))
+/**
+ * Rotate this on the Y-Axis by n * 90%
+ * @param n the number of times to rotate [this]
+ * @return the result of rotating this [n] times
+ */
+private tailrec fun VoxelShape.rotateNTimes(n: Int): VoxelShape =
+    if (n == 0) this else rotateY90Deg().rotateNTimes(n.dec())
+
+
+/**
+ * Rotate shape by 90 deg on the Y-Axis
+ * @return the shape after being rotated
+ */
+private fun VoxelShape.rotateY90Deg(): VoxelShape =
+    buildList {
+        forEachBox { minX, minY, minZ, maxX, maxY, maxZ ->
+            add(VoxelShapes.cuboid(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX))
         }
-        buffer[0] = buffer[1]
-        buffer[1] = VoxelShapes.empty()
-    }
-
-    return buffer[0]
-}
+    }.fold(VoxelShapes.empty()) { acc, cuboid -> acc.or(cuboid) }

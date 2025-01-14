@@ -3,6 +3,7 @@ package com.professionalowo
 import com.professionalowo.Professionaltombstones.MOD_ID
 import com.professionalowo.blocks.ModBlockEntities
 import com.professionalowo.blocks.ModBlocks
+import com.professionalowo.renderer.AbstractAltarBlockEntityRenderer
 import com.professionalowo.renderer.TombstoneEntityRenderer
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
@@ -12,9 +13,13 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 
 object ProfessionaltombstonesClient : Initializer(), ClientModInitializer {
     override fun initialize() {
-        RenderLayer.getCutout().putBlocks(ModBlocks.TOMBSTONE_BLOCK)
+        RenderLayer.getCutout()
+            .putBlocks(ModBlocks.TOMBSTONE_BLOCK, ModBlocks.ALTAR_CORE_BLOCK, ModBlocks.ALTAR_PEDESTAL_BLOCK)
 
         BlockEntityRendererFactories.register(ModBlockEntities.TOMBSTONE_BLOCK_ENTITY) { TombstoneEntityRenderer(it) }
+        BlockEntityRendererFactories.register(ModBlockEntities.ALTAR_BLOCK_ENTITY) {
+            AbstractAltarBlockEntityRenderer(it)
+        }
         logger.info("Initialized Client for $MOD_ID")
     }
 

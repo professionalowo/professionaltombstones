@@ -3,7 +3,7 @@ package com.professionalowo.util
 import net.minecraft.inventory.Inventory
 
 /**
- * Transfers the contents of this inventory to other, while clearing this, other is overwritten
+ * Transfers the contents of [this] Inventory to [other], while clearing [this], [other] is overwritten
  * @param other the Inventory that recieves the items
  * @see Inventory
  */
@@ -16,7 +16,7 @@ fun Inventory.transferTo(other: Inventory) =
 
 
 /**
- * @return a copy of each ItemStack in the Inventory
+ * @return a copy of each ItemStack in [this] Inventory
  */
 fun Inventory.itemsCopy() = (0 until size())
     .mapNotNull { getStack(it) }

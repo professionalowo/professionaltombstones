@@ -2,6 +2,8 @@ package com.professionalowo.renderer
 
 import com.professionalowo.blocks.tombstone.TombstoneBlock
 import com.professionalowo.blocks.tombstone.TombstoneBlockEntity
+import com.professionalowo.util.fit
+import com.professionalowo.util.pad
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.font.TextRenderer
@@ -47,7 +49,7 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
         multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180f))
 
         //make the text fit on the block
-        fit(width)
+        fit(width.toFloat(), 1f)
 
         //add some padding
         pad(0.8f)
@@ -88,11 +90,4 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
         Direction.SOUTH -> 0.13f
         else -> 0f
     }
-
-    private fun MatrixStack.fit(width: Int) {
-        val scalar = (1f / width)
-        scale(scalar, scalar, scalar)
-    }
-
-    private fun MatrixStack.pad(padding: Float) = scale(padding, padding, padding)
 }
