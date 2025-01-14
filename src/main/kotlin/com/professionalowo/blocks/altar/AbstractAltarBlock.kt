@@ -90,7 +90,7 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
         state: BlockState?,
         type: BlockEntityType<T>?
     ): BlockEntityTicker<T>? = if (world.isClient) {
-        validateTicker(type, ModBlockEntities.ALTAR_BLOCK_ENTITY) { w, p, s, e ->
+        validateTicker(type, ModBlockEntities.ALTAR_BLOCK_ENTITY) { _, _, _, e ->
             e.ticks++
         }
     } else null
