@@ -1,6 +1,7 @@
 package com.professionalowo.blocks.altar
 
 import com.professionalowo.blocks.ModBlockEntities
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
@@ -30,21 +31,30 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
     override fun size(): Int = itemSlot.size
     override fun isEmpty(): Boolean = itemSlot.isEmpty()
 
-    override fun clear() = itemSlot.clear().also { markDirty() }
+    override fun clear() = itemSlot.clear()
 
     override fun getStack(slot: Int): ItemStack = if (slot == 0) itemSlot[slot] else ItemStack.EMPTY
-    override fun removeStack(slot: Int): ItemStack = Inventories.removeStack(itemSlot, slot).also { markDirty() }
+    override fun removeStack(slot: Int): ItemStack =
+        Inventories.removeStack(itemSlot, slot)
 
     override fun removeStack(slot: Int, amount: Int): ItemStack =
-        Inventories.splitStack(itemSlot, slot, amount).also { markDirty() }
+        Inventories.splitStack(itemSlot, slot, amount)
+            .also {
+                if (it.isEmpty) {
+                    this.markDirty()
+                }
+            }
 
     override fun setStack(slot: Int, stack: ItemStack) {
-        itemSlot[slot] = stack.apply { capCount(getMaxCount(this)) }.also { markDirty() }
+        itemSlot[slot] = stack
+        stack.capCount(getMaxCount(stack))
+        markDirty()
     }
 
     override fun isValid(slot: Int, stack: ItemStack?): Boolean = slot in itemSlot.indices && itemSlot[slot].isEmpty
 
-    override fun canTransferTo(hopperInventory: Inventory?, slot: Int, stack: ItemStack): Boolean = slot == 0 && !itemSlot[slot].isEmpty
+    override fun canTransferTo(hopperInventory: Inventory?, slot: Int, stack: ItemStack): Boolean =
+        slot in itemSlot.indices && !itemSlot[slot].isEmpty
 
     override fun getMaxCountPerStack(): Int = 1
 
@@ -52,20 +62,25 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
 
     override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup?) {
         super.readNbt(nbt, registryLookup)
+        Inventories.readNbt(nbt, itemSlot, registryLookup)
         if (nbt.contains("Ticks", NbtElement.INT_TYPE.toInt())) {
             ticks = nbt.getInt("Ticks")
         }
-        Inventories.readNbt(nbt, itemSlot, registryLookup)
     }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup?) {
+        super.writeNbt(nbt, registryLookup)
         Inventories.writeNbt(nbt, itemSlot, registryLookup)
         nbt.putInt("Ticks", ticks)
-        super.writeNbt(nbt, registryLookup)
     }
 
     override fun toUpdatePacket(): Packet<ClientPlayPacketListener> = BlockEntityUpdateS2CPacket.create(this)
 
     override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound =
         createNbt(registryLookup)
+
+    override fun markDirty() {
+        world?.updateListeners(pos, cachedState, cachedState, Block.NOTIFY_ALL)
+        super.markDirty()
+    }
 }

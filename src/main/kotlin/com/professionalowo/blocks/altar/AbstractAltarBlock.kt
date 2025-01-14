@@ -1,6 +1,8 @@
 package com.professionalowo.blocks.altar
 
+import com.mojang.authlib.minecraft.client.MinecraftClient
 import com.professionalowo.blocks.ModBlockEntities
+import net.minecraft.block.Block
 import net.minecraft.block.BlockRenderType
 import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
@@ -9,6 +11,7 @@ import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.server.MinecraftServer
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
@@ -17,6 +20,7 @@ import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraft.world.event.GameEvent
 
 abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings) {
     override fun createBlockEntity(pos: BlockPos, state: BlockState?): BlockEntity? = AltarBlockEntity(pos, state)
@@ -31,19 +35,27 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
         player: PlayerEntity,
         hand: Hand,
         hit: BlockHitResult
+    ): ItemActionResult {
+        val entity = world.getBlockEntity(pos) as? AltarBlockEntity ?: return ItemActionResult.FAIL
+
+        return swapItems(entity, state, player, hand)
+    }
+
+
+    private fun swapItems(
+        entity: AltarBlockEntity,
+        state: BlockState,
+        player: PlayerEntity,
+        hand: Hand
     ): ItemActionResult =
-        ((world.getBlockEntity(pos) as? AltarBlockEntity)?.let { swapItems(it, player, hand) })
-            ?: ItemActionResult.FAIL
-
-
-    private fun swapItems(entity: AltarBlockEntity, player: PlayerEntity, hand: Hand): ItemActionResult =
         entity.runCatching {
-            val existing = getStack(0)
+            val existing = getStack(0).copy()
+            val world = player.world
             clear()
             val playerItemStack = player.getStackInHand(hand)
 
             if (existing.isEmpty && playerItemStack.isEmpty) return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-            player.world.run {
+            world.run {
                 if (isClient) playSoundAtBlockCenter(
                     pos,
                     SoundEvents.ENTITY_ITEM_FRAME_PLACE,
@@ -54,16 +66,17 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
                 )
             }
 
+            if (!world.isClient)
+                setStack(0, playerItemStack.copyWithCount(1))
 
-            setStack(0, playerItemStack.copyWithCount(1))
+            world.emitGameEvent(player, GameEvent.BLOCK_CHANGE, pos)
 
-            if (!player.isCreative) {
-                playerItemStack.decrement(1)
-                player.inventory.insertStack(existing)
-            }
+            playerItemStack.decrementUnlessCreative(1, player)
 
+            player.inventory.insertStack(existing)
+            markDirty()
 
-            return ItemActionResult.SUCCESS
+            return ItemActionResult.CONSUME
         }.getOrElse { ItemActionResult.FAIL }
 
     override fun onStateReplaced(
