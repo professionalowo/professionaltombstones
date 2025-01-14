@@ -35,7 +35,7 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
 
         fun canAccessPedestals(world: World, corePos: BlockPos, offset: BlockPos): Boolean {
             val blockState = world.getBlockState(corePos.add(offset))
-            val isBlocked = world.isSolidBlock(corePos.add(offset.x / 2, offset.y, offset.z / 2))
+            val isBlocked: Boolean by lazy { world.isSolidBlock(corePos.add(offset.x / 2, offset.y, offset.z / 2)) }
             return blockState.block is AltarPedestalBlock && !isBlocked
         }
     }
