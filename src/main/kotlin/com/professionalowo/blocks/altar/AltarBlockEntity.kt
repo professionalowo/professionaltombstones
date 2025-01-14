@@ -7,6 +7,7 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
@@ -16,11 +17,12 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import kotlin.random.Random
 
 class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
     BlockEntity(ModBlockEntities.ALTAR_BLOCK_ENTITY, pos, state),
-    Inventory {
+    Inventory, SidedInventory {
     private val itemSlot: DefaultedList<ItemStack> = DefaultedList.ofSize(1, ItemStack.EMPTY)
 
     var ticks: Int = Random.nextInt(361)
@@ -55,6 +57,12 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
 
     override fun canTransferTo(hopperInventory: Inventory?, slot: Int, stack: ItemStack): Boolean =
         slot in itemSlot.indices && !itemSlot[slot].isEmpty
+
+    override fun getAvailableSlots(side: Direction?): IntArray = IntArray(itemSlot.size)
+
+    override fun canInsert(slot: Int, stack: ItemStack?, dir: Direction?): Boolean = dir == Direction.UP
+
+    override fun canExtract(slot: Int, stack: ItemStack?, dir: Direction?): Boolean = false
 
     override fun getMaxCountPerStack(): Int = 1
 
