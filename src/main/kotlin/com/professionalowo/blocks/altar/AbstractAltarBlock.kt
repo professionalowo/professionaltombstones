@@ -35,7 +35,7 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
     ): ItemActionResult {
         val entity = world.getBlockEntity(pos) as? AltarBlockEntity ?: return ItemActionResult.FAIL
 
-        return swapItems(entity, player, hand)
+        return swapItems(entity, player, hand).also { entity.markDirty() }
     }
 
 
@@ -69,9 +69,8 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
             playerItemStack.decrementUnlessCreative(1, player)
 
             player.inventory.offerOrDrop(existing)
-            markDirty()
 
-            return ItemActionResult.CONSUME
+            return ItemActionResult.SUCCESS
         }.getOrElse { ItemActionResult.FAIL }
 
     override fun onStateReplaced(
