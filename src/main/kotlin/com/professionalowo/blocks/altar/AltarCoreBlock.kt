@@ -1,10 +1,7 @@
 package com.professionalowo.blocks.altar
 
 import com.mojang.serialization.MapCodec
-import com.professionalowo.util.isSolidBlock
-import com.professionalowo.util.or
-import com.professionalowo.util.plus
-import com.professionalowo.util.unaryMinus
+import com.professionalowo.util.*
 import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
 import net.minecraft.block.ShapeContext
@@ -53,16 +50,16 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
         if (random.nextInt(5) == 0 && arePedestalsFull) {
             for (offset in PEDESTAL_OFFSETS) {
                 if (random.nextInt(3) != 0) continue
-                val pedestalPosition = pos + offset
-                val inverse = -offset
+                val (pX, pY, pZ) = pos + offset
+                val (vX, vY, vZ) = -offset
                 world.addParticle(
                     ParticleTypes.SOUL_FIRE_FLAME,
-                    pedestalPosition.x.toDouble() + 0.5,
-                    pedestalPosition.y.toDouble() + 1,
-                    pedestalPosition.z.toDouble() + 0.5,
-                    inverse.x.toDouble() * 0.05,
-                    inverse.y.toDouble() * 0.05,
-                    inverse.z.toDouble() * 0.05,
+                    pX.toDouble() + 0.5,
+                    pY.toDouble() + 1,
+                    pZ.toDouble() + 0.5,
+                    vX.toDouble() * 0.05,
+                    vY.toDouble() * 0.05,
+                    vZ.toDouble() * 0.05,
                 )
             }
         }
