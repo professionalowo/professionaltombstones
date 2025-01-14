@@ -22,7 +22,7 @@ import kotlin.random.Random
 
 class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
     BlockEntity(ModBlockEntities.ALTAR_BLOCK_ENTITY, pos, state),
-    Inventory, SidedInventory {
+    SidedInventory {
     private val itemSlot: DefaultedList<ItemStack> = DefaultedList.ofSize(1, ItemStack.EMPTY)
 
     var ticks: Int = Random.nextInt(361)
