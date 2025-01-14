@@ -50,7 +50,7 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
     override fun setStack(slot: Int, stack: ItemStack) {
         itemSlot[slot] = stack
         stack.capCount(getMaxCount(stack))
-        markDirty()
+        this.markDirty()
     }
 
     override fun isValid(slot: Int, stack: ItemStack?): Boolean = slot in itemSlot.indices && itemSlot[slot].isEmpty
@@ -60,13 +60,13 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
 
     override fun getAvailableSlots(side: Direction?): IntArray = IntArray(itemSlot.size)
 
-    override fun canInsert(slot: Int, stack: ItemStack?, dir: Direction?): Boolean = dir == Direction.UP
+    override fun canInsert(slot: Int, stack: ItemStack?, dir: Direction?): Boolean = true
 
     override fun canExtract(slot: Int, stack: ItemStack?, dir: Direction?): Boolean = false
 
     override fun getMaxCountPerStack(): Int = 1
 
-    override fun canPlayerUse(player: PlayerEntity?): Boolean = Inventory.canPlayerUse(this, player)
+    override fun canPlayerUse(player: PlayerEntity): Boolean = Inventory.canPlayerUse(this, player)
 
     override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup?) {
         super.readNbt(nbt, registryLookup)
