@@ -71,7 +71,7 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
 
             playerItemStack.decrementUnlessCreative(1, player)
 
-            player.inventory.insertStack(existing)
+            player.inventory.offerOrDrop(existing)
             markDirty()
 
             return ItemActionResult.CONSUME
