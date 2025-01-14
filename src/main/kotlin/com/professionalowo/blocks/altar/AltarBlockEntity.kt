@@ -30,7 +30,7 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
             field = value % 361
         }
 
-    var item: ItemStack
+    inline var item: ItemStack
         get() = getStack(0)
         set(value) = setStack(0, value)
 
