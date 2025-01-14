@@ -42,7 +42,7 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
 
     private fun getPossiblePedestalPositions(pos: BlockPos) = PEDESTAL_OFFSETS.mapNotNull { pos.add(it).toImmutable() }
     private fun getPedestalBlockEntities(world: World, pos: BlockPos) =
-        getPossiblePedestalPositions(pos).mapNotNull { world.getBlockEntity(it) }
+        getPossiblePedestalPositions(pos).mapNotNull { world.getBlockEntity(it) as? AltarBlockEntity }
 
     private fun hasFullPedestals(world: World, pos: BlockPos) = PEDESTAL_OFFSETS.all { offset ->
         canAccessPedestals(world, pos, offset)

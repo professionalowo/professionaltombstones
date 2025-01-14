@@ -30,6 +30,8 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
             field = value % 361
         }
 
+    val item: ItemStack get() = itemSlot.first()
+
     override fun size(): Int = itemSlot.size
     override fun isEmpty(): Boolean = itemSlot.isEmpty()
 
