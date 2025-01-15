@@ -31,7 +31,7 @@ object ModBlocks : Initializer() {
 
     val ALTAR_PEDESTAL_BLOCK =
         AltarPedestalBlock(
-            AbstractBlock.Settings.create().hardness(3f).requiresTool().pistonBehavior(PistonBehavior.BLOCK)
+            AbstractBlock.Settings.copy(ALTAR_CORE_BLOCK)
         ).register(
             "altar_pedestal_block",
             true
