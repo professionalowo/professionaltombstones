@@ -26,8 +26,8 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
 
 
         val PEDESTAL_OFFSETS: List<BlockPos> = BlockPos.stream(-2, 0, -2, 2, 0, 2)
-            .filter { pos -> abs(pos.x.toDouble()) == 2.0 || abs(pos.z.toDouble()) == 2.0 }
-            .filter { pos -> abs(pos.x.toDouble()) != abs(pos.z.toDouble()) }
+            .filter { abs(it.x) == 2 || abs(it.z) == 2 }
+            .filter { abs(it.x) != abs(it.z) }
             .map { it.toImmutable() }
             .toList()
 
@@ -42,9 +42,8 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
     private fun getPedestalBlockEntities(world: World, pos: BlockPos) =
         getPossiblePedestalPositions(pos).mapNotNull { world.getBlockEntity(it) as? AltarBlockEntity }
 
-    private fun hasFullPedestals(world: World, pos: BlockPos) = PEDESTAL_OFFSETS.all { offset ->
-        canAccessPedestals(world, pos, offset)
-    }
+    private fun hasFullPedestals(world: World, pos: BlockPos) =
+        PEDESTAL_OFFSETS.all { canAccessPedestals(world, pos, it) }
 
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
         val arePedestalsFull: Boolean by lazy { hasFullPedestals(world, pos) }
@@ -53,8 +52,8 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
                 if (random.nextInt(3) != 0) continue
                 world.addParticle(
                     ParticleTypes.SOUL_FIRE_FLAME,
-                    Vec3d.of(pos + offset).add(0.5, 1.0, 0.5),
-                    Vec3d.of(-offset).multiply(0.05)
+                    Vec3d.ofCenter(pos + offset),
+                    -Vec3d.of(offset).multiply(0.05)
                 )
             }
         }
