@@ -2,7 +2,6 @@ package com.professionalowo.blocks
 
 import com.professionalowo.Initializer
 import com.professionalowo.Professionaltombstones.MOD_ID
-import com.professionalowo.blocks.altar.AbstractAltarBlockEntity
 import com.professionalowo.blocks.altar.AltarCoreBlockEntity
 import com.professionalowo.blocks.altar.AltarPedestalBlockEntity
 import com.professionalowo.blocks.tombstone.TombstoneBlockEntity
