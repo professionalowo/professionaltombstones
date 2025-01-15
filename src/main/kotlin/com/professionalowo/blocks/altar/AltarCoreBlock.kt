@@ -1,10 +1,14 @@
 package com.professionalowo.blocks.altar
 
 import com.mojang.serialization.MapCodec
+import com.professionalowo.blocks.ModBlockEntities
 import com.professionalowo.util.*
 import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
 import net.minecraft.block.ShapeContext
+import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityTicker
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundCategory
@@ -40,10 +44,13 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
 
     private fun getPossiblePedestalPositions(pos: BlockPos) = PEDESTAL_OFFSETS.mapNotNull { pos.add(it).toImmutable() }
     private fun getPedestalBlockEntities(world: World, pos: BlockPos) =
-        getPossiblePedestalPositions(pos).mapNotNull { world.getBlockEntity(it) as? AltarBlockEntity }
+        getPossiblePedestalPositions(pos).mapNotNull { world.getBlockEntity(it) as? AbstractAltarBlockEntity }
 
     private fun hasFullPedestals(world: World, pos: BlockPos) =
         PEDESTAL_OFFSETS.all { canAccessPedestal(world, pos, it) }
+
+    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = AltarCoreBlockEntity(pos, state)
+
 
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
         val arePedestalsFull: Boolean by lazy { hasFullPedestals(world, pos) }
@@ -78,6 +85,15 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
         context: ShapeContext?
     ): VoxelShape = voxelShape
 
+    override fun <T : BlockEntity?> getTicker(
+        world: World,
+        state: BlockState?,
+        type: BlockEntityType<T>?
+    ): BlockEntityTicker<T>? = if (world.isClient) {
+        validateTicker(type, ModBlockEntities.ALTAR_CORE_BLOCK_ENTITY,) { _, _, _, e ->
+            e.ticks++
+        }
+    } else null
 
     override fun onUse(
         state: BlockState,

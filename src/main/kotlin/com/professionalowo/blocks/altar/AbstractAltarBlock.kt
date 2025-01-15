@@ -20,7 +20,6 @@ import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
 
 abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings) {
-    override fun createBlockEntity(pos: BlockPos, state: BlockState?): BlockEntity? = AltarBlockEntity(pos, state)
 
     override fun getRenderType(state: BlockState): BlockRenderType = BlockRenderType.MODEL
 
@@ -33,14 +32,14 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
         hand: Hand,
         hit: BlockHitResult
     ): ItemActionResult {
-        val entity = world.getBlockEntity(pos) as? AltarBlockEntity ?: return ItemActionResult.FAIL
+        val entity = world.getBlockEntity(pos) as? AbstractAltarBlockEntity ?: return ItemActionResult.FAIL
 
         return swapItems(entity, player, hand).also { entity.markDirty() }
     }
 
 
     private fun swapItems(
-        entity: AltarBlockEntity,
+        entity: AbstractAltarBlockEntity,
         player: PlayerEntity,
         hand: Hand
     ): ItemActionResult =
@@ -83,14 +82,4 @@ abstract class AbstractAltarBlock(settings: Settings) : BlockWithEntity(settings
         ItemScatterer.onStateReplaced(state, newState, world, pos)
         super.onStateReplaced(state, world, pos, newState, moved)
     }
-
-    override fun <T : BlockEntity?> getTicker(
-        world: World,
-        state: BlockState?,
-        type: BlockEntityType<T>?
-    ): BlockEntityTicker<T>? = if (world.isClient) {
-        validateTicker(type, ModBlockEntities.ALTAR_BLOCK_ENTITY) { _, _, _, e ->
-            e.ticks++
-        }
-    } else null
 }
