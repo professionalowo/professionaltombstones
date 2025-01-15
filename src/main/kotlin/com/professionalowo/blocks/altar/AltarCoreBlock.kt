@@ -31,7 +31,7 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
             .map { it.toImmutable() }
             .toList()
 
-        fun canAccessPedestals(world: World, corePos: BlockPos, offset: BlockPos): Boolean {
+        fun canAccessPedestal(world: World, corePos: BlockPos, offset: BlockPos): Boolean {
             val blockState = world.getBlockState(corePos.add(offset))
             val isBlocked: Boolean by lazy { world.isSolidBlock(corePos.add(offset.x / 2, offset.y, offset.z / 2)) }
             return blockState.block is AltarPedestalBlock && !isBlocked
@@ -43,7 +43,7 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
         getPossiblePedestalPositions(pos).mapNotNull { world.getBlockEntity(it) as? AltarBlockEntity }
 
     private fun hasFullPedestals(world: World, pos: BlockPos) =
-        PEDESTAL_OFFSETS.all { canAccessPedestals(world, pos, it) }
+        PEDESTAL_OFFSETS.all { canAccessPedestal(world, pos, it) }
 
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
         val arePedestalsFull: Boolean by lazy { hasFullPedestals(world, pos) }
