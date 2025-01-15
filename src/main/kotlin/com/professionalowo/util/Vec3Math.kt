@@ -1,5 +1,6 @@
 package com.professionalowo.util
 
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.Vec3i
 
@@ -12,11 +13,19 @@ operator fun Vec3i.minus(other: Vec3i): Vec3i = this.subtract(other)
 operator fun Vec3i.unaryMinus(): Vec3i = Vec3i(-x, -y, -z)
 
 
+operator fun BlockPos.plus(other: Vec3i): BlockPos = this.add(other)
+
+operator fun BlockPos.minus(other: Vec3i): BlockPos = this.subtract(other)
+
+operator fun BlockPos.unaryMinus(): BlockPos = BlockPos(-x, -y, -z)
+
+
 operator fun Vec3d.plus(other: Vec3d): Vec3d = this.add(other)
 
 operator fun Vec3d.minus(other: Vec3d): Vec3d = this.subtract(other)
 
 operator fun Vec3d.unaryMinus(): Vec3d = Vec3d(-x, -y, -z)
+
 
 //destructuring
 
