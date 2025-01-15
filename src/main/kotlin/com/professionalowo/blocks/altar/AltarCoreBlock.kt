@@ -12,6 +12,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.random.Random
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
@@ -24,10 +25,11 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 7.0, 16.0).or(createCuboidShape(2.0, 7.0, 2.0, 14.0, 9.0, 14.0))
 
 
-        val PEDESTAL_OFFSETS: List<BlockPos> = BlockPos.iterate(-2, 0, -2, 2, 0, 2)
+        val PEDESTAL_OFFSETS: List<BlockPos> = BlockPos.stream(-2, 0, -2, 2, 0, 2)
             .filter { pos -> abs(pos.x.toDouble()) == 2.0 || abs(pos.z.toDouble()) == 2.0 }
             .filter { pos -> abs(pos.x.toDouble()) != abs(pos.z.toDouble()) }
             .map { it.toImmutable() }
+            .toList()
 
         fun canAccessPedestals(world: World, corePos: BlockPos, offset: BlockPos): Boolean {
             val blockState = world.getBlockState(corePos.add(offset))
@@ -49,16 +51,10 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
         if (random.nextInt(5) == 0 && arePedestalsFull) {
             for (offset in PEDESTAL_OFFSETS) {
                 if (random.nextInt(3) != 0) continue
-                val (pX, pY, pZ) = pos + offset
-                val (vX, vY, vZ) = -offset
                 world.addParticle(
                     ParticleTypes.SOUL_FIRE_FLAME,
-                    pX.toDouble() + 0.5,
-                    pY.toDouble() + 1,
-                    pZ.toDouble() + 0.5,
-                    vX.toDouble() * 0.05,
-                    vY.toDouble() * 0.05,
-                    vZ.toDouble() * 0.05,
+                    Vec3d.of(pos + offset).add(0.5, 1.0, 0.5),
+                    Vec3d.of(-offset).multiply(0.05)
                 )
             }
         }
