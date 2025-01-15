@@ -19,14 +19,11 @@ fun MatrixStack.rotateAllAxes(degrees: Float) {
  *
  * @param targetWidth the width to fit into this
  */
-fun MatrixStack.fit(itemWith: Float, targetWidth: Float) {
-    val scalar = (targetWidth / itemWith)
-    scale(scalar, scalar, scalar)
-}
+fun MatrixStack.fit(itemWith: Float, targetWidth: Float) = scaleAll((targetWidth / itemWith))
 
 /**
  * Scales [this] with [padding]
  *
  * @param padding the padding
  */
-fun MatrixStack.pad(padding: Float) = scale(padding, padding, padding)
+fun MatrixStack.scaleAll(padding: Float) = scale(padding, padding, padding)
