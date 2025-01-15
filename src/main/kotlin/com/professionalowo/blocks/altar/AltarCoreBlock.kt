@@ -24,11 +24,10 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 7.0, 16.0).or(createCuboidShape(2.0, 7.0, 2.0, 14.0, 9.0, 14.0))
 
 
-        val PEDESTAL_OFFSETS: List<BlockPos> = BlockPos.stream(-2, 0, -2, 2, 0, 2)
+        val PEDESTAL_OFFSETS: List<BlockPos> = BlockPos.iterate(-2, 0, -2, 2, 0, 2)
             .filter { pos -> abs(pos.x.toDouble()) == 2.0 || abs(pos.z.toDouble()) == 2.0 }
             .filter { pos -> abs(pos.x.toDouble()) != abs(pos.z.toDouble()) }
             .map { it.toImmutable() }
-            .toList()
 
         fun canAccessPedestals(world: World, corePos: BlockPos, offset: BlockPos): Boolean {
             val blockState = world.getBlockState(corePos.add(offset))
@@ -82,9 +81,8 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
         world: BlockView?,
         pos: BlockPos?,
         context: ShapeContext?
-    ): VoxelShape {
-        return voxelShape
-    }
+    ): VoxelShape = voxelShape
+
 
     override fun onUse(
         state: BlockState,
