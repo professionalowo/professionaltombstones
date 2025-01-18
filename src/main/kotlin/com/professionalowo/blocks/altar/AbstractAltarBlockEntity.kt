@@ -18,6 +18,7 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.world.World
 import kotlin.random.Random
 
 abstract class AbstractAltarBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState?) :
@@ -94,5 +95,9 @@ abstract class AbstractAltarBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
     override fun markDirty() {
         world?.updateListeners(pos, cachedState, cachedState, Block.NOTIFY_ALL)
         super.markDirty()
+    }
+
+    open fun tick(world: World, pos: BlockPos, state: BlockState) {
+        ticks++
     }
 }

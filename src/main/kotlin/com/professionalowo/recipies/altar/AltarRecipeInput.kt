@@ -15,6 +15,27 @@ data class AltarRecipeInput(
     val eighth: ItemStack,
     val ninth: ItemStack,
 ) : RecipeInput {
+    companion object {
+        fun ofList(core: ItemStack, pedestals: List<ItemStack>): AltarRecipeInput {
+            if (pedestals.size != 9) throw UnsupportedOperationException("There have to be 9 ItemStacks in the list, there are ${pedestals.size}")
+
+            return AltarRecipeInput(core, pedestals)
+        }
+    }
+
+    private constructor(core: ItemStack, pedestals: List<ItemStack>) : this(
+        core,
+        pedestals[0],
+        pedestals[1],
+        pedestals[2],
+        pedestals[3],
+        pedestals[4],
+        pedestals[5],
+        pedestals[6],
+        pedestals[7],
+        pedestals[8],
+    )
+
     private fun inputs(): Array<ItemStack> =
         arrayOf(core, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth)
 
@@ -35,5 +56,5 @@ data class AltarRecipeInput(
     override fun getSize(): Int = 10
 
     override fun isEmpty(): Boolean =
-        inputs().all { isEmpty() }
+        inputs().all { it.isEmpty }
 }

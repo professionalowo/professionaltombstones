@@ -35,19 +35,20 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
             .map { it.toImmutable() }
             .toList()
 
-        fun canAccessPedestal(world: World, corePos: BlockPos, offset: BlockPos): Boolean {
+        private fun canAccessPedestal(world: World, corePos: BlockPos, offset: BlockPos): Boolean {
             val blockState = world.getBlockState(corePos.add(offset))
             val isBlocked: Boolean by lazy { world.isSolidBlock(corePos.add(offset.x / 2, offset.y, offset.z / 2)) }
             return blockState.block is AltarPedestalBlock && !isBlocked
         }
+
+        private fun getPossiblePedestalPositions(pos: BlockPos) = PEDESTAL_OFFSETS.mapNotNull { pos.add(it).toImmutable() }
+
+        fun getPedestalBlockEntities(world: World, pos: BlockPos) =
+            getPossiblePedestalPositions(pos).mapNotNull { world.getBlockEntity(it) as? AbstractAltarBlockEntity }
+
+        fun hasFullPedestals(world: World, pos: BlockPos) =
+            PEDESTAL_OFFSETS.all { canAccessPedestal(world, pos, it) }
     }
-
-    private fun getPossiblePedestalPositions(pos: BlockPos) = PEDESTAL_OFFSETS.mapNotNull { pos.add(it).toImmutable() }
-    private fun getPedestalBlockEntities(world: World, pos: BlockPos) =
-        getPossiblePedestalPositions(pos).mapNotNull { world.getBlockEntity(it) as? AbstractAltarBlockEntity }
-
-    private fun hasFullPedestals(world: World, pos: BlockPos) =
-        PEDESTAL_OFFSETS.all { canAccessPedestal(world, pos, it) }
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = AltarCoreBlockEntity(pos, state)
 
@@ -90,8 +91,8 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
         state: BlockState?,
         type: BlockEntityType<T>?
     ): BlockEntityTicker<T>? = if (world.isClient) {
-        validateTicker(type, ModBlockEntities.ALTAR_CORE_BLOCK_ENTITY,) { _, _, _, e ->
-            e.ticks++
+        validateTicker(type, ModBlockEntities.ALTAR_CORE_BLOCK_ENTITY) { w, p, s, e ->
+            e.tick(w, p, s)
         }
     } else null
 
