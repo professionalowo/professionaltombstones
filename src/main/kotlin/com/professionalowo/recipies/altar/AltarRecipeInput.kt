@@ -1,6 +1,8 @@
 package com.professionalowo.recipies.altar
 
 import net.minecraft.item.ItemStack
+import net.minecraft.recipe.Ingredient
+import net.minecraft.recipe.RecipeMatcher
 import net.minecraft.recipe.input.RecipeInput
 
 data class AltarRecipeInput(
@@ -15,6 +17,13 @@ data class AltarRecipeInput(
     val eighth: ItemStack,
     val ninth: ItemStack,
 ) : RecipeInput {
+
+    val matcher: RecipeMatcher = RecipeMatcher()
+
+    init {
+        inputs().forEach { matcher.addInput(it, 1) }
+    }
+
     companion object {
         fun ofList(core: ItemStack, pedestals: List<ItemStack>): AltarRecipeInput {
             if (pedestals.size != 9) throw UnsupportedOperationException("There have to be 9 ItemStacks in the list, there are ${pedestals.size}")
