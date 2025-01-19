@@ -2,7 +2,6 @@ package com.professionalowo.blocks.altar
 
 import com.professionalowo.blocks.ModBlockEntities
 import com.professionalowo.util.addParticle
-import com.professionalowo.util.minus
 import net.minecraft.block.BlockState
 import net.minecraft.item.ItemStack
 import net.minecraft.particle.ItemStackParticleEffect
