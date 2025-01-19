@@ -1,0 +1,23 @@
+{
+  "type": "professionaltombstones:crafting_altar",
+  "core": {
+    "item": "minecraft:emerald_block"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },{
+      "item": "minecraft:gold_ingot"
+    },{
+      "item": "minecraft:golden_apple"
+    },{
+      "item": "minecraft:emerald"
+    },{
+      "item": "minecraft:emerald"
+    }
+  ],
+  "result": {
+    "id": "minecraft:totem_of_undying",
+    "count": 1
+  }
+}

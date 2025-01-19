@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WBW",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:gold_block"
+    },
+    "W": {
+      "item": "minecraft:gold_ingot"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "result": {
+    "id": "professionaltombstones:altar_core_block",
+    "count": 1
+  }
+}
