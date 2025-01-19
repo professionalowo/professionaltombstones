@@ -6,13 +6,17 @@
   "ingredients": [
     {
       "item": "minecraft:gold_ingot"
-    },{
+    },
+    {
       "item": "minecraft:gold_ingot"
-    },{
+    },
+    {
       "item": "minecraft:golden_apple"
-    },{
+    },
+    {
       "item": "minecraft:emerald"
-    },{
+    },
+    {
       "item": "minecraft:emerald"
     }
   ],
