@@ -1,5 +1,6 @@
 package com.professionalowo.blocks.altar
 
+import com.professionalowo.util.addParticle
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
@@ -14,10 +15,15 @@ import net.minecraft.nbt.NbtElement
 import net.minecraft.network.listener.ClientPlayPacketListener
 import net.minecraft.network.packet.Packet
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
+import net.minecraft.particle.ItemStackParticleEffect
+import net.minecraft.particle.ParticleEffect
+import net.minecraft.particle.ParticleType
+import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import kotlin.random.Random
 
@@ -99,5 +105,23 @@ abstract class AbstractAltarBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
 
     open fun tick(world: World, pos: BlockPos, state: BlockState) {
         ticks++
+    }
+
+    fun consumeItem(world: World) {
+        if (!item.isEmpty) {
+            val random = world.random
+            for (i in 0..10) {
+                world.addParticle(
+                    ItemStackParticleEffect(ParticleTypes.ITEM, item.copy()),
+                    Vec3d.ofCenter(pos.up()),
+                    Vec3d(
+                        random.nextGaussian() * 0.15,
+                        random.nextDouble() * 0.2,
+                        random.nextGaussian() * 0.15
+                    )
+                )
+            }
+        }
+        item = ItemStack.EMPTY
     }
 }

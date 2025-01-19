@@ -5,9 +5,11 @@ import com.professionalowo.recipies.ModRecipieTypes
 import com.professionalowo.recipies.altar.AltarRecipe
 import com.professionalowo.recipies.altar.AltarRecipeInput
 import net.minecraft.block.BlockState
+import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeManager
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import kotlin.jvm.optionals.getOrNull
 
 class AltarCoreBlockEntity(pos: BlockPos, state: BlockState) :
     AbstractAltarBlockEntity(ModBlockEntities.ALTAR_CORE_BLOCK_ENTITY, pos, state) {
@@ -15,16 +17,24 @@ class AltarCoreBlockEntity(pos: BlockPos, state: BlockState) :
     private val matchGetter: RecipeManager.MatchGetter<AltarRecipeInput, AltarRecipe> =
         RecipeManager.createCachedMatchGetter(ModRecipieTypes.ALTAR)
 
-    override fun tick(world: World, pos: BlockPos, state: BlockState) {
-        super.tick(world, pos, state)
+
+    fun craft(world: World, pos: BlockPos): Boolean {
         val input = getRecipeInput(world, pos)
-        val recipeEntry = input?.let { matchGetter.getFirstMatch(it, world).orElse(null) }
+        val recipeEntry = input?.let { matchGetter.getFirstMatch(it, world).getOrNull() } ?: return false
+
+        val result = recipeEntry.value.craft(input, null)
+        consumePedestals(world, pos)
+        item = result.copy()
+        return true
     }
+
+    private fun consumePedestals(world: World, pos: BlockPos) =
+        AltarCoreBlock.getPedestalBlockEntities(world, pos).forEach { it.consumeItem(world) }
 
     private fun getRecipeInput(world: World, pos: BlockPos): AltarRecipeInput? =
         if (AltarCoreBlock.hasFullPedestals(world, pos)) {
             AltarCoreBlock.getPedestalBlockEntities(world, pos)
-                .map { it.item }.take(9).runCatching {
+                .map { it.item }.take(12).runCatching {
                     AltarRecipeInput.ofList(item, this)
                 }.getOrNull()
 

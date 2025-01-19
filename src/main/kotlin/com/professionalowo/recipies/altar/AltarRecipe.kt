@@ -33,9 +33,9 @@ class AltarRecipe(
         return coreIngredient.test(input.core)
     }
 
-    override fun craft(input: AltarRecipeInput, lookup: RegistryWrapper.WrapperLookup): ItemStack = result.copy()
+    override fun craft(input: AltarRecipeInput, lookup: RegistryWrapper.WrapperLookup?): ItemStack = result.copy()
 
-    override fun fits(width: Int, height: Int): Boolean = width >= 10 && height >= 1
+    override fun fits(width: Int, height: Int): Boolean = width >= 13 && height >= 1
     override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup?): ItemStack = result
 
     override fun getIngredients(): DefaultedList<Ingredient> =
@@ -51,7 +51,7 @@ class AltarRecipe(
                         .flatXmap<DefaultedList<Ingredient>>({ ingredients ->
                             val readIngredients: List<Ingredient> =
                                 ingredients.filter { ingredient -> !ingredient.isEmpty }
-                            if (readIngredients.size > 9) return@flatXmap DataResult.error { "Too many ingredients for altar recipe" }
+                            if (readIngredients.size > 12) return@flatXmap DataResult.error { "Too many ingredients for altar recipe" }
 
                             DataResult.success(
                                 DefaultedList.copyOf(
@@ -88,7 +88,7 @@ class AltarRecipe(
 
                 //ingredients
                 val length = buf.readVarInt()
-                val ingredients = DefaultedList.ofSize(9, Ingredient.EMPTY)
+                val ingredients = DefaultedList.ofSize(12, Ingredient.EMPTY)
                 for (i in (0 until length)) {
                     ingredients[i] = Ingredient.PACKET_CODEC.decode(buf)
                 }

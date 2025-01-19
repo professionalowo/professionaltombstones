@@ -9,11 +9,17 @@ import net.minecraft.block.ShapeContext
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.LightningEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
+import net.minecraft.util.Hand
+import net.minecraft.util.ItemActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
@@ -41,7 +47,8 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
             return blockState.block is AltarPedestalBlock && !isBlocked
         }
 
-        private fun getPossiblePedestalPositions(pos: BlockPos) = PEDESTAL_OFFSETS.mapNotNull { pos.add(it).toImmutable() }
+        private fun getPossiblePedestalPositions(pos: BlockPos) =
+            PEDESTAL_OFFSETS.mapNotNull { pos.add(it).toImmutable() }
 
         fun getPedestalBlockEntities(world: World, pos: BlockPos) =
             getPossiblePedestalPositions(pos).mapNotNull { world.getBlockEntity(it) as? AbstractAltarBlockEntity }
@@ -96,13 +103,30 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
         }
     } else null
 
-    override fun onUse(
+    override fun onUseWithItem(
+        stack: ItemStack,
         state: BlockState,
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
-        hit: BlockHitResult?
-    ): ActionResult {
-        return super.onUse(state, world, pos, player, hit)
+        hand: Hand,
+        hit: BlockHitResult
+    ): ItemActionResult {
+        val heldItem = player.getStackInHand(hand)
+        val cooldownManager = player.itemCooldownManager
+
+
+        if (heldItem.isOf(Items.FLINT_AND_STEEL)) {
+            if (cooldownManager.isCoolingDown(heldItem.item)) return ItemActionResult.FAIL
+            val coreEntity = world.getBlockEntity(pos) as? AltarCoreBlockEntity ?: return ItemActionResult.FAIL
+            if(coreEntity.craft(world,pos)){
+                val lightningEntity = LightningEntity(EntityType.LIGHTNING_BOLT, world)
+                lightningEntity.setPosition(Vec3d.ofCenter(pos))
+                world.spawnEntity(lightningEntity)
+                cooldownManager.set(heldItem.item, 20)
+            }
+            return ItemActionResult.SUCCESS
+        }
+        return super.onUseWithItem(stack, state, world, pos, player, hand, hit)
     }
 }
