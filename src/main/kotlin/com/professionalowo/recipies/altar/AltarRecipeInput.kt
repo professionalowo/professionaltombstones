@@ -1,7 +1,6 @@
 package com.professionalowo.recipies.altar
 
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeMatcher
 import net.minecraft.recipe.input.RecipeInput
 

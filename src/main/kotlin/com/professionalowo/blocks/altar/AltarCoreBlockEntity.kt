@@ -12,7 +12,7 @@ import net.minecraft.world.World
 class AltarCoreBlockEntity(pos: BlockPos, state: BlockState) :
     AbstractAltarBlockEntity(ModBlockEntities.ALTAR_CORE_BLOCK_ENTITY, pos, state) {
 
-    private val matchGetter: RecipeManager.MatchGetter<AltarRecipeInput, out AltarRecipe> =
+    private val matchGetter: RecipeManager.MatchGetter<AltarRecipeInput, AltarRecipe> =
         RecipeManager.createCachedMatchGetter(ModRecipieTypes.ALTAR)
 
     override fun tick(world: World, pos: BlockPos, state: BlockState) {

@@ -6,13 +6,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.recipies.ModRecipeSerializers
 import com.professionalowo.recipies.ModRecipieTypes
-import net.minecraft.inventory.CraftingInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.recipe.*
-import net.minecraft.recipe.book.CraftingRecipeCategory
-import net.minecraft.recipe.input.CraftingRecipeInput
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.world.World
@@ -65,7 +62,7 @@ class AltarRecipe(
                         }, { data ->
                             DataResult.success(data)
                         }).forGetter { recipe -> recipe.ingredients },
-                    ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter { recipe -> recipe.result }
+                    ItemStack.VALIDATED_UNCOUNTED_CODEC.fieldOf("result").forGetter { recipe -> recipe.result }
                 ).apply(it) { core, ingredients, result -> AltarRecipe(core, ingredients, result) }
             }
 

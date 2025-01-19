@@ -3,22 +3,22 @@ package com.professionalowo.recipies
 import com.professionalowo.Initializer
 import com.professionalowo.recipies.altar.AltarRecipe
 import com.professionalowo.util.modIdentifier
-import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object ModRecipieTypes : Initializer() {
 
-    val ALTAR: RecipeType<AltarRecipe> = register("altar")
+    val ALTAR: RecipeType<AltarRecipe> = register("crafting_altar")
 
     override fun initialize() = logger.info("Initialized Recipe Types")
 
-    fun <T : Recipe<*>?> register(id: String): RecipeType<T> {
-        return Registry.register(Registries.RECIPE_TYPE, modIdentifier(id), object : RecipeType<T> {
-            override fun toString(): String {
-                return id
-            }
-        }) as RecipeType<T>
+
+    fun register(id: String): AltarRecipeType {
+        return Registry.register(Registries.RECIPE_TYPE, modIdentifier(id), AltarRecipeType(id))
+    }
+
+    class AltarRecipeType(private val id: String) : RecipeType<AltarRecipe> {
+        override fun toString(): String = id
     }
 }
