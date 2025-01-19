@@ -23,12 +23,12 @@ data class AltarRecipeInput(
     val matcher: RecipeMatcher = RecipeMatcher()
 
     init {
-        inputs().forEach { matcher.addInput(it) }
+        inputs.forEach { matcher.addInput(it) }
     }
 
     companion object {
         fun ofList(core: ItemStack, pedestals: List<ItemStack>): AltarRecipeInput {
-            if (pedestals.size != 12) throw UnsupportedOperationException("There have to be 9 ItemStacks in the list, there are ${pedestals.size}")
+            if (pedestals.size != AltarRecipe.MAX_INGREDIENTS) throw UnsupportedOperationException("There have to be 9 ItemStacks in the list, there are ${pedestals.size}")
 
             return AltarRecipeInput(core, pedestals)
         }
@@ -50,17 +50,17 @@ data class AltarRecipeInput(
         pedestals[11],
     )
 
-    fun inputs(): Array<ItemStack> =
-        arrayOf(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth)
+    val inputs: Array<ItemStack>
+        get() = arrayOf(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth)
 
     override fun getStackInSlot(slot: Int): ItemStack = when (slot) {
         0 -> core
-        in 1..11 -> inputs()[slot]
+        in 1..11 -> inputs[slot]
         else -> throw IllegalArgumentException("Recipe does not contain slot $slot")
     }
 
-    override fun getSize(): Int = 13
+    override fun getSize(): Int = AltarRecipe.MAX_INGREDIENTS + 1
 
     override fun isEmpty(): Boolean =
-        inputs().all { it.isEmpty }
+        inputs.all { it.isEmpty }
 }

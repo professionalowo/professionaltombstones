@@ -20,6 +20,18 @@ class AltarRecipe(
     private val result: ItemStack,
 ) :
     Recipe<AltarRecipeInput> {
+    companion object {
+        const val MAX_INGREDIENTS = 12
+        fun of(coreIngredient: Ingredient, ingredients: Iterable<Ingredient>, result: ItemStack): AltarRecipe {
+            val defaultedList: DefaultedList<Ingredient> = DefaultedList.ofSize(MAX_INGREDIENTS, Ingredient.EMPTY)
+            ingredients.take(MAX_INGREDIENTS).forEachIndexed { index, ingredient -> defaultedList[index] = ingredient }
+            return AltarRecipe(coreIngredient, defaultedList, result)
+        }
+
+        fun of(coreIngredient: Ingredient, vararg ingredients: Ingredient, result: ItemStack): AltarRecipe =
+            of(coreIngredient, ingredients.asIterable(), result)
+
+    }
 
     override fun getType(): RecipeType<*> = ModRecipieTypes.ALTAR
 
@@ -36,7 +48,7 @@ class AltarRecipe(
 
     private fun testEmptyPedestals(input: AltarRecipeInput): Boolean {
         val emptyIngredients = ingredients.count { it.isEmpty }
-        val emptyInput = input.inputs().count { it.isEmpty }
+        val emptyInput = input.inputs.count { it.isEmpty }
         return emptyInput == emptyIngredients
     }
 
@@ -59,17 +71,14 @@ class AltarRecipe(
                         .flatXmap({ ingredients ->
                             val readIngredients: List<Ingredient> =
                                 ingredients.filter { ingredient -> !ingredient.isEmpty }
-                            if (readIngredients.size > 12) return@flatXmap DataResult.error { "Too many ingredients for altar recipe" }
-                            val defList: DefaultedList<Ingredient> = DefaultedList.ofSize(12, Ingredient.EMPTY)
-                            for ((index, ingredient) in readIngredients.withIndex()) {
-                                defList[index] = ingredient
-                            }
-                            DataResult.success(defList)
+                            if (readIngredients.size > MAX_INGREDIENTS) return@flatXmap DataResult.error { "Too many ingredients for altar recipe" }
+
+                            DataResult.success(DefaultedList.copyOf(Ingredient.EMPTY, *readIngredients.toTypedArray()))
                         }, { data ->
                             DataResult.success(data)
                         }).forGetter { recipe -> recipe.ingredients },
                     ItemStack.VALIDATED_UNCOUNTED_CODEC.fieldOf("result").forGetter { recipe -> recipe.result }
-                ).apply(it) { core, ingredients, result -> AltarRecipe(core, ingredients, result) }
+                ).apply(it) { core, ingredients, result -> of(core, ingredients, result) }
             }
 
             val PACKET_CODEC: PacketCodec<RegistryByteBuf, AltarRecipe> = PacketCodec.ofStatic(::write, ::read)
