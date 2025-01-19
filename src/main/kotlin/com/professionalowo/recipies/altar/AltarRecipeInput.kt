@@ -55,7 +55,7 @@ data class AltarRecipeInput(
 
     override fun getStackInSlot(slot: Int): ItemStack = when (slot) {
         0 -> core
-        in 1..11 -> inputs[slot]
+        in 1..12 -> inputs[slot - 1]
         else -> throw IllegalArgumentException("Recipe does not contain slot $slot")
     }
 
