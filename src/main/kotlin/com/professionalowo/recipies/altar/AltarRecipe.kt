@@ -6,7 +6,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.recipies.ModRecipeSerializers
 import com.professionalowo.recipies.ModRecipieTypes
-import com.professionalowo.util.defaultedListOf
 import com.professionalowo.util.readList
 import com.professionalowo.util.writeList
 import net.minecraft.item.ItemStack
@@ -66,22 +65,22 @@ class AltarRecipe(
 
     class Serializer : RecipeSerializer<AltarRecipe> {
         companion object {
-            private val CODEC: MapCodec<AltarRecipe> = RecordCodecBuilder.mapCodec {
-                it.group(
-                    Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("core").forGetter { recipe -> recipe.coreIngredient },
+            private val CODEC: MapCodec<AltarRecipe> = RecordCodecBuilder.mapCodec { builder ->
+                builder.group(
+                    Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("core").forGetter { it.coreIngredient },
                     Ingredient.DISALLOW_EMPTY_CODEC.listOf()
                         .fieldOf("ingredients")
                         .flatXmap({ ingredients ->
                             val readIngredients: List<Ingredient> =
-                                ingredients.filter { ingredient -> !ingredient.isEmpty }
+                                ingredients.filter { !it.isEmpty }
                             if (readIngredients.size > MAX_INGREDIENTS) return@flatXmap DataResult.error { "Too many ingredients for altar recipe" }
 
                             DataResult.success(DefaultedList.copyOf(Ingredient.EMPTY, *readIngredients.toTypedArray()))
-                        }, { data ->
-                            DataResult.success(data)
-                        }).forGetter { recipe -> recipe.ingredients },
-                    ItemStack.VALIDATED_UNCOUNTED_CODEC.fieldOf("result").forGetter { recipe -> recipe.result }
-                ).apply(it) { core, ingredients, result -> of(core, ingredients, result) }
+                        }, {
+                            DataResult.success(it)
+                        }).forGetter { it.ingredients },
+                    ItemStack.VALIDATED_UNCOUNTED_CODEC.fieldOf("result").forGetter { it.result }
+                ).apply(builder) { core, ingredients, result -> of(core, ingredients, result) }
             }
 
             val PACKET_CODEC: PacketCodec<RegistryByteBuf, AltarRecipe> = PacketCodec.ofStatic(::write, ::read)
