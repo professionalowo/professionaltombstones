@@ -118,12 +118,15 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
         if (heldItem.isOf(Items.FLINT_AND_STEEL)) {
             if (cooldownManager.isCoolingDown(heldItem.item)) return ItemActionResult.FAIL
             val coreEntity = world.getBlockEntity(pos) as? AltarCoreBlockEntity ?: return ItemActionResult.FAIL
-            if(coreEntity.craft(world,pos)){
+
+            if (coreEntity.craft(world, pos, state)) {
+                coreEntity.consumePedestals(world, pos)
                 val lightningEntity = LightningEntity(EntityType.LIGHTNING_BOLT, world)
                 lightningEntity.setPosition(Vec3d.ofCenter(pos))
                 world.spawnEntity(lightningEntity)
                 cooldownManager.set(heldItem.item, 20)
             }
+
             return ItemActionResult.SUCCESS
         }
         return super.onUseWithItem(stack, state, world, pos, player, hand, hit)

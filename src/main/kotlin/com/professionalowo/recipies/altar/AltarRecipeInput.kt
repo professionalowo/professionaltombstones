@@ -50,7 +50,7 @@ data class AltarRecipeInput(
         pedestals[11],
     )
 
-    private fun inputs(): Array<ItemStack> =
+    fun inputs(): Array<ItemStack> =
         arrayOf(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth)
 
     override fun getStackInSlot(slot: Int): ItemStack = when (slot) {

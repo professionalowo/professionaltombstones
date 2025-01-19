@@ -27,11 +27,19 @@ class AltarRecipe(
     override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.ALTAR
 
     override fun matches(input: AltarRecipeInput?, world: World?): Boolean =
-        input != null && world != null && coreMatches(input) && input.matcher.match(this, null)
+        input != null && world != null && coreMatches(input) && testEmptyPedestals(input) && input.matcher.match(
+            this,
+            null
+        )
 
-    private fun coreMatches(input: AltarRecipeInput): Boolean {
-        return coreIngredient.test(input.core)
+    private fun coreMatches(input: AltarRecipeInput): Boolean = coreIngredient.test(input.core)
+
+    private fun testEmptyPedestals(input: AltarRecipeInput): Boolean {
+        val emptyIngredients = ingredients.count { it.isEmpty }
+        val emptyInput = input.inputs().count { it.isEmpty }
+        return emptyInput == emptyIngredients
     }
+
 
     override fun craft(input: AltarRecipeInput, lookup: RegistryWrapper.WrapperLookup?): ItemStack = result.copy()
 
@@ -48,17 +56,15 @@ class AltarRecipe(
                     Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("core").forGetter { recipe -> recipe.coreIngredient },
                     Ingredient.DISALLOW_EMPTY_CODEC.listOf()
                         .fieldOf("ingredients")
-                        .flatXmap<DefaultedList<Ingredient>>({ ingredients ->
+                        .flatXmap({ ingredients ->
                             val readIngredients: List<Ingredient> =
                                 ingredients.filter { ingredient -> !ingredient.isEmpty }
                             if (readIngredients.size > 12) return@flatXmap DataResult.error { "Too many ingredients for altar recipe" }
-
-                            DataResult.success(
-                                DefaultedList.copyOf(
-                                    Ingredient.EMPTY,
-                                    *readIngredients.toTypedArray()
-                                )
-                            )
+                            val defList: DefaultedList<Ingredient> = DefaultedList.ofSize(12, Ingredient.EMPTY)
+                            for ((index, ingredient) in readIngredients.withIndex()) {
+                                defList[index] = ingredient
+                            }
+                            DataResult.success(defList)
                         }, { data ->
                             DataResult.success(data)
                         }).forGetter { recipe -> recipe.ingredients },
