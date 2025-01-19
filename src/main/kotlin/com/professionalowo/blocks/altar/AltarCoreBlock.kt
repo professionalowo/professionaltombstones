@@ -17,7 +17,6 @@ import net.minecraft.item.Items
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
-import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.ItemActionResult
 import net.minecraft.util.hit.BlockHitResult

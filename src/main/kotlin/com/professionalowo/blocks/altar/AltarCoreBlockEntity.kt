@@ -5,7 +5,6 @@ import com.professionalowo.recipies.ModRecipieTypes
 import com.professionalowo.recipies.altar.AltarRecipe
 import com.professionalowo.recipies.altar.AltarRecipeInput
 import net.minecraft.block.BlockState
-import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeManager
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
