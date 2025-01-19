@@ -7,9 +7,7 @@ import net.minecraft.network.codec.PacketEncoder
 fun <T> RegistryByteBuf.writeList(list: List<T>, encoder: PacketEncoder<RegistryByteBuf, T>) {
     fun encode(value: T) = encoder.encode(this, value)
     writeVarInt(list.size)
-    for (i in list) {
-        encode(i)
-    }
+    list.forEach { encode(it) }
 }
 
 fun <T> RegistryByteBuf.readList(decoder: PacketDecoder<RegistryByteBuf, T>): List<T> {
