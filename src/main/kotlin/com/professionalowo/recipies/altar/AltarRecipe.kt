@@ -71,11 +71,11 @@ class AltarRecipe(
                     Ingredient.DISALLOW_EMPTY_CODEC.listOf()
                         .fieldOf("ingredients")
                         .flatXmap({ ingredients ->
-                            val readIngredients: List<Ingredient> =
-                                ingredients.filter { !it.isEmpty }
+                            val readIngredients: Array<Ingredient> =
+                                ingredients.filter { !it.isEmpty }.toTypedArray()
                             if (readIngredients.size > MAX_INGREDIENTS) return@flatXmap DataResult.error { "Too many ingredients for altar recipe" }
 
-                            DataResult.success(DefaultedList.copyOf(Ingredient.EMPTY, *readIngredients.toTypedArray()))
+                            DataResult.success(DefaultedList.copyOf(Ingredient.EMPTY, *readIngredients))
                         }, {
                             DataResult.success(it)
                         }).forGetter { it.ingredients },
