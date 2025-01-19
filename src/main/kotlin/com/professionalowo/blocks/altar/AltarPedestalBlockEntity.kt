@@ -4,7 +4,6 @@ import com.professionalowo.blocks.ModBlockEntities
 import com.professionalowo.util.addParticle
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.item.ItemStack
 import net.minecraft.particle.ItemStackParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.util.math.BlockPos
