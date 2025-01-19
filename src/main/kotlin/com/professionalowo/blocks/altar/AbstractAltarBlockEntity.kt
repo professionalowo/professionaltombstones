@@ -104,22 +104,4 @@ abstract class AbstractAltarBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
     open fun tick(world: World, pos: BlockPos, state: BlockState) {
         ticks++
     }
-
-    fun consumeItem(world: World) {
-        if (!item.isEmpty) {
-            val random = world.random
-            for (i in 0..10) {
-                world.addParticle(
-                    ItemStackParticleEffect(ParticleTypes.ITEM, item.copy()),
-                    Vec3d.ofCenter(pos.up()),
-                    Vec3d(
-                        random.nextGaussian() * 0.15,
-                        random.nextDouble() * 0.2,
-                        random.nextGaussian() * 0.15
-                    )
-                )
-            }
-        }
-        item = ItemStack.EMPTY
-    }
 }
