@@ -85,15 +85,15 @@ class AltarRecipe(
 
             val PACKET_CODEC: PacketCodec<RegistryByteBuf, AltarRecipe> = PacketCodec.ofStatic(::write, ::read)
 
-            fun write(buf: RegistryByteBuf, recipe: AltarRecipe) {
+            fun write(buf: RegistryByteBuf, recipe: AltarRecipe) = recipe.run {
                 //core
-                Ingredient.PACKET_CODEC.encode(buf, recipe.coreIngredient)
+                Ingredient.PACKET_CODEC.encode(buf, coreIngredient)
 
                 //ingredients
-                buf.writeList(recipe.ingredients, Ingredient.PACKET_CODEC)
+                buf.writeList(ingredients, Ingredient.PACKET_CODEC)
 
                 //result
-                ItemStack.PACKET_CODEC.encode(buf, recipe.result)
+                ItemStack.PACKET_CODEC.encode(buf, result)
             }
 
             fun read(buf: RegistryByteBuf): AltarRecipe {
