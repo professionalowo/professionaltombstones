@@ -21,15 +21,15 @@ object ModItems : Initializer() {
         WitherSwordItem(),
     )
 
+    val ALTAR_FOCUS = createItem(
+        "altar_focus_item",
+        Item(Item.Settings().maxCount(1))
+    )
+
     data class RegisteredItem(val key: RegistryKey<Item>, val item: Item) : ItemConvertible by item
 
-    private fun register(item: Item, registryKey: RegistryKey<Item>): Item {
-        // Register the item.
-        val registeredItem: Item = Registry.register(Registries.ITEM, registryKey.value, item)
-
-        // Return the registered item!
-        return registeredItem
-    }
+    private fun register(item: Item, registryKey: RegistryKey<Item>): Item =
+        Registry.register(Registries.ITEM, registryKey.value, item)
 
     private fun createItem(id: String, item: Item): RegisteredItem {
         val key = RegistryKey.of(RegistryKeys.ITEM, modIdentifier(id))

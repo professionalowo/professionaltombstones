@@ -2,6 +2,7 @@ package com.professionalowo.blocks.altar
 
 import com.mojang.serialization.MapCodec
 import com.professionalowo.blocks.ModBlockEntities
+import com.professionalowo.items.ModItems
 import com.professionalowo.util.*
 import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
@@ -13,7 +14,6 @@ import net.minecraft.entity.EntityType
 import net.minecraft.entity.LightningEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -113,7 +113,7 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
     ): ItemActionResult {
         val heldItem = player.getStackInHand(hand)
 
-        return if (heldItem.isOf(Items.FLINT_AND_STEEL)) {
+        return if (heldItem.isOf(ModItems.ALTAR_FOCUS.asItem())) {
             craft(player, heldItem, world, pos, state)
         } else {
             super.onUseWithItem(stack, state, world, pos, player, hand, hit)
