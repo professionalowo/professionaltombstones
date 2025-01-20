@@ -8,5 +8,6 @@
   "item.professionaltombstones.altar_core_block": "Altar Core",
   "item.professionaltombstones.altar_pedestal_block": "Altar Pedestal",
   "item.professionaltombstones.wither_sword_item": "Wither Sword",
+  "wither_sword_tooltip": "Why would you ever do that?",
   "sound.professionaltombstones.tombstone_creaking": "Tombstone creaking"
 }
