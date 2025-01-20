@@ -26,6 +26,12 @@
         "value": "com.professionalowo.ProfessionaltombstonesClient",
         "adapter": "kotlin"
       }
+    ],
+    "fabric-datagen": [
+      {
+        "value": "com.professionalowo.ProfessionaltombstonesDataGenerator",
+        "adapter": "kotlin"
+      }
     ]
   },
   "mixins": [

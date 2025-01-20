@@ -4,13 +4,11 @@ import com.professionalowo.Initializer
 import com.professionalowo.items.swords.WitherSwordItem
 import com.professionalowo.util.modIdentifier
 import net.minecraft.item.Item
-import net.minecraft.item.SwordItem
-import net.minecraft.item.ToolMaterials
+import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.util.Rarity
 
 
 object ModItems : Initializer() {
@@ -23,7 +21,7 @@ object ModItems : Initializer() {
         WitherSwordItem(),
     )
 
-    data class RegisteredItem(val key: RegistryKey<Item>, val item: Item)
+    data class RegisteredItem(val key: RegistryKey<Item>, val item: Item) : ItemConvertible by item
 
     private fun register(item: Item, registryKey: RegistryKey<Item>): Item {
         // Register the item.

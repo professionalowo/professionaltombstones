@@ -24,7 +24,7 @@ object ModTabs : Initializer() {
             ModBlocks.TOMBSTONE_BLOCK,
             ModBlocks.ALTAR_PEDESTAL_BLOCK,
             ModBlocks.ALTAR_CORE_BLOCK,
-            ModItems.WITHER_SWORD.item
+            ModItems.WITHER_SWORD
         )
 
         logger.info("Initialized ItemGroups")
