@@ -112,23 +112,33 @@ class AltarCoreBlock(settings: Settings) : AbstractAltarBlock(settings) {
         hit: BlockHitResult
     ): ItemActionResult {
         val heldItem = player.getStackInHand(hand)
-        val cooldownManager = player.itemCooldownManager
 
-
-        if (heldItem.isOf(Items.FLINT_AND_STEEL)) {
-            if (cooldownManager.isCoolingDown(heldItem.item)) return ItemActionResult.FAIL
-            val coreEntity = world.getBlockEntity(pos) as? AltarCoreBlockEntity ?: return ItemActionResult.FAIL
-
-            if (coreEntity.craft(world, pos, state)) {
-                coreEntity.consumePedestals(world, pos)
-                val lightningEntity = LightningEntity(EntityType.LIGHTNING_BOLT, world)
-                lightningEntity.setPosition(Vec3d.ofCenter(pos))
-                world.spawnEntity(lightningEntity)
-                cooldownManager.set(heldItem.item, 20)
-            }
-
-            return ItemActionResult.SUCCESS
+        return if (heldItem.isOf(Items.FLINT_AND_STEEL)) {
+            craft(player, heldItem, world, pos, state)
+        } else {
+            super.onUseWithItem(stack, state, world, pos, player, hand, hit)
         }
-        return super.onUseWithItem(stack, state, world, pos, player, hand, hit)
+    }
+
+    private fun craft(
+        player: PlayerEntity,
+        heldItem: ItemStack,
+        world: World,
+        pos: BlockPos,
+        state: BlockState
+    ): ItemActionResult {
+        val cooldownManager = player.itemCooldownManager
+        if (cooldownManager.isCoolingDown(heldItem.item)) return ItemActionResult.FAIL
+        val coreEntity = world.getBlockEntity(pos) as? AltarCoreBlockEntity ?: return ItemActionResult.FAIL
+
+        if (coreEntity.craft(world, pos, state)) {
+            coreEntity.consumePedestals(world, pos)
+            val lightningEntity = LightningEntity(EntityType.LIGHTNING_BOLT, world)
+            lightningEntity.setPosition(Vec3d.ofCenter(pos))
+            world.spawnEntity(lightningEntity)
+            cooldownManager.set(heldItem.item, 20)
+        }
+
+        return ItemActionResult.SUCCESS
     }
 }
