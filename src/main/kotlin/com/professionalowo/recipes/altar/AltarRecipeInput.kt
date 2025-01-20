@@ -1,4 +1,4 @@
-package com.professionalowo.recipies.altar
+package com.professionalowo.recipes.altar
 
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeMatcher

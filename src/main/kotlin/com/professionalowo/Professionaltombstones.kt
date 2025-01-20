@@ -5,8 +5,8 @@ import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.creative_tabs.ModTabs
 import com.professionalowo.gamerules.ModGameRules
 import com.professionalowo.items.ModItems
-import com.professionalowo.recipies.ModRecipeSerializers
-import com.professionalowo.recipies.ModRecipieTypes
+import com.professionalowo.recipes.ModRecipeSerializers
+import com.professionalowo.recipes.ModRecipieTypes
 import com.professionalowo.sound.ModSoundEvents
 import net.fabricmc.api.ModInitializer
 

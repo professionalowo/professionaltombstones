@@ -1,7 +1,7 @@
-package com.professionalowo.recipies
+package com.professionalowo.recipes
 
 import com.professionalowo.Initializer
-import com.professionalowo.recipies.altar.AltarRecipe
+import com.professionalowo.recipes.altar.AltarRecipe
 import com.professionalowo.util.modIdentifier
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeSerializer

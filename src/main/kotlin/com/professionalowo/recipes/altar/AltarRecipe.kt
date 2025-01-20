@@ -1,11 +1,11 @@
-package com.professionalowo.recipies.altar
+package com.professionalowo.recipes.altar
 
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import com.professionalowo.blocks.ModBlocks
-import com.professionalowo.recipies.ModRecipeSerializers
-import com.professionalowo.recipies.ModRecipieTypes
+import com.professionalowo.recipes.ModRecipeSerializers
+import com.professionalowo.recipes.ModRecipieTypes
 import com.professionalowo.util.readList
 import com.professionalowo.util.writeList
 import net.minecraft.item.ItemStack

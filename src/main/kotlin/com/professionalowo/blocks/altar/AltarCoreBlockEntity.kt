@@ -1,9 +1,9 @@
 package com.professionalowo.blocks.altar
 
 import com.professionalowo.blocks.ModBlockEntities
-import com.professionalowo.recipies.ModRecipieTypes
-import com.professionalowo.recipies.altar.AltarRecipe
-import com.professionalowo.recipies.altar.AltarRecipeInput
+import com.professionalowo.recipes.ModRecipieTypes
+import com.professionalowo.recipes.altar.AltarRecipe
+import com.professionalowo.recipes.altar.AltarRecipeInput
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.recipe.RecipeManager
