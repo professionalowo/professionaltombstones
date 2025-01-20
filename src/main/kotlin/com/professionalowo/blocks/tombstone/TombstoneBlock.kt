@@ -112,7 +112,9 @@ class TombstoneBlock(settings: Settings) : BlockWithEntity(settings), Waterlogga
         newState: BlockState,
         moved: Boolean
     ) {
-        ItemScatterer.onStateReplaced(state, newState, world, pos)
+        if (!world.isClient){
+            ItemScatterer.onStateReplaced(state, newState, world, pos)
+        }
         super.onStateReplaced(state, world, pos, newState, moved)
     }
 

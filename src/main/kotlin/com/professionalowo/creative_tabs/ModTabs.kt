@@ -3,6 +3,7 @@ package com.professionalowo.creative_tabs
 import com.professionalowo.Initializer
 import com.professionalowo.Professionaltombstones
 import com.professionalowo.blocks.ModBlocks
+import com.professionalowo.items.ModItems
 import com.professionalowo.util.modIdentifier
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
@@ -19,7 +20,12 @@ object ModTabs : Initializer() {
     val TOMBSTONE_GROUP = createGroup("tombstone_group", ModBlocks.TOMBSTONE_BLOCK)
 
     override fun initialize() {
-        TOMBSTONE_GROUP.register(ModBlocks.TOMBSTONE_BLOCK, ModBlocks.ALTAR_PEDESTAL_BLOCK, ModBlocks.ALTAR_CORE_BLOCK)
+        TOMBSTONE_GROUP.register(
+            ModBlocks.TOMBSTONE_BLOCK,
+            ModBlocks.ALTAR_PEDESTAL_BLOCK,
+            ModBlocks.ALTAR_CORE_BLOCK,
+            ModItems.WITHER_SWORD.item
+        )
 
         logger.info("Initialized ItemGroups")
     }
