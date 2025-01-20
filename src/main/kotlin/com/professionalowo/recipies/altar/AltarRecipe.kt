@@ -65,7 +65,7 @@ class AltarRecipe(
 
     class Serializer : RecipeSerializer<AltarRecipe> {
         companion object {
-            private val CODEC: MapCodec<AltarRecipe> = RecordCodecBuilder.mapCodec { builder ->
+            val CODEC: MapCodec<AltarRecipe> = RecordCodecBuilder.mapCodec { builder ->
                 builder.group(
                     Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("core").forGetter { it.coreIngredient },
                     Ingredient.DISALLOW_EMPTY_CODEC.listOf()
