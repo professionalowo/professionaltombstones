@@ -14,7 +14,7 @@ object ModRecipieTypes : Initializer() {
     override fun initialize() = logger.info("Initialized Recipe Types")
 
 
-    fun register(id: String): AltarRecipeType =
+    private fun register(id: String): AltarRecipeType =
         Registry.register(Registries.RECIPE_TYPE, modIdentifier(id), AltarRecipeType(id))
 
 
