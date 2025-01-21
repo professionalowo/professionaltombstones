@@ -9,11 +9,14 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object ModRecipeSerializers : Initializer() {
-    val ALTAR = register("crafting_altar", AltarRecipe.Serializer())
+    val ALTAR = register("crafting_altar") { AltarRecipe.Serializer() }
 
     override fun initialize() = logger.info("Initialized Recipe Serializers")
 
-    fun <S : RecipeSerializer<T>?, T : Recipe<*>?> register(id: String, serializer: S): S {
-        return Registry.register(Registries.RECIPE_SERIALIZER, modIdentifier(id), serializer)
+    private inline fun <S : RecipeSerializer<T>, T : Recipe<*>> register(
+        id: String,
+        serializerProvider: (String) -> S
+    ): S {
+        return Registry.register(Registries.RECIPE_SERIALIZER, modIdentifier(id), serializerProvider(id))
     }
 }
