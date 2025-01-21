@@ -17,8 +17,9 @@ class WitherSwordItem : SwordItem(
     )
 ) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity): Boolean {
-        val effect = StatusEffectInstance(StatusEffects.WITHER, 60, 3, false, true, true)
-        target.addStatusEffect(effect)
+        target.addStatusEffect(
+            StatusEffectInstance(StatusEffects.WITHER, 60, 3, false, true, true)
+        )
         return super.postHit(stack, target, attacker)
     }
 

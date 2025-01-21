@@ -14,9 +14,9 @@ object ModRecipieTypes : Initializer() {
     override fun initialize() = logger.info("Initialized Recipe Types")
 
 
-    fun register(id: String): AltarRecipeType {
-        return Registry.register(Registries.RECIPE_TYPE, modIdentifier(id), AltarRecipeType(id))
-    }
+    fun register(id: String): AltarRecipeType =
+        Registry.register(Registries.RECIPE_TYPE, modIdentifier(id), AltarRecipeType(id))
+
 
     class AltarRecipeType(private val id: String) : RecipeType<AltarRecipe> {
         override fun toString(): String = id
