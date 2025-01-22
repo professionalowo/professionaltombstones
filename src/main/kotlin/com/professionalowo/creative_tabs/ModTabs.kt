@@ -18,20 +18,14 @@ import net.minecraft.text.Text
 
 object ModTabs : Initializer() {
     val TOMBSTONE_GROUP = registerGroup("tombstone_group", ModBlocks.TOMBSTONE_BLOCK)
-    val TOMBSTONE_ITEM_GROUP = registerGroup("tombstone_item_group", ModItems.ALTAR_FOCUS)
-    val TOMBSTONE_BLOCK_GROUP = registerGroup("tombstone_block_group", ModBlocks.ALTAR_CORE_BLOCK)
 
     override fun initialize() {
         TOMBSTONE_GROUP.register(
-            ModBlocks.TOMBSTONE_BLOCK
-        )
-        TOMBSTONE_ITEM_GROUP.register(
+            ModBlocks.TOMBSTONE_BLOCK,
+            ModBlocks.ALTAR_PEDESTAL_BLOCK,
+            ModBlocks.ALTAR_CORE_BLOCK,
             ModItems.WITHER_SWORD,
             ModItems.ALTAR_FOCUS
-        )
-        TOMBSTONE_BLOCK_GROUP.register(
-            ModBlocks.ALTAR_PEDESTAL_BLOCK,
-            ModBlocks.ALTAR_CORE_BLOCK
         )
 
         logger.info("Initialized ItemGroups")
