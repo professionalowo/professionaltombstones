@@ -26,12 +26,12 @@ object ModItems : Initializer() {
         Item(Item.Settings().maxCount(1))
     )
 
-    data class RegisteredItem(val key: RegistryKey<Item>, val item: Item) : ItemConvertible by item
+    data class RegisteredItem<I : Item>(val key: RegistryKey<Item>, val item: I) : ItemConvertible by item
 
-    private fun register(item: Item, registryKey: RegistryKey<Item>): Item =
+    private fun <I : Item> register(item: I, registryKey: RegistryKey<Item>): I =
         Registry.register(Registries.ITEM, registryKey.value, item)
 
-    private fun createItem(id: String, item: Item): RegisteredItem {
+    private fun <I : Item> createItem(id: String, item: I): RegisteredItem<I> {
         val key = RegistryKey.of(RegistryKeys.ITEM, modIdentifier(id))
         return RegisteredItem(key, register(item, key))
     }
