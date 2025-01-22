@@ -16,23 +16,24 @@ object ModItems : Initializer() {
         logger.info("Initialized Items")
     }
 
-    val WITHER_SWORD = createItem(
+    val WITHER_SWORD = registerItem(
         "wither_sword_item",
         WitherSwordItem(),
     )
 
-    val ALTAR_FOCUS = createItem(
+    val ALTAR_FOCUS = registerItem(
         "altar_focus_item",
         Item(Item.Settings().maxCount(1))
     )
 
     data class RegisteredItem<I : Item>(val key: RegistryKey<Item>, val item: I) : ItemConvertible by item
 
-    private fun <I : Item> register(item: I, registryKey: RegistryKey<Item>): I =
+    private fun <I : Item> register(registryKey: RegistryKey<Item>, item: I): I =
         Registry.register(Registries.ITEM, registryKey.value, item)
 
-    private fun <I : Item> createItem(id: String, item: I): RegisteredItem<I> {
+    private fun <I : Item> registerItem(id: String, item: I): RegisteredItem<I> {
         val key = RegistryKey.of(RegistryKeys.ITEM, modIdentifier(id))
-        return RegisteredItem(key, register(item, key))
+        val registered = register(key, item)
+        return RegisteredItem(key, registered)
     }
 }

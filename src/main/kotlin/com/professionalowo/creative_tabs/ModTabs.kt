@@ -17,7 +17,7 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 
 object ModTabs : Initializer() {
-    val TOMBSTONE_GROUP = createGroup("tombstone_group", ModBlocks.TOMBSTONE_BLOCK)
+    val TOMBSTONE_GROUP = registerGroup("tombstone_group", ModBlocks.TOMBSTONE_BLOCK)
 
     override fun initialize() {
         TOMBSTONE_GROUP.register(
@@ -43,16 +43,16 @@ data class Group(val key: RegistryKey<ItemGroup>, val itemGroup: ItemGroup) {
 /**
  * Creates an ItemGroup and RegistryKey<ItemGroup> from the supplied id
  */
-fun createGroup(id: String, iconSupplier: () -> ItemStack): Group {
+fun registerGroup(id: String, iconSupplier: () -> ItemStack): Group {
     val key = RegistryKey.of(Registries.ITEM_GROUP.key, modIdentifier(id))
     val group = createItemGroup(id, iconSupplier)
     return Group(key, Registry.register(Registries.ITEM_GROUP, key, group))
 }
 
 /**
- * @see createGroup
+ * @see registerGroup
  */
-fun createGroup(id: String, iconItem: ItemConvertible) = createGroup(id) { ItemStack(iconItem) }
+fun registerGroup(id: String, iconItem: ItemConvertible) = registerGroup(id) { ItemStack(iconItem) }
 
 /**
  * Simple function to create an ItemGroup with a name and icon
