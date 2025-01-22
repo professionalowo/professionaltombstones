@@ -7,6 +7,7 @@ import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.util.Identifier
 
 object ModRecipeSerializers : Initializer() {
     val ALTAR = register("crafting_altar") { AltarRecipe.Serializer() }
@@ -15,6 +16,6 @@ object ModRecipeSerializers : Initializer() {
 
     private inline fun <S : RecipeSerializer<T>, T : Recipe<*>> register(
         id: String,
-        serializerProvider: (String) -> S
-    ): S = Registry.register(Registries.RECIPE_SERIALIZER, modIdentifier(id), serializerProvider(id))
+        serializerProvider: (Identifier) -> S
+    ): S = modIdentifier(id).let { Registry.register(Registries.RECIPE_SERIALIZER, it, serializerProvider(it)) }
 }
