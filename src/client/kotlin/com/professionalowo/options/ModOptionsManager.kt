@@ -15,12 +15,12 @@ object ModOptionsManager {
         getSpawnGravestoneOption(client),
     )
 
-    fun createWidgetKey(name: String): String = "options.${MOD_ID}.$name"
+    private fun createOptionKey(name: String): String = "options.${MOD_ID}.$name"
 
 
     private fun getSpawnGravestoneOption(client: MinecraftClient?) =
         if (client?.world != null && client.isIntegratedServerRunning) SimpleOption(
-            createWidgetKey("spawn_gravestone"),
+            createOptionKey("spawn_gravestone"),
             SimpleOption.emptyTooltip(),
             { _: Text, value: Boolean -> Text.literal(value.toString()) },
             SimpleOption.BOOLEAN,
