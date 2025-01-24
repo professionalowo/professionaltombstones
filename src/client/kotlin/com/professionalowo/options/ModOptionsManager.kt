@@ -8,12 +8,8 @@ import net.minecraft.text.Text
 
 object ModOptionsManager {
     fun getOptions(client: MinecraftClient?): Array<SimpleOption<*>> =
-        arrayListOf(*getIntegratedWorldOptions(client)).filterNotNull().toTypedArray()
+        getSpawnGravestoneOption(client)?.let { arrayOf(it) } ?: emptyArray()
 
-
-    private fun getIntegratedWorldOptions(client: MinecraftClient?): Array<SimpleOption<*>?> = arrayOf(
-        getSpawnGravestoneOption(client),
-    )
 
     private fun createOptionKey(name: String): String = "options.${MOD_ID}.$name"
 
@@ -29,8 +25,5 @@ object ModOptionsManager {
             val server = client.server ?: return@SimpleOption
             server.gameRules?.get(ModGameRules.SPAWN_GRAVESTONE)?.set(it, server)
         } else null
-
-
-    fun save(){}
 }
 

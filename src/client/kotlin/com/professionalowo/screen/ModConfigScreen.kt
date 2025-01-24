@@ -18,10 +18,4 @@ class ModConfigScreen(parent: Screen?) : GameOptionsScreen(
     override fun addOptions() {
         body?.addAll(*ModOptionsManager.getOptions(client))
     }
-
-    override fun removed() {
-        ModOptionsManager.save()
-    }
-
-
 }
