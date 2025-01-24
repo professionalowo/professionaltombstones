@@ -30,5 +30,7 @@ object ModOptionsManager {
             server.gameRules?.get(ModGameRules.SPAWN_GRAVESTONE)?.set(it, server)
         } else null
 
+
+    fun save(){}
 }
 
