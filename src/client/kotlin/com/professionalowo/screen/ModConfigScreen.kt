@@ -12,7 +12,7 @@ class ModConfigScreen(private val parent: Screen?) : Screen(Text.literal(MOD_ID)
     override fun close() = client?.setScreen(parent) ?: Unit
 
     override fun init() {
-        val closeButton = ButtonWidget.builder(Text.literal("Close")) {
+        val closeButton = ButtonWidget.builder(Text.literal("Done")) {
             close()
         }.build()
         closeButton.setPosition((width - closeButton.width) / 2, (height - closeButton.height) / 2)
