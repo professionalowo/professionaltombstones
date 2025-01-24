@@ -28,8 +28,8 @@ class ModEnchantmentGenerator(output: FabricDataOutput?, registriesFuture: Compl
                     registries.getWrapperOrThrow(RegistryKeys.ITEM).getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
                     5,
                     1,
-                    Enchantment.leveledCost(1, 8),
-                    Enchantment.leveledCost(1, 10),
+                    Enchantment.constantCost(8),
+                    Enchantment.constantCost(10),
                     5,
                     AttributeModifierSlot.BODY
                 )
