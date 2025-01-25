@@ -2,7 +2,6 @@ package com.professionalowo.mixin;
 
 
 import com.professionalowo.VillagerUtil;
-import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.passive.VillagerEntity;
 
 import org.spongepowered.asm.mixin.Mixin;
