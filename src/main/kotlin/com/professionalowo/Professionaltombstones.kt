@@ -3,6 +3,7 @@ package com.professionalowo
 import com.professionalowo.blocks.ModBlockEntities
 import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.creative_tabs.ModTabs
+import com.professionalowo.enchantments.ModEnchantments
 import com.professionalowo.gamerules.ModGameRules
 import com.professionalowo.items.ModItems
 import com.professionalowo.recipes.ModRecipeSerializers
@@ -21,6 +22,7 @@ object Professionaltombstones : Initializer(), ModInitializer {
             ModGameRules,
             ModTabs,
             ModBlockEntities,
+            ModEnchantments,
             ModBlocks,
             ModItems,
         ).forEach { it.initialize() }

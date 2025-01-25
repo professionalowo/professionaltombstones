@@ -1,16 +1,12 @@
 package com.professionalowo.generator
 
-import com.professionalowo.ModEnchantments
-import com.professionalowo.ModEnchantments.SOULBOUND
+import com.professionalowo.enchantments.ModEnchantments.SOULBOUND
+import com.professionalowo.Professionaltombstones.MOD_ID
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
-import net.minecraft.component.EnchantmentEffectComponentTypes
 import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.enchantment.Enchantment
-import net.minecraft.enchantment.EnchantmentLevelBasedValue
-import net.minecraft.enchantment.effect.EnchantmentEffectTarget
-import net.minecraft.enchantment.effect.EnchantmentEntityEffect
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper.WrapperLookup
@@ -22,19 +18,7 @@ class ModEnchantmentGenerator(output: FabricDataOutput?, registriesFuture: Compl
     FabricDynamicRegistryProvider(output, registriesFuture) {
 
     override fun configure(registries: WrapperLookup, entries: Entries) = entries.run {
-        register(
-            SOULBOUND, Enchantment.builder(
-                Enchantment.definition(
-                    registries.getWrapperOrThrow(RegistryKeys.ITEM).getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
-                    5,
-                    1,
-                    Enchantment.constantCost(8),
-                    Enchantment.constantCost(10),
-                    5,
-                    AttributeModifierSlot.BODY
-                )
-            )
-        )
+
     }
 
     private fun Entries.register(
@@ -46,6 +30,6 @@ class ModEnchantmentGenerator(output: FabricDataOutput?, registriesFuture: Compl
     }
 
     override fun getName(): String {
-        return "ReferenceDocEnchantmentGenerator"
+        return "${MOD_ID}EnchantmentGenerator"
     }
 }

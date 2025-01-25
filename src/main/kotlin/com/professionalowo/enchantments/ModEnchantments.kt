@@ -1,12 +1,12 @@
-package com.professionalowo
+package com.professionalowo.enchantments
 
+import com.professionalowo.Initializer
 import com.professionalowo.util.modIdentifier
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 
 object ModEnchantments : Initializer() {
-    val SOULBOUND = of("soulbound")
 
     override fun initialize() = logger.info("Initialising Enchantments")
 
