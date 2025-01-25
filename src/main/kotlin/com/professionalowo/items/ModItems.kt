@@ -1,6 +1,8 @@
 package com.professionalowo.items
 
 import com.professionalowo.Initializer
+import com.professionalowo.items.misc.FilledSoulVialItem
+import com.professionalowo.items.misc.SoulVialItem
 import com.professionalowo.items.swords.WitherSwordItem
 import com.professionalowo.util.modIdentifier
 import net.minecraft.item.Item
@@ -28,6 +30,11 @@ object ModItems : Initializer() {
             )
         ),
     )
+
+    val VILLAGER_CHARM = registerItem("villager_charm_item", Item(Item.Settings().maxCount(1)))
+    val SOUL_VIAL = registerItem("soul_vial_item", SoulVialItem(Item.Settings().maxCount(16)))
+    val FILLED_SOUL_VIAL =
+        registerItem("filled_soul_vial_item", FilledSoulVialItem(Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON)))
 
     val ALTAR_FOCUS = registerItem(
         "altar_focus_item",

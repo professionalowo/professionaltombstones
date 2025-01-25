@@ -11,6 +11,10 @@
   "item.professionaltombstones.altar_pedestal_block": "Altar Pedestal",
   "item.professionaltombstones.wither_sword_item": "Wither Sword",
   "item.professionaltombstones.altar_focus_item": "Altar Focus",
+  "item.professionaltombstones.villager_charm_item": "Villager Charm",
+  "item.professionaltombstones.soul_vial_item": "Soul Vial",
+  "item.professionaltombstones.filled_soul_vial_item": "Filled Soul Vial",
   "wither_sword_tooltip": "Why would you ever do that?",
+  "filled_soul_vial_tooltip": "You are a cruel person...",
   "sound.professionaltombstones.tombstone_creaking": "Tombstone creaking"
 }

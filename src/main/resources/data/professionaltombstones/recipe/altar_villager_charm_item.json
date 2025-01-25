@@ -1,0 +1,15 @@
+{
+  "type": "professionaltombstones:crafting_altar",
+  "core": {
+    "item": "minecraft:emerald"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:soul_lantern"
+    }
+  ],
+  "result": {
+    "id": "professionaltombstones:villager_charm_item",
+    "count": 1
+  }
+}

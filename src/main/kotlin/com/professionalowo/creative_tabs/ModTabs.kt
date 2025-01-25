@@ -25,7 +25,10 @@ object ModTabs : Initializer() {
             ModBlocks.ALTAR_PEDESTAL_BLOCK,
             ModBlocks.ALTAR_CORE_BLOCK,
             ModItems.WITHER_SWORD,
-            ModItems.ALTAR_FOCUS
+            ModItems.ALTAR_FOCUS,
+            ModItems.VILLAGER_CHARM,
+            ModItems.SOUL_VIAL,
+            ModItems.FILLED_SOUL_VIAL,
         )
 
         logger.info("Initialized ItemGroups")
