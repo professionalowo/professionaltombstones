@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "minecraft:item/glass_bottle"
+		"layer0": "professionaltombstones:item/filled_soul_vial_item"
 	}
 }

@@ -7,6 +7,7 @@ import net.minecraft.item.*
 import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
+
 class WitherSwordItem(material: ToolMaterial, settings: Settings) : SwordItem(
     material, settings,
 ) {
