@@ -5,10 +5,13 @@ import com.professionalowo.items.swords.WitherSwordItem
 import com.professionalowo.util.modIdentifier
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.item.SwordItem.createAttributeModifiers
+import net.minecraft.item.ToolMaterials
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.util.Rarity
 
 
 object ModItems : Initializer() {
@@ -18,7 +21,12 @@ object ModItems : Initializer() {
 
     val WITHER_SWORD = registerItem(
         "wither_sword_item",
-        WitherSwordItem(),
+        WitherSwordItem(
+            ToolMaterials.NETHERITE,
+            Item.Settings().fireproof().rarity(Rarity.EPIC).attributeModifiers(
+                createAttributeModifiers(ToolMaterials.NETHERITE, 5, -2.4f)
+            )
+        ),
     )
 
     val ALTAR_FOCUS = registerItem(
