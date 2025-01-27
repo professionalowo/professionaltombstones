@@ -5,7 +5,10 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:soul_lantern"
+      "item": "professionaltombstones:filled_soul_vial_item"
+    },
+    {
+      "item": "minecraft:wither_skeleton_skull"
     }
   ],
   "result": {
