@@ -6,8 +6,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.recipes.ModRecipeSerializers
 import com.professionalowo.recipes.ModRecipieTypes
-import com.professionalowo.util.readList
-import com.professionalowo.util.writeList
+import com.professionalowo.util.decodeList
+import com.professionalowo.util.encodeList
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -90,7 +90,7 @@ class AltarRecipe(
                 Ingredient.PACKET_CODEC.encode(buf, coreIngredient)
 
                 //ingredients
-                buf.writeList(ingredients, Ingredient.PACKET_CODEC)
+                Ingredient.PACKET_CODEC.encodeList(buf, ingredients)
 
                 //result
                 ItemStack.PACKET_CODEC.encode(buf, result)
@@ -98,15 +98,15 @@ class AltarRecipe(
 
             fun read(buf: RegistryByteBuf): AltarRecipe {
                 //core
-                val core = Ingredient.PACKET_CODEC.decode(buf)
+                val coreIngredient = Ingredient.PACKET_CODEC.decode(buf)
 
                 //ingredients
-                val ingredients = buf.readList(Ingredient.PACKET_CODEC)
+                val ingredients = Ingredient.PACKET_CODEC.decodeList(buf)
 
                 //result
                 val result = ItemStack.PACKET_CODEC.decode(buf)
 
-                return of(core, ingredients, result)
+                return of(coreIngredient, ingredients, result)
             }
         }
 
