@@ -1,19 +1,13 @@
 package com.professionalowo.util
 
 import net.minecraft.network.RegistryByteBuf
-import net.minecraft.network.codec.PacketDecoder
-import net.minecraft.network.codec.PacketEncoder
+import net.minecraft.network.codec.PacketCodec
+import net.minecraft.network.codec.PacketCodecs
 
-fun <T> PacketEncoder<RegistryByteBuf, T>.encodeList(buf: RegistryByteBuf, list: List<T>) {
-    buf.writeVarInt(list.size)
-    list.forEach { encode(buf, it) }
-}
 
-fun <T> PacketDecoder<RegistryByteBuf, T>.decodeList(buf: RegistryByteBuf): List<T> {
-    val size = buf.readVarInt()
-    return buildList {
-        for (i in 0 until size) {
-            add(decode(buf))
-        }
-    }
-}
+fun <T> PacketCodec<RegistryByteBuf, T>.encodeList(buf: RegistryByteBuf, list: List<T>) =
+    collect(PacketCodecs.toList()).encode(buf, list)
+
+
+fun <T> PacketCodec<RegistryByteBuf, T>.decodeList(buf: RegistryByteBuf): List<T> =
+    collect(PacketCodecs.toList()).decode(buf)
