@@ -10,13 +10,20 @@ import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 
 class SoulVialItem(settings: Settings) : Item(settings) {
-    override fun useOnEntity(stack: ItemStack, user: PlayerEntity, entity: LivingEntity, hand: Hand): ActionResult {
-        return if (entity is ZombieVillagerEntity) {
-            if (entity.health > 5) return ActionResult.FAIL
+    override fun useOnEntity(stack: ItemStack, user: PlayerEntity, entity: LivingEntity, hand: Hand): ActionResult =
+        if (entity is ZombieVillagerEntity) useOnZombieVillagerEntity(stack, user, entity)
+        else super.useOnEntity(stack, user, entity, hand)
+
+
+    private fun useOnZombieVillagerEntity(
+        stack: ItemStack,
+        user: PlayerEntity,
+        entity: ZombieVillagerEntity
+    ): ActionResult =
+        if (entity.health > 5) ActionResult.FAIL else {
             stack.decrementUnlessCreative(1, user)
             entity.kill()
             user.inventory.offerOrDrop(ItemStack(ModItems.FILLED_SOUL_VIAL))
             ActionResult.CONSUME
-        } else super.useOnEntity(stack, user, entity, hand)
-    }
+        }
 }
