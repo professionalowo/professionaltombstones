@@ -24,6 +24,6 @@ class SoulVialItem(settings: Settings) : Item(settings) {
             stack.decrementUnlessCreative(1, user)
             entity.kill()
             user.inventory.offerOrDrop(ItemStack(ModItems.FILLED_SOUL_VIAL))
-            ActionResult.CONSUME
+            ActionResult.SUCCESS
         }
 }
