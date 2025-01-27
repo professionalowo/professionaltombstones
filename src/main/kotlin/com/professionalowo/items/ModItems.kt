@@ -21,7 +21,7 @@ object ModItems : Initializer() {
         logger.info("Initialized Items")
     }
 
-    val WITHER_SWORD = registerItem(
+    val WITHER_SWORD = RegisteredItem.create(
         "wither_sword_item",
         WitherSwordItem(
             ToolMaterials.NETHERITE,
@@ -31,24 +31,25 @@ object ModItems : Initializer() {
         ),
     )
 
-    val VILLAGER_CHARM = registerItem("villager_charm_item", Item(Item.Settings().maxCount(1)))
-    val SOUL_VIAL = registerItem("soul_vial_item", SoulVialItem(Item.Settings().maxCount(16)))
+    val VILLAGER_CHARM = RegisteredItem.create("villager_charm_item", Item(Item.Settings().maxCount(1)))
+    val SOUL_VIAL = RegisteredItem.create("soul_vial_item", SoulVialItem(Item.Settings().maxCount(16)))
     val FILLED_SOUL_VIAL =
-        registerItem("filled_soul_vial_item", FilledSoulVialItem(Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON)))
+        RegisteredItem.create(
+            "filled_soul_vial_item",
+            FilledSoulVialItem(Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON))
+        )
 
-    val ALTAR_FOCUS = registerItem(
+    val ALTAR_FOCUS = RegisteredItem.create(
         "altar_focus_item",
         Item(Item.Settings().maxCount(1))
     )
 
-    data class RegisteredItem<I : Item>(val key: RegistryKey<Item>, val item: I) : ItemConvertible by item
-
-    private fun <I : Item> register(registryKey: RegistryKey<Item>, item: I): I =
-        Registry.register(Registries.ITEM, registryKey.value, item)
-
-    private fun <I : Item> registerItem(id: String, item: I): RegisteredItem<I> {
-        val key = RegistryKey.of(RegistryKeys.ITEM, modIdentifier(id))
-        val registered = register(key, item)
-        return RegisteredItem(key, registered)
+    data class RegisteredItem<I : Item>(val key: RegistryKey<Item>, val item: I) : ItemConvertible by item {
+        companion object {
+            fun <I : Item> create(id: String, item: I): RegisteredItem<I> =
+                RegistryKey.of(RegistryKeys.ITEM, modIdentifier(id)).let { key ->
+                    RegisteredItem(key, Registry.register(Registries.ITEM, key, item))
+                }
+        }
     }
 }
