@@ -23,32 +23,31 @@ object ModItems : Initializer() {
 
     val WITHER_SWORD = RegisteredItem.create(
         "wither_sword_item",
+    ) {
         WitherSwordItem(
             ToolMaterials.NETHERITE,
-            Item.Settings().fireproof().rarity(Rarity.EPIC).attributeModifiers(
+            it.fireproof().rarity(Rarity.EPIC).attributeModifiers(
                 createAttributeModifiers(ToolMaterials.NETHERITE, 5, -2.4f)
             )
-        ),
-    )
+        )
+    }
 
-    val VILLAGER_CHARM = RegisteredItem.create("villager_charm_item", Item(Item.Settings().maxCount(1)))
-    val SOUL_VIAL = RegisteredItem.create("soul_vial_item", SoulVialItem(Item.Settings().maxCount(16)))
+    val VILLAGER_CHARM = RegisteredItem.create("villager_charm_item") { Item(it.maxCount(1)) }
+    val SOUL_VIAL = RegisteredItem.create("soul_vial_item") { SoulVialItem(it.maxCount(16)) }
     val FILLED_SOUL_VIAL =
         RegisteredItem.create(
-            "filled_soul_vial_item",
-            FilledSoulVialItem(Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON))
-        )
+            "filled_soul_vial_item"
+        ) { FilledSoulVialItem(it.maxCount(1).rarity(Rarity.UNCOMMON)) }
 
     val ALTAR_FOCUS = RegisteredItem.create(
-        "altar_focus_item",
-        Item(Item.Settings().maxCount(1))
-    )
+        "altar_focus_item"
+    ) { Item(it.maxCount(1)) }
 
     data class RegisteredItem<I : Item>(val key: RegistryKey<Item>, val item: I) : ItemConvertible by item {
         companion object {
-            fun <I : Item> create(id: String, item: I): RegisteredItem<I> =
+            inline fun <I : Item> create(id: String, itemSupplier: (Item.Settings) -> I): RegisteredItem<I> =
                 RegistryKey.of(RegistryKeys.ITEM, modIdentifier(id)).let { key ->
-                    RegisteredItem(key, Registry.register(Registries.ITEM, key, item))
+                    RegisteredItem(key, Registry.register(Registries.ITEM, key, itemSupplier(Item.Settings())))
                 }
         }
     }
