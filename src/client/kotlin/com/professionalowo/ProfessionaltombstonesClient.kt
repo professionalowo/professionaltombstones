@@ -3,10 +3,14 @@ package com.professionalowo
 import com.professionalowo.Professionaltombstones.MOD_ID
 import com.professionalowo.blocks.ModBlockEntities
 import com.professionalowo.blocks.ModBlocks
+import com.professionalowo.networking.ManaUpdateS2CPayloadHandler
+import com.professionalowo.networking.ModClientNetworking
+import com.professionalowo.networking.packets.ManaUpdateS2CPayload
 import com.professionalowo.renderer.AbstractAltarBlockEntityRenderer
 import com.professionalowo.renderer.TombstoneEntityRenderer
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.block.Block
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
@@ -24,7 +28,10 @@ object ProfessionaltombstonesClient : Initializer(), ClientModInitializer {
             AbstractAltarBlockEntityRenderer(it)
         }
         logger.info("Initialized Client for $MOD_ID")
+
+        ModClientNetworking.registerS2CPackets()
     }
+
 
     override fun onInitializeClient() = initialize()
 

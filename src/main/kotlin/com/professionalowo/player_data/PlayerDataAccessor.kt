@@ -3,7 +3,7 @@ package com.professionalowo.player_data
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 
-class PlayerDataAccessor(val player: PlayerEntity) : IPlayerDataHandler {
+class PlayerDataAccessor<P : PlayerEntity>(val player: P) : IPlayerDataHandler {
     companion object {
         const val MANA_VALUE_KEY = "mana_value_key"
         const val MAX_MANA_KEY = "max_mana_key"

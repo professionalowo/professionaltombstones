@@ -1,9 +1,11 @@
 package com.professionalowo.player_data.mana
 
+import com.professionalowo.networking.packets.ManaUpdateS2CPayload
 import com.professionalowo.player_data.PlayerDataAccessor
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
-import net.minecraft.item.ItemStack
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.network.ServerPlayerEntity
 
 class ServerTickEventListenerManaRegeneration : ServerTickEvents.EndTick {
     private var ticks: Int = 0
@@ -16,7 +18,8 @@ class ServerTickEventListenerManaRegeneration : ServerTickEvents.EndTick {
         ticks++
     }
 
-    private fun regenerateMana(player: PlayerDataAccessor) = player.run {
+    private fun regenerateMana(accessor: PlayerDataAccessor<ServerPlayerEntity>) = accessor.run {
         mana = minOf(mana + getManaRegenPerSecond(), maxMana)
+        ServerPlayNetworking.send(accessor.player, ManaUpdateS2CPayload(mana))
     }
 }

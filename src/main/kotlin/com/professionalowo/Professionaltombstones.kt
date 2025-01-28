@@ -6,6 +6,7 @@ import com.professionalowo.creative_tabs.ModTabs
 import com.professionalowo.enchantments.ModEnchantments
 import com.professionalowo.gamerules.ModGameRules
 import com.professionalowo.items.ModItems
+import com.professionalowo.networking.ModPackets
 import com.professionalowo.player_data.mana.ServerTickEventListenerManaRegeneration
 import com.professionalowo.recipes.ModRecipeSerializers
 import com.professionalowo.recipes.ModRecipieTypes
@@ -18,6 +19,7 @@ object Professionaltombstones : Initializer(), ModInitializer {
 
     override fun initialize() =
         arrayOf(
+            ModPackets,
             ModRecipieTypes,
             ModRecipeSerializers,
             ModSoundEvents,
