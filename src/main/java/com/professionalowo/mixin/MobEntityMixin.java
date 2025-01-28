@@ -10,9 +10,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MobEntity.class)
-public abstract class MobEntityMixin {
+public abstract class MobEntityMixin extends EntityMixin {
 
-    @Shadow @Final protected GoalSelector goalSelector;
+    @Shadow
+    @Final
+    protected GoalSelector goalSelector;
 
     @Inject(method = "initGoals", at = @At("TAIL"))
     protected void initGoalsTail(CallbackInfo ci) {

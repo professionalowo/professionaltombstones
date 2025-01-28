@@ -7,7 +7,6 @@ import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.util.Identifier
 
 object ModRecipeSerializers : Initializer() {
     val ALTAR = register("crafting_altar") { AltarRecipe.Serializer() }

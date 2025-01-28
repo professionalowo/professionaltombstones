@@ -3,6 +3,7 @@
   "package": "com.professionalowo.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "EntityMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
     "VillagerEntityMixin"
