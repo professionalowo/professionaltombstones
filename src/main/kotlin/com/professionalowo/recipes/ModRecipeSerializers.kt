@@ -16,6 +16,6 @@ object ModRecipeSerializers : Initializer() {
 
     private inline fun <S : RecipeSerializer<T>, T : Recipe<*>> register(
         id: String,
-        serializerProvider: (Identifier) -> S
-    ): S = modIdentifier(id).let { Registry.register(Registries.RECIPE_SERIALIZER, it, serializerProvider(it)) }
+        serializerProvider: () -> S
+    ): S = modIdentifier(id).let { Registry.register(Registries.RECIPE_SERIALIZER, it, serializerProvider()) }
 }
