@@ -18,7 +18,7 @@ import static com.professionalowo.OnPlayerDeathKt.afterDeath;
 import static com.professionalowo.util.IdentifierUtilKt.modIdentifier;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends EntityMixin implements IPlayerDataHandler {
+public abstract class PlayerEntityMixin extends LivingEntityMixin implements IPlayerDataHandler {
 
     @Unique
     private NbtCompound customData;
