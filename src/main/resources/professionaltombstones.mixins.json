@@ -3,8 +3,10 @@
   "package": "com.professionalowo.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "EntityMixin",
+    "LivingEntityMixin",
     "MobEntityMixin",
-    "ServerPlayerEntityMixin",
+    "PlayerEntityMixin",
     "VillagerEntityMixin"
   ],
   "injectors": {

@@ -1,0 +1,18 @@
+{
+  "type": "professionaltombstones:crafting_altar",
+  "core": {
+    "item": "minecraft:emerald"
+  },
+  "ingredients": [
+    {
+      "item": "professionaltombstones:filled_soul_vial_item"
+    },
+    {
+      "item": "minecraft:wither_skeleton_skull"
+    }
+  ],
+  "result": {
+    "id": "professionaltombstones:villager_charm_item",
+    "count": 1
+  }
+}

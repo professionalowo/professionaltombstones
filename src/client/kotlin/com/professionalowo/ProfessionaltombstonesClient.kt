@@ -17,7 +17,10 @@ object ProfessionaltombstonesClient : Initializer(), ClientModInitializer {
             .putBlocks(ModBlocks.TOMBSTONE_BLOCK, ModBlocks.ALTAR_CORE_BLOCK, ModBlocks.ALTAR_PEDESTAL_BLOCK)
 
         BlockEntityRendererFactories.register(ModBlockEntities.TOMBSTONE_BLOCK_ENTITY) { TombstoneEntityRenderer(it) }
-        BlockEntityRendererFactories.register(ModBlockEntities.ALTAR_BLOCK_ENTITY) {
+        BlockEntityRendererFactories.register(ModBlockEntities.ALTAR_PEDESTAL_BLOCK_ENTITY) {
+            AbstractAltarBlockEntityRenderer(it)
+        }
+        BlockEntityRendererFactories.register(ModBlockEntities.ALTAR_CORE_BLOCK_ENTITY) {
             AbstractAltarBlockEntityRenderer(it)
         }
         logger.info("Initialized Client for $MOD_ID")

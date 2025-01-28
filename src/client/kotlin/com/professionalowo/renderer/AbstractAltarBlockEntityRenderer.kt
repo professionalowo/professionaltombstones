@@ -1,6 +1,6 @@
 package com.professionalowo.renderer
 
-import com.professionalowo.blocks.altar.AltarBlockEntity
+import com.professionalowo.blocks.altar.AbstractAltarBlockEntity
 import com.professionalowo.util.rotateAllAxes
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -10,15 +10,14 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.util.math.RotationAxis
 import kotlin.math.sin
 
 @Environment(EnvType.CLIENT)
 class AbstractAltarBlockEntityRenderer(private val ctx: BlockEntityRendererFactory.Context) :
-    BlockEntityRenderer<AltarBlockEntity> {
+    BlockEntityRenderer<AbstractAltarBlockEntity> {
 
     override fun render(
-        entity: AltarBlockEntity,
+        entity: AbstractAltarBlockEntity,
         tickDelta: Float,
         matrices: MatrixStack,
         vertexConsumers: VertexConsumerProvider,
@@ -44,7 +43,7 @@ class AbstractAltarBlockEntityRenderer(private val ctx: BlockEntityRendererFacto
         matrices.pop()
     }
 
-    private fun moveModel(entity: AltarBlockEntity, stack: MatrixStack) {
+    private fun moveModel(entity: AbstractAltarBlockEntity, stack: MatrixStack) {
         val deltaY = sin(entity.ticks.toDouble() * 0.07) * 0.2
 
         val deltaDeg = (entity.ticks % 360 * 1.5).toFloat()

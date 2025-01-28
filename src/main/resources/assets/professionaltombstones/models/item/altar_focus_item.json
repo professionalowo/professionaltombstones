@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "professionaltombstones:item/altar_focus_item"
+  }
+}

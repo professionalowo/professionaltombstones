@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    " S ",
+    "SSS"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:gold_ingot"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "result": {
+    "id": "professionaltombstones:altar_pedestal_block",
+    "count": 1
+  }
+}

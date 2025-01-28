@@ -1,9 +1,9 @@
 package com.professionalowo.blocks.altar
 
-import com.professionalowo.blocks.ModBlockEntities
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
@@ -18,10 +18,11 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.world.World
 import kotlin.random.Random
 
-class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
-    BlockEntity(ModBlockEntities.ALTAR_BLOCK_ENTITY, pos, state),
+abstract class AbstractAltarBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState?) :
+    BlockEntity(type, pos, state),
     SidedInventory {
     private val itemSlot: DefaultedList<ItemStack> = DefaultedList.ofSize(1, ItemStack.EMPTY)
 
@@ -94,5 +95,9 @@ class AltarBlockEntity(pos: BlockPos, state: BlockState?) :
     override fun markDirty() {
         world?.updateListeners(pos, cachedState, cachedState, Block.NOTIFY_ALL)
         super.markDirty()
+    }
+
+    open fun tick(world: World, pos: BlockPos, state: BlockState) {
+        ticks++
     }
 }

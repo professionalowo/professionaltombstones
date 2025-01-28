@@ -7,13 +7,14 @@ import com.professionalowo.gamerules.allGamerules
 import com.professionalowo.util.createLogger
 import com.professionalowo.util.nextSolidBlockDown
 import com.professionalowo.util.transferTo
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.GameRules
 
 
-fun afterDeath(player: ServerPlayerEntity) = player.run {
+fun afterDeath(player: PlayerEntity) = player.run {
 
     if (inventory.isEmpty) return
 
@@ -35,16 +36,16 @@ fun afterDeath(player: ServerPlayerEntity) = player.run {
     createLogger().info("Saved inventory of ${name.literalString} at $blockPos")
 }
 
-private fun ServerPlayerEntity.createTombstone() =
+private fun PlayerEntity.createTombstone() =
     world.getBlockEntity(placeTombstone()) as? TombstoneBlockEntity
 
 
-private fun ServerPlayerEntity.placeTombstone(): BlockPos =
+private fun PlayerEntity.placeTombstone(): BlockPos =
     getNextSolidBlockDown().also { world.setBlockState(it, getTombstoneBlockState()) }
 
-private fun ServerPlayerEntity.getNextSolidBlockDown() = blockPos.nextSolidBlockDown(world)
+private fun PlayerEntity.getNextSolidBlockDown() = blockPos.nextSolidBlockDown(world)
 
-private fun ServerPlayerEntity.getTombstoneBlockState() =
+private fun PlayerEntity.getTombstoneBlockState() =
     ModBlocks.TOMBSTONE_BLOCK.defaultState.withIfExists(Properties.FACING, facing)
 
 

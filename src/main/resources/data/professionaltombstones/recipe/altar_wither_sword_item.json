@@ -1,0 +1,33 @@
+{
+  "type": "professionaltombstones:crafting_altar",
+  "core": {
+    "item": "minecraft:diamond_sword"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:wither_rose"
+    },
+    {
+      "item": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "item": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "item": "minecraft:wither_skeleton_skull"
+    }
+  ],
+  "result": {
+    "id": "professionaltombstones:wither_sword_item",
+    "count": 1
+  }
+}

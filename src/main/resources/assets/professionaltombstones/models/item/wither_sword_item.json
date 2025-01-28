@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "professionaltombstones:item/wither_sword_item"
+  }
+}

@@ -2,7 +2,8 @@ package com.professionalowo.blocks
 
 import com.professionalowo.Initializer
 import com.professionalowo.Professionaltombstones.MOD_ID
-import com.professionalowo.blocks.altar.AltarBlockEntity
+import com.professionalowo.blocks.altar.AltarCoreBlockEntity
+import com.professionalowo.blocks.altar.AltarPedestalBlockEntity
 import com.professionalowo.blocks.tombstone.TombstoneBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntity
@@ -16,12 +17,17 @@ object ModBlockEntities : Initializer() {
     val TOMBSTONE_BLOCK_ENTITY: BlockEntityType<TombstoneBlockEntity> =
         register("tombstone", ModBlocks.TOMBSTONE_BLOCK) { pos, state -> TombstoneBlockEntity(pos, state) }
 
-    val ALTAR_BLOCK_ENTITY: BlockEntityType<AltarBlockEntity> =
+    val ALTAR_PEDESTAL_BLOCK_ENTITY: BlockEntityType<AltarPedestalBlockEntity> =
         register(
-            "altar",
-            ModBlocks.ALTAR_CORE_BLOCK,
+            "altar_pedestal",
             ModBlocks.ALTAR_PEDESTAL_BLOCK
-        ) { pos, state -> AltarBlockEntity(pos, state) }
+        ) { pos, state -> AltarPedestalBlockEntity(pos, state) }
+
+    val ALTAR_CORE_BLOCK_ENTITY: BlockEntityType<AltarCoreBlockEntity> =
+        register(
+            "altar_core",
+            ModBlocks.ALTAR_CORE_BLOCK,
+        ) { pos, state -> AltarCoreBlockEntity(pos, state) }
 
     override fun initialize() {
         logger.info("Initialized BlockEntities")

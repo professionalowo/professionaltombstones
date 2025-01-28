@@ -3,7 +3,7 @@ package com.professionalowo.renderer
 import com.professionalowo.blocks.tombstone.TombstoneBlock
 import com.professionalowo.blocks.tombstone.TombstoneBlockEntity
 import com.professionalowo.util.fit
-import com.professionalowo.util.pad
+import com.professionalowo.util.scaleAll
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.font.TextRenderer
@@ -52,7 +52,7 @@ class TombstoneEntityRenderer(private val ctx: BlockEntityRendererFactory.Contex
         fit(width.toFloat(), 1f)
 
         //add some padding
-        pad(0.8f)
+        scaleAll(0.8f)
 
         renderer.draw(
             text,

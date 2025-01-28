@@ -3,6 +3,7 @@ package com.professionalowo.creative_tabs
 import com.professionalowo.Initializer
 import com.professionalowo.Professionaltombstones
 import com.professionalowo.blocks.ModBlocks
+import com.professionalowo.items.ModItems
 import com.professionalowo.util.modIdentifier
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
@@ -16,10 +17,19 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 
 object ModTabs : Initializer() {
-    val TOMBSTONE_GROUP = createGroup("tombstone_group", ModBlocks.TOMBSTONE_BLOCK)
+    val TOMBSTONE_GROUP = registerGroup("tombstone_group", ModBlocks.TOMBSTONE_BLOCK)
 
     override fun initialize() {
-        TOMBSTONE_GROUP.register(ModBlocks.TOMBSTONE_BLOCK, ModBlocks.ALTAR_PEDESTAL_BLOCK, ModBlocks.ALTAR_CORE_BLOCK)
+        TOMBSTONE_GROUP.register(
+            ModBlocks.TOMBSTONE_BLOCK,
+            ModBlocks.ALTAR_PEDESTAL_BLOCK,
+            ModBlocks.ALTAR_CORE_BLOCK,
+            ModItems.WITHER_SWORD,
+            ModItems.ALTAR_FOCUS,
+            ModItems.VILLAGER_CHARM,
+            ModItems.SOUL_VIAL,
+            ModItems.FILLED_SOUL_VIAL,
+        )
 
         logger.info("Initialized ItemGroups")
     }
@@ -36,16 +46,16 @@ data class Group(val key: RegistryKey<ItemGroup>, val itemGroup: ItemGroup) {
 /**
  * Creates an ItemGroup and RegistryKey<ItemGroup> from the supplied id
  */
-fun createGroup(id: String, iconSupplier: () -> ItemStack): Group {
+fun registerGroup(id: String, iconSupplier: () -> ItemStack): Group {
     val key = RegistryKey.of(Registries.ITEM_GROUP.key, modIdentifier(id))
     val group = createItemGroup(id, iconSupplier)
     return Group(key, Registry.register(Registries.ITEM_GROUP, key, group))
 }
 
 /**
- * @see createGroup
+ * @see registerGroup
  */
-fun createGroup(id: String, iconItem: ItemConvertible) = createGroup(id) { ItemStack(iconItem) }
+fun registerGroup(id: String, iconItem: ItemConvertible) = registerGroup(id) { ItemStack(iconItem) }
 
 /**
  * Simple function to create an ItemGroup with a name and icon

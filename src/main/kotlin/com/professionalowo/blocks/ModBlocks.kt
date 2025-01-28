@@ -8,6 +8,7 @@ import com.professionalowo.util.modIdentifier
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.MapColor
+import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -25,10 +26,15 @@ object ModBlocks : Initializer() {
     ).register("tombstone_block", true)
 
     val ALTAR_CORE_BLOCK =
-        AltarCoreBlock(AbstractBlock.Settings.create().hardness(3f).requiresTool()).register("altar_core_block", true)
+        AltarCoreBlock(
+            AbstractBlock.Settings.create().hardness(3f).requiresTool().pistonBehavior(PistonBehavior.BLOCK)
+                .instrument(NoteBlockInstrument.BELL)
+        ).register("altar_core_block", true)
 
     val ALTAR_PEDESTAL_BLOCK =
-        AltarPedestalBlock(AbstractBlock.Settings.create().hardness(3f).requiresTool()).register(
+        AltarPedestalBlock(
+            AbstractBlock.Settings.copy(ALTAR_CORE_BLOCK)
+        ).register(
             "altar_pedestal_block",
             true
         )

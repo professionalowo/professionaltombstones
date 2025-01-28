@@ -3,9 +3,9 @@
   "id": "professionaltombstones",
   "version": "${version}",
   "name": "professionaltombstones",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "This mod adds stuff related to death",
   "authors": [
-    "Me!"
+    "professionalowo"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
@@ -26,6 +26,18 @@
         "value": "com.professionalowo.ProfessionaltombstonesClient",
         "adapter": "kotlin"
       }
+    ],
+    "fabric-datagen": [
+      {
+        "value": "com.professionalowo.ProfessionaltombstonesDataGenerator",
+        "adapter": "kotlin"
+      }
+    ],
+    "modmenu": [
+      {
+        "value": "com.professionalowo.ProfessionaltombstonesModMenuApi",
+        "adapter": "kotlin"
+      }
     ]
   },
   "mixins": [
@@ -43,6 +55,6 @@
     "fabric-language-kotlin": "*"
   },
   "suggests": {
-    "another-mod": "*"
+    "modmenu": "*"
   }
 }
