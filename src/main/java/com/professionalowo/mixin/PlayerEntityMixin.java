@@ -36,10 +36,10 @@ public abstract class PlayerEntityMixin extends EntityMixin implements IPlayerDa
 
     @Override
     protected void writeNbtHead(NbtCompound nbt, CallbackInfoReturnable<NbtCompound> cir) {
+        super.writeNbtHead(nbt, cir);
         if (customData != null) {
             nbt.put(customDataId.toString(), customData);
         }
-        super.writeNbtHead(nbt, cir);
     }
 
     @Override
