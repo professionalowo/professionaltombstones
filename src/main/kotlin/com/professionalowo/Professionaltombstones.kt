@@ -7,10 +7,12 @@ import com.professionalowo.enchantments.ModEnchantments
 import com.professionalowo.gamerules.ModGameRules
 import com.professionalowo.items.ModItems
 import com.professionalowo.player_data.PlayerDataAccessor
+import com.professionalowo.player_data.mana.ServerTickEventListenerManaRegeneration
 import com.professionalowo.recipes.ModRecipeSerializers
 import com.professionalowo.recipes.ModRecipieTypes
 import com.professionalowo.sound.ModSoundEvents
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
@@ -42,10 +44,7 @@ object Professionaltombstones : Initializer(), ModInitializer {
     override fun onInitialize() {
         initialize()
 
-        PlayerBlockBreakEvents.AFTER.register{ world: World, playerEntity: PlayerEntity, blockPos: BlockPos, blockState: BlockState, blockEntity: BlockEntity? ->
-            val accessor = PlayerDataAccessor(playerEntity)
-            println(accessor.getNbtData())
-        }
+        ServerTickEvents.END_SERVER_TICK.register(ServerTickEventListenerManaRegeneration())
     }
 }
 
