@@ -22,4 +22,7 @@ class PlayerDataAccessor(val player: PlayerEntity) : IPlayerDataHandler {
         get() = getNbtData().getInt(MAX_MANA_KEY)
         set(value) = getNbtData().putInt(MAX_MANA_KEY, value)
 
+    fun decrementMana(value: Int) {
+        mana = maxOf(mana - value, 0)
+    }
 }
