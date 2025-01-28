@@ -6,9 +6,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.GameRules;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -18,7 +16,8 @@ import static com.professionalowo.OnPlayerDeathKt.afterDeath;
 import static com.professionalowo.util.IdentifierUtilKt.modIdentifier;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntityMixin implements IPlayerDataHandler {
+@Implements(@Interface(iface = IPlayerDataHandler.class, prefix = "professionaltombstones$"))
+public abstract class PlayerEntityMixin extends LivingEntityMixin {
 
     @Unique
     private NbtCompound customData;
@@ -26,8 +25,7 @@ public abstract class PlayerEntityMixin extends LivingEntityMixin implements IPl
     @Unique
     private static final Identifier customDataId = modIdentifier("nbt.custom_data");
 
-    @Override
-    public @NotNull NbtCompound professionaltombstone$getNbtData() {
+    public @NotNull NbtCompound professionaltombstones$getNbtData() {
         if (customData == null) {
             customData = new NbtCompound();
         }

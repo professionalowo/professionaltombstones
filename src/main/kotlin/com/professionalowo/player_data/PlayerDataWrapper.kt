@@ -7,5 +7,5 @@ class PlayerDataWrapper(val player: PlayerEntity) : IPlayerDataHandler {
     val handler: IPlayerDataHandler =
         player as? IPlayerDataHandler ?: throw IllegalStateException("Mixins might not have been initialized")
 
-    override fun `professionaltombstone$getNbtData`(): NbtCompound = handler.`professionaltombstone$getNbtData`()
+    override fun getNbtData(): NbtCompound = handler.getNbtData()
 }
