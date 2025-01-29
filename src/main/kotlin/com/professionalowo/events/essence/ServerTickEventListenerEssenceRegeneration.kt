@@ -19,6 +19,7 @@ class ServerTickEventListenerEssenceRegeneration : ServerTickEvents.EndTick {
     }
 
     private fun regenerateEssence(accessor: PlayerDataAccessor<ServerPlayerEntity>) = accessor.run {
+        if (essence == maxEssence) return@run
         regenerateEssence()
         ServerPlayNetworking.send(player, EssenceUpdateS2CPayload(essence))
     }
