@@ -5,6 +5,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 
 object ModClientNetworking {
     fun registerS2CPackets() {
-        ClientPlayNetworking.registerGlobalReceiver(EssenceUpdateS2CPayload.ID, EssenceUpdateS2CPayloadHandler());
+        ClientPlayNetworking.registerGlobalReceiver(EssenceUpdateS2CPayload.ID, EssenceUpdateS2CPayloadHandler())
     }
 }

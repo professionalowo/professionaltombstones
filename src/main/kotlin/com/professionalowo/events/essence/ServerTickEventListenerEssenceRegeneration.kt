@@ -11,7 +11,7 @@ class ServerTickEventListenerEssenceRegeneration : ServerTickEvents.EndTick {
     private var ticks: Int = 0
 
     override fun onEndTick(server: MinecraftServer) {
-        if (ticks % 21 == 0) {
+        if (ticks % 20 == 0) {
             ticks = 0
             server.playerManager.playerList.map { PlayerDataAccessor(it) }.forEach { regenerateEssence(it) }
         }
@@ -19,7 +19,7 @@ class ServerTickEventListenerEssenceRegeneration : ServerTickEvents.EndTick {
     }
 
     private fun regenerateEssence(accessor: PlayerDataAccessor<ServerPlayerEntity>) = accessor.run {
-        essence = minOf(essence + getEssenceRegenPerSecond(), maxEssence)
-        ServerPlayNetworking.send(accessor.player, EssenceUpdateS2CPayload(essence))
+        regenerateEssence()
+        ServerPlayNetworking.send(player, EssenceUpdateS2CPayload(essence))
     }
 }

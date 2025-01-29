@@ -32,9 +32,17 @@ class PlayerDataAccessor<P : PlayerEntity>(val player: P) : IPlayerDataHandler {
         }
     }
 
+    fun hasEnoughEssence(value: Int): Boolean = essence >= value
+
+    fun addEssence(value: Int) {
+        essence = minOf(essence + value, maxEssence)
+    }
+
+    fun regenerateEssence() = addEssence(getEssenceRegenPerSecond())
+
     fun decrementEssence(value: Int) {
         essence = maxOf(essence - value, 0)
     }
 
-    fun getEssenceRegenPerSecond(): Int = 1
+    private fun getEssenceRegenPerSecond(): Int = 1
 }
