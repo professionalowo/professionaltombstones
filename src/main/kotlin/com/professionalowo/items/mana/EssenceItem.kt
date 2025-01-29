@@ -8,21 +8,21 @@ import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 
-abstract class ManaItem(settings: Settings) : Item(settings) {
-    abstract fun getManaCost(player: PlayerEntity): Int
+abstract class EssenceItem(settings: Settings) : Item(settings) {
+    abstract fun getEssenceCost(player: PlayerEntity): Int
 
     protected open fun canPlayerUse(player: PlayerEntity): Boolean =
-        getManaCost(player) < PlayerDataAccessor(player).mana
+        getEssenceCost(player) < PlayerDataAccessor(player).essence
 
-    protected open fun consumePlayerMana(player: PlayerEntity) {
-        PlayerDataAccessor(player).decrementMana(getManaCost(player))
+    protected open fun consumePlayerEssence(player: PlayerEntity) {
+        PlayerDataAccessor(player).decrementEssence(getEssenceCost(player))
     }
 
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> =
         if (canPlayerUse(user)) {
             doUse(world, user, hand).also {
                 if (it.result.isAccepted) {
-                    consumePlayerMana(user)
+                    consumePlayerEssence(user)
                 }
             }
         } else TypedActionResult.fail(user.getStackInHand(hand))

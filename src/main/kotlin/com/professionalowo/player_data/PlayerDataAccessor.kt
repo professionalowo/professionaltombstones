@@ -5,8 +5,8 @@ import net.minecraft.nbt.NbtCompound
 
 class PlayerDataAccessor<P : PlayerEntity>(val player: P) : IPlayerDataHandler {
     companion object {
-        const val MANA_VALUE_KEY = "mana_value_key"
-        const val MAX_MANA_KEY = "max_mana_key"
+        const val ESSENCE_VALUE_KEY = "essence_value_key"
+        const val ESSENCE_MAX_KEY = "essence_max_key"
     }
 
     val handler: IPlayerDataHandler =
@@ -14,27 +14,27 @@ class PlayerDataAccessor<P : PlayerEntity>(val player: P) : IPlayerDataHandler {
 
     override fun getNbtData(): NbtCompound = handler.getNbtData()
 
-    var mana: Int
-        get() = getNbtData().getInt(MANA_VALUE_KEY)
-        set(value) = getNbtData().putInt(MANA_VALUE_KEY, value)
+    var essence: Int
+        get() = getNbtData().getInt(ESSENCE_VALUE_KEY)
+        set(value) = getNbtData().putInt(ESSENCE_VALUE_KEY, value)
 
-    var maxMana: Int
-        get() = getNbtData().getInt(MAX_MANA_KEY)
-        set(value) = getNbtData().putInt(MAX_MANA_KEY, value)
+    var maxEssence: Int
+        get() = getNbtData().getInt(ESSENCE_MAX_KEY)
+        set(value) = getNbtData().putInt(ESSENCE_MAX_KEY, value)
 
     init {
         val nbt = getNbtData()
-        if (!nbt.contains(MANA_VALUE_KEY)) {
-            nbt.putInt(MANA_VALUE_KEY, 0)
+        if (!nbt.contains(ESSENCE_VALUE_KEY)) {
+            nbt.putInt(ESSENCE_VALUE_KEY, 0)
         }
-        if (!nbt.contains(MAX_MANA_KEY)) {
-            nbt.putInt(MAX_MANA_KEY, 10)
+        if (!nbt.contains(ESSENCE_MAX_KEY)) {
+            nbt.putInt(ESSENCE_MAX_KEY, 10)
         }
     }
 
-    fun decrementMana(value: Int) {
-        mana = maxOf(mana - value, 0)
+    fun decrementEssence(value: Int) {
+        essence = maxOf(essence - value, 0)
     }
 
-    fun getManaRegenPerSecond(): Int = 1
+    fun getEssenceRegenPerSecond(): Int = 1
 }
