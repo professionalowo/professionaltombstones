@@ -1,4 +1,4 @@
-package com.professionalowo.player_data.mana
+package com.professionalowo.events.mana
 
 import com.professionalowo.networking.packets.ManaUpdateS2CPayload
 import com.professionalowo.player_data.PlayerDataAccessor
