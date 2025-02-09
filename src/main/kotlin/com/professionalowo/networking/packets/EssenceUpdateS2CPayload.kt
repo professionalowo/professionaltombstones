@@ -9,9 +9,7 @@ class EssenceUpdateS2CPayload(val updatedValue: Int) : CustomPayload {
     companion object {
         val ID: CustomPayload.Id<EssenceUpdateS2CPayload> = ModPackets.modPayload("mana_update")
         val CODEC: PacketCodec<PacketByteBuf, EssenceUpdateS2CPayload> =
-            CustomPayload.codecOf(EssenceUpdateS2CPayload::write) {
-                EssenceUpdateS2CPayload(it)
-            }
+            CustomPayload.codecOf(EssenceUpdateS2CPayload::write) { EssenceUpdateS2CPayload(it) }
     }
 
     private constructor(buf: PacketByteBuf) : this(buf.readInt())

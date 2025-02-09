@@ -24,6 +24,7 @@ object ModTabs : Initializer() {
             ModBlocks.TOMBSTONE_BLOCK,
             ModBlocks.ALTAR_PEDESTAL_BLOCK,
             ModBlocks.ALTAR_CORE_BLOCK,
+            ModBlocks.ALCHEMICAL_FURNACE_BLOCK,
             ModItems.WITHER_SWORD,
             ModItems.ALTAR_FOCUS,
             ModItems.VILLAGER_CHARM,
