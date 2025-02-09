@@ -1,9 +1,13 @@
 package com.professionalowo.blocks.furnace
 
 import com.mojang.serialization.MapCodec
+import com.professionalowo.blocks.ModBlockEntities
+import com.professionalowo.blocks.ModBlocks
 import net.minecraft.block.AbstractFurnaceBlock
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityTicker
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -23,4 +27,10 @@ class AlchemicalFurnaceBlock(settings: Settings) : AbstractFurnaceBlock(settings
         val blockEntity = world.getBlockEntity(pos) as? AlchemicalFurnaceBlockEntity ?: return
         player.openHandledScreen(blockEntity)
     }
+
+    override fun <T : BlockEntity?> getTicker(
+        world: World?,
+        state: BlockState?,
+        type: BlockEntityType<T>?
+    ): BlockEntityTicker<T>? = validateTicker(world, type, ModBlockEntities.ALCHEMICAL_FURNACE_BLOCK_ENTITY)
 }
