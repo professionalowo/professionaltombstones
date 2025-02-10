@@ -59,6 +59,10 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("fabric_kotlin_version")}")
 
     modImplementation("com.terraformersmc:modmenu:${project.property("modmenu_version")}")
+
+    testImplementation("net.fabricmc:fabric-loader-junit:${project.property("loader_version")}")
+
+    testImplementation(kotlin("test"))
 }
 
 tasks.processResources {
@@ -78,6 +82,10 @@ tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
         JavaVersion.VERSION_21
     }
+}
+
+tasks.test{
+    useJUnitPlatform()
 }
 
 java {
