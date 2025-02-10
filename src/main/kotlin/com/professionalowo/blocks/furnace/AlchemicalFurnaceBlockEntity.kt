@@ -2,7 +2,7 @@ package com.professionalowo.blocks.furnace
 
 import com.professionalowo.IAbstractFurnaceBlockEntityAccessor
 import com.professionalowo.blocks.ModBlockEntities
-import com.professionalowo.util.FurnaceRecipeGetterAccelerated
+import com.professionalowo.util.recipes.AcceleratedAbstractCookingRecipeMatchGetter
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -20,7 +20,7 @@ class AlchemicalFurnaceBlockEntity(pos: BlockPos, state: BlockState?) :
     init {
         val acc = this as? IAbstractFurnaceBlockEntityAccessor
             ?: throw IllegalStateException("Mixins might not have been initialized")
-        acc.setMatchGetter(FurnaceRecipeGetterAccelerated(acc.matchGetter) { 1.5f })
+        acc.setMatchGetter(AcceleratedAbstractCookingRecipeMatchGetter(acc.matchGetter) { 1.5f })
     }
 
     override fun getContainerName(): Text = Text.translatable("container.alchemical_furnace")
