@@ -42,7 +42,8 @@ object ModBlocks : Initializer() {
         )
 
     val ALCHEMICAL_FURNACE_BLOCK =
-        AlchemicalFurnaceBlock(AbstractBlock.Settings.copy(Blocks.FURNACE)).register("alchemical_furnace_block", true);
+        AlchemicalFurnaceBlock(AbstractBlock.Settings.copy(Blocks.FURNACE))
+            .register("alchemical_furnace_block", true)
 
     override fun initialize() {
         logger.info("Initialized Blocks")

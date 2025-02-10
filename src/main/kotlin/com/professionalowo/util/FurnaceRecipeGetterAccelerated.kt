@@ -11,16 +11,16 @@ import java.util.*
 
 class FurnaceRecipeGetterAccelerated(
     private val matcher: RecipeManager.MatchGetter<SingleStackRecipeInput, out AbstractCookingRecipe>,
-    private val acceleration: Float
+    private val acceleration: () -> Float
 ) :
     RecipeManager.MatchGetter<SingleStackRecipeInput, AbstractCookingRecipe> {
     override fun getFirstMatch(
         input: SingleStackRecipeInput?,
         world: World?
     ): Optional<RecipeEntry<AbstractCookingRecipe>> {
-        val inner = matcher.getFirstMatch(input, world);
+        val inner = matcher.getFirstMatch(input, world)
         return inner.map {
-            val recipe = it.value;
+            val recipe = it.value
             val discounted = recipe.run {
                 SmeltingRecipe(
                     group,
@@ -28,8 +28,8 @@ class FurnaceRecipeGetterAccelerated(
                     ingredients.first(),
                     getResult(null),
                     experience,
-                    Math.round(cookingTime / acceleration)
-                );
+                    Math.round(cookingTime / acceleration())
+                )
             }
             RecipeEntry<AbstractCookingRecipe>(it.id, discounted)
         }
