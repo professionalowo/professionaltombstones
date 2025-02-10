@@ -15,7 +15,7 @@ group = project.property<String>("maven_group")
 
 base {
     project.run {
-        val name = property<String>("archives_base_name")
+        val name = property<String>("mod_id")
         val version = property<String>("mod_version")
         val mcVersion = property<String>("minecraft_version")
 
