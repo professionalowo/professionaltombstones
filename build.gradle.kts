@@ -11,7 +11,11 @@ version = project.version
 group = project.property("maven_group") as String
 
 base {
-    archivesName.set(project.property("archives_base_name") as String)
+    val name = project.property("archives_base_name") as String
+    val version = project.property("mod_version") as String
+    val mcVersion = project.property("minecraft_version") as String
+
+    archivesName.set("$name-$version+mc$mcVersion")
 }
 
 repositories {
