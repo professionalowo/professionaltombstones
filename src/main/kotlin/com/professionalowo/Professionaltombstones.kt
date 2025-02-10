@@ -4,25 +4,21 @@ import com.professionalowo.blocks.ModBlockEntities
 import com.professionalowo.blocks.ModBlocks
 import com.professionalowo.creative_tabs.ModTabs
 import com.professionalowo.enchantments.ModEnchantments
+import com.professionalowo.events.ModEventListeners
 import com.professionalowo.gamerules.ModGameRules
 import com.professionalowo.items.ModItems
-import com.professionalowo.player_data.PlayerDataWrapper
+import com.professionalowo.networking.ModPackets
 import com.professionalowo.recipes.ModRecipeSerializers
 import com.professionalowo.recipes.ModRecipieTypes
 import com.professionalowo.sound.ModSoundEvents
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
-import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
 
 object Professionaltombstones : Initializer(), ModInitializer {
     const val MOD_ID = "professionaltombstones"
 
     override fun initialize() =
         arrayOf(
+            ModPackets,
             ModRecipieTypes,
             ModRecipeSerializers,
             ModSoundEvents,
@@ -32,6 +28,7 @@ object Professionaltombstones : Initializer(), ModInitializer {
             ModEnchantments,
             ModBlocks,
             ModItems,
+            ModEventListeners,
         ).forEach { it.initialize() }
             .also { logger.info("Initialized $MOD_ID") }
 

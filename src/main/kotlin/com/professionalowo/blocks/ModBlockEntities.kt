@@ -4,6 +4,8 @@ import com.professionalowo.Initializer
 import com.professionalowo.Professionaltombstones.MOD_ID
 import com.professionalowo.blocks.altar.AltarCoreBlockEntity
 import com.professionalowo.blocks.altar.AltarPedestalBlockEntity
+import com.professionalowo.blocks.furnace.AlchemicalFurnaceBlock
+import com.professionalowo.blocks.furnace.AlchemicalFurnaceBlockEntity
 import com.professionalowo.blocks.tombstone.TombstoneBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntity
@@ -28,6 +30,9 @@ object ModBlockEntities : Initializer() {
             "altar_core",
             ModBlocks.ALTAR_CORE_BLOCK,
         ) { pos, state -> AltarCoreBlockEntity(pos, state) }
+
+    val ALCHEMICAL_FURNACE_BLOCK_ENTITY: BlockEntityType<AlchemicalFurnaceBlockEntity> =
+        register("alchemical_furnace",ModBlocks.ALCHEMICAL_FURNACE_BLOCK) {pos,state-> AlchemicalFurnaceBlockEntity(pos,state)}
 
     override fun initialize() {
         logger.info("Initialized BlockEntities")
