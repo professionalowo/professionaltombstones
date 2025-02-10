@@ -8,6 +8,7 @@ import com.professionalowo.blocks.tombstone.TombstoneBlock
 import com.professionalowo.util.modIdentifier
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.block.MapColor
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
@@ -41,7 +42,7 @@ object ModBlocks : Initializer() {
         )
 
     val ALCHEMICAL_FURNACE_BLOCK =
-        AlchemicalFurnaceBlock(AbstractBlock.Settings.create()).register("alchemical_furnace_block", true);
+        AlchemicalFurnaceBlock(AbstractBlock.Settings.copy(Blocks.FURNACE)).register("alchemical_furnace_block", true);
 
     override fun initialize() {
         logger.info("Initialized Blocks")
