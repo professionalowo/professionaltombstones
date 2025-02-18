@@ -1,7 +1,6 @@
 package com.professionalowo.screen
 
 import com.professionalowo.Professionaltombstones.MOD_ID
-import com.professionalowo.options.ModOptionsManager
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.MinecraftClient
@@ -16,6 +15,6 @@ class ModConfigScreen(parent: Screen?) : GameOptionsScreen(
 ) {
 
     override fun addOptions() {
-        body?.addAll(*ModOptionsManager.getOptions(client))
+
     }
 }
