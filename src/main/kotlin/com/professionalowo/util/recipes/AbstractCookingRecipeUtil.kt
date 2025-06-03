@@ -2,6 +2,7 @@ package com.professionalowo.util.recipes
 
 import net.minecraft.recipe.AbstractCookingRecipe
 import net.minecraft.recipe.SmeltingRecipe
+import kotlin.math.roundToInt
 
 fun AbstractCookingRecipe.accelerate(factor: Float): AbstractCookingRecipe = SmeltingRecipe(
     group,
@@ -9,5 +10,5 @@ fun AbstractCookingRecipe.accelerate(factor: Float): AbstractCookingRecipe = Sme
     ingredients.first(),
     getResult(null),
     experience,
-    Math.round(cookingTime / factor)
+    (cookingTime / factor).roundToInt()
 )
